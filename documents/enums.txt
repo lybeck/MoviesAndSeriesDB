@@ -1,0 +1,3 @@
+LangId: eng, fi, swe, other
+MediaFormat: VHS, DVD, BD, DC
+
