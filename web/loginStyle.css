@@ -1,0 +1,81 @@
+/* 
+    Document   : loginStyle
+    Created on : Mar 24, 2013, 12:13:22 PM
+    Author     : Easysimulation
+    Description: Login stylesheet
+*/
+
+body{
+    background-color: #d6d7e2;
+}
+
+body,#center{  
+    color: #474747;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    text-decoration:none;
+    text-shadow:1px -2px 0px #ffffff;
+}
+
+#loginPic{
+    position: absolute;
+    left: 27%;
+    top: 7px;
+    z-index: -1;
+}
+
+#center{
+    position: absolute;
+    left: 35.3%;
+    width: 30%;
+    top: 300px;
+    text-align: center;
+}
+
+input[type=text].loginBoxes, input[type=password].loginBoxes{
+    color: #474747;
+    height: 28px;
+    text-decoration: none;
+    background-image: url('pics/pbpVI.png');
+    background-repeat: repeat-x;
+    border-radius: 8px;
+    border: 0;
+    
+}
+
+.loginButton {
+    -moz-box-shadow:inset 0px 0px 30px 0px #ededed;
+    -webkit-box-shadow:inset 0px 0px 30px 0px #ededed;
+    box-shadow:inset 0px 0px 30px 0px #ededed;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e6e4eb), color-stop(1, #48494f) );
+    background:-moz-linear-gradient( center top, #e6e4eb 5%, #48494f 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6e4eb', endColorstr='#c4c2cc');
+    background-color:#e6e4eb;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:8px;
+    border:1px solid #dcdcdc;
+    display:inline-block;
+    color:#474747;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 34px;
+    text-decoration:none;
+    text-shadow:1px -2px 0px #ffffff;
+    cursor: pointer;
+}
+
+.loginButton:hover {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #48494f), color-stop(1, #e6e4eb) );
+    background:-moz-linear-gradient( center top, #48494f 5%, #e6e4eb 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c4c2cc', endColorstr='#e6e4eb');
+    background-color:#48494f;
+}
+
+.loginButton,.loginButton:active {
+    position:absolute;
+    left:46.2%;
+    top:557px;
+}
