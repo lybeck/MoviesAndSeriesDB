@@ -41,7 +41,7 @@ input[type=text].loginBoxes, input[type=password].loginBoxes{
     color: #474747;
     height: 28px;
     text-decoration: none;
-    background-image: url('pics/pbpVI.png');
+    background-image: url('pbpVI.png');
     background-repeat: repeat-x;
     border-radius: 8px;
     border: 0;
