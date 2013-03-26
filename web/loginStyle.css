@@ -7,6 +7,25 @@
 
 body{
     background-color: #d6d7e2;
+    margin-left: 27%;
+    margin-top: 7px;
+}
+#loginPic{
+    position: relative;
+    z-index: -1;
+}
+
+#center{
+    position: relative;
+    width: 626px;
+    top: -350px;
+    text-align: center;
+}
+
+.loginButton,.loginButton:active{
+    position: relative;
+    left: 259px;
+    top: -228px;
 }
 
 body,#center{  
@@ -16,21 +35,6 @@ body,#center{
     font-weight:bold;
     text-decoration:none;
     text-shadow:1px -2px 0px #ffffff;
-}
-
-#loginPic{
-    position: absolute;
-    left: 27%;
-    top: 7px;
-    z-index: -1;
-}
-
-#center{
-    position: absolute;
-    left: 35.3%;
-    width: 30%;
-    top: 300px;
-    text-align: center;
 }
 
 input[type=text].loginBoxes, input[type=password].loginBoxes{
@@ -72,10 +76,4 @@ input[type=text].loginBoxes, input[type=password].loginBoxes{
     background:-moz-linear-gradient( center top, #48494f 5%, #e6e4eb 100% );
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c4c2cc', endColorstr='#e6e4eb');
     background-color:#48494f;
-}
-
-.loginButton,.loginButton:active {
-    position:absolute;
-    left:46.2%;
-    top:557px;
 }
