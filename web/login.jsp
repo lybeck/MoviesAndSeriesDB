@@ -13,7 +13,7 @@
         <title>MoSeDB|Login</title>
     </head>
     <body>
-        <img id='loginPic' src="pics/mosedb_gradAndnameGrad.png" title="moseDB" alt='moseDB logo' />
+        <img id='loginPic' src="style/mosedb_gradAndnameGrad.png" title="moseDB" alt='moseDB logo' />
         
         <div id="center">
             USERNAME 

@@ -1,0 +1,24 @@
+/* 
+    Document   : Style
+    Created on : Mar 26, 2013, 10:55:36 AM
+    Author     : Easysimulation
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body{
+    margin-left: 25%;
+    margin-right: 25%;
+    background: -moz-linear-gradient(left, #c3c4cc 0%, #e9eaf8 20%, #e9eaf8 80%, #c1c2cc 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#c3c4cc), 
+                color-stop(20%,#e9eaf8), color-stop(80%,#e9eaf8), color-stop(100%,#c1c2cc));  
+}
+
+#navbar{
+    width: 100%;
+    height: 30px;
+    border-radius: 10px;
+    background: -moz-linear-gradient(top, #e9eaf8 0%, #0e0d21 20%, #0e0d21 80%, #e9eaf8 100%, #e9eaf8 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e9eaf8), color-stop(20%,#0e0d21), 
+                color-stop(80%,#0e0d21), color-stop(100%,#e9eaf8), color-stop(100%,#e9eaf8));
+}
