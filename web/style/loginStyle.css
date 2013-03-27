@@ -76,3 +76,13 @@ input[type=text].loginBoxes, input[type=password].loginBoxes{
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c4c2cc', endColorstr='#e6e4eb');
     background-color:#48494f;
 }
+
+footer{
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: lighter;
+    color: #666666;
+    position: relative;
+    top: -180px;
+    text-shadow: none;
+}

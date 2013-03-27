@@ -85,3 +85,10 @@ body,div,a{
     background-color: #e9eaf8;
     color:#131219;
 }
+
+footer{
+    font-family: Arial;
+    font-size: 10px;
+    font-weight: lighter;
+    color: #666666;
+}

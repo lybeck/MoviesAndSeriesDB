@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
+
             And then here some search-functionality!
-        </div>
-    </body>
-</html>
+            
+<%@include file="bottom.jspf" %>

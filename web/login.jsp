@@ -13,6 +13,7 @@
         <title>MoSeDB|Login</title>
     </head>
     <body>
+        
         <img id='loginPic' src="style/mosedb_gradAndnameGrad.png" title="moseDB" alt='moseDB logo' />
         
         <div id="center">
@@ -29,5 +30,8 @@
         </div>
         
         <a href="#" class="loginButton">Login</a>
+        
+        <footer>Copyright © Lybeck and Sirviö 2013</footer>
+        
     </body>
 </html>
