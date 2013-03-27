@@ -7,8 +7,6 @@
 */
 
 body{
-    margin-left: 25%;
-    margin-right: 25%;
     background: -moz-linear-gradient(left, #c3c4cc 0%, #e9eaf8 20%, #e9eaf8 80%, #c1c2cc 100%);
     background: -webkit-gradient(linear, left top, right top, color-stop(0%,#c3c4cc), 
                 color-stop(20%,#e9eaf8), color-stop(80%,#e9eaf8), color-stop(100%,#c1c2cc));  
@@ -29,8 +27,9 @@ body,div,a{
 }
 
 #comBox{
-    position:relative;
-    width: 100%;
+    position: relative;
+    width: 720px;
+    margin: 0 auto;
     top: -50px;
     text-align: center;
     border: 2px solid #131219;
