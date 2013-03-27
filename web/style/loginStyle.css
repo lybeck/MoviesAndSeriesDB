@@ -7,8 +7,9 @@
 
 body{
     background-color: #d6d7e2;
-    margin-left: 27%;
+
     margin-top: 7px;
+    text-align: center;
 }
 #loginPic{
     position: relative;
@@ -17,15 +18,14 @@ body{
 
 #center{
     position: relative;
-    width: 626px;
     top: -350px;
     text-align: center;
 }
 
 .loginButton,.loginButton:active{
     position: relative;
-    left: 259px;
-    top: -228px;
+    left: -6px;
+    top: -225px;
 }
 
 body,#center{  
