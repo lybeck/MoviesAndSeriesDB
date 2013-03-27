@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class ConnectionManager {
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException {
 
         try {
             Class.forName("org.postgresql.Driver");
@@ -27,14 +27,8 @@ public class ConnectionManager {
             return null;
         }
 
-        Connection connection;
-        try {
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost/llybeck", "llybeck", "7efa67a6d7dd527f");
-        } catch (SQLException ex) {
-            Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        Connection connection = DriverManager.getConnection(
+                "jdbc:postgresql://localhost/llybeck", "llybeck", "7efa67a6d7dd527f");
 
         return connection;
     }
