@@ -33,7 +33,7 @@ body,div,a{
     width: 100%;
     top: -50px;
     text-align: center;
-    border: 1px solid gray;
+    border: 2px solid #131219;
     box-shadow: 0px 0px 2px 2px red;
 }
 
@@ -75,7 +75,7 @@ body,div,a{
 
 .navbarLeft a:link,a:visited,.navbarRight a:link,a:visited{
     display: inline-block;
-    width: 100px;
+    width: 120px;
     height: 30px;
     background-color: #131219;
     color:#e9eaf8;
