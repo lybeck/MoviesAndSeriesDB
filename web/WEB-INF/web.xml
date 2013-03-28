@@ -7,12 +7,16 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
+        <servlet-name>LoginCheckServlet</servlet-name>
+        <servlet-class>com.mosedb.servlets.LoginCheckServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.mosedb.servlets.LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoginCheckServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.LoginCheckServlet</servlet-class>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.mosedb.servlets.LogoutServlet</servlet-class>
     </servlet>
     
     
@@ -23,12 +27,16 @@
     
     
     <servlet-mapping>
+        <servlet-name>LoginCheckServlet</servlet-name>
+        <url-pattern>/logincheck</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoginCheckServlet</servlet-name>
-        <url-pattern>/logincheck</url-pattern>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>

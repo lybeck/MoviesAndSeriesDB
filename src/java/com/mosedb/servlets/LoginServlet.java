@@ -5,7 +5,7 @@
 package com.mosedb.servlets;
 
 import com.mosedb.models.User;
-import com.mosedb.tools.InLogger;
+import com.mosedb.tools.LoginManager;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +26,7 @@ public class LoginServlet extends MosedbServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         try {
-            User user = InLogger.doLogin(session, username, password);
+            User user = LoginManager.doLogin(session, username, password);
             if (user != null) {
                 redirectToPage("search.jsp", response);
             } else {

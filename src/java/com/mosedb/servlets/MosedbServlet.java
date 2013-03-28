@@ -4,7 +4,7 @@
  */
 package com.mosedb.servlets;
 
-import com.mosedb.tools.InLogger;
+import com.mosedb.tools.LoginManager;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,7 +35,7 @@ public class MosedbServlet extends HttpServlet {
 
     protected boolean isUserLoggedIn(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        if (InLogger.getKirjautunutKayttaja(session) != null) {
+        if (LoginManager.getLoggedUser(session) != null) {
             return true;
         } else {
             return false;
