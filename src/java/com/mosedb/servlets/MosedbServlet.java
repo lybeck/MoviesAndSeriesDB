@@ -4,12 +4,14 @@
  */
 package com.mosedb.servlets;
 
+import com.mosedb.tools.InLogger;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,5 +31,14 @@ public class MosedbServlet extends HttpServlet {
 
     protected void setErrorMessage(String message, HttpServletRequest request) {
         request.setAttribute("errorMessage", message);
+    }
+
+    protected boolean isUserLoggedIn(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        if (InLogger.getKirjautunutKayttaja(session) != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
