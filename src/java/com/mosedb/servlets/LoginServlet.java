@@ -18,7 +18,16 @@ import javax.servlet.http.HttpSession;
  * @author llybeck
  */
 public class LoginServlet extends MosedbServlet {
-    
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (isUserLoggedIn(request)) {
+            redirectHome(request, response);
+        } else {
+            redirectToPage("login", request, response);
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,7 +37,7 @@ public class LoginServlet extends MosedbServlet {
         try {
             User user = LoginManager.doLogin(session, username, password);
             if (user != null) {
-                redirectToPage("search.jsp", response);
+                redirectHome(request, response);
             } else {
                 setErrorMessage("Invalid username or password!", request);
                 restorePage("login.jsp", request, response);

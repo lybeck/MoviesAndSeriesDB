@@ -19,14 +19,31 @@ import javax.servlet.http.HttpSession;
  */
 public class MosedbServlet extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        redirectHome(request, response);
+    }
+
+    protected void redirectHome(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (isUserLoggedIn(request)) {
+            redirectToPage("search", request, response);
+        } else {
+            redirectToLoginPage(response);
+        }
+    }
+
     protected void restorePage(String page, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);
         dispatcher.forward(request, response);
     }
 
-    protected void redirectToPage(String page, HttpServletResponse response) throws IOException {
-        response.sendRedirect(page);
+    protected void redirectToPage(String page, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (isUserLoggedIn(request)) {
+            response.sendRedirect(page);
+        } else {
+            redirectToLoginPage(response);
+        }
     }
 
     protected void setErrorMessage(String message, HttpServletRequest request) {
@@ -35,10 +52,10 @@ public class MosedbServlet extends HttpServlet {
 
     protected boolean isUserLoggedIn(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        if (LoginManager.getLoggedUser(session) != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return LoginManager.getLoggedUser(session) != null;
+    }
+
+    private void redirectToLoginPage(HttpServletResponse response) throws IOException {
+        response.sendRedirect("login.jsp");
     }
 }
