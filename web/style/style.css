@@ -3,7 +3,10 @@
     Created on : Mar 26, 2013, 10:55:36 AM
     Author     : Easysimulation
     Description:
-        Purpose of the stylesheet follows.
+        Color-Scheme:
+        #c3c4cc = BGC - left & right 
+        #e9eaf8 = BGC - center
+        #131219 = Navigationbar & font
 */
 
 body{
@@ -13,7 +16,7 @@ body{
 }
 
 body,div,a{
-    color: #474747;
+    color: #131219;
     font-family:Arial;
     font-size:15px;
     font-weight:bold;
@@ -33,7 +36,7 @@ body,div,a{
     top: -50px;
     text-align: center;
     border: 2px solid #131219;
-    box-shadow: 0px 0px 2px 2px red;
+    box-shadow: 0px 0px 15px 2px red;
 }
 
 #navbar{
@@ -83,6 +86,76 @@ body,div,a{
 .navbarLeft a:hover,a:active,.navbarRight a:hover,a:active{
     background-color: #e9eaf8;
     color:#131219;
+}
+
+input[type=checkbox]{
+    display: none;
+}
+
+.checkbox {
+    cursor: pointer;
+    position: absolute;
+    vertical-align: middle;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 15px;
+    height: 17px;
+    border-radius: 4px;
+
+    background: -webkit-linear-gradient(top, #222 0%, #45484d 100%);
+    background: -moz-linear-gradient(top, #222 0%, #45484d 100%);
+    background: -o-linear-gradient(top, #222 0%, #45484d 100%);
+    background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
+    background: linear-gradient(top, #222 0%, #45484d 100%);
+}
+
+.checkbox:after {
+    opacity: 0;
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 4px;
+    background: transparent;
+    top: 4px;
+    left: 3px;
+    border: 3px solid #e9eaf8;
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+
+    -webkit-transition: opacity 400ms ease, color 400ms ease;	
+    -moz-transition: opacity 400ms ease, color 400ms ease;
+    -ms-transition: opacity 400ms ease, color 400ms ease;
+    -o-transition: opacity 400ms ease, color 400ms ease;
+    transition: opacity 400ms ease, color 400ms ease;	
+}
+
+.checkbox:hover:after {
+        opacity: 0.3;
+}
+
+input[type=checkbox]:checked + .checkbox:after {
+	opacity: 1;
+}
+
+#searchFS{
+    margin: 10px;
+    border: 3px solid #131219;
+    border-radius: 15px;
+}
+
+#searchFS #pLeft{
+    width: 42%;
+    text-align: center;
+    float: left;
+    margin: 0 auto;
+}
+
+#searchFS #pRight{
+    width: 58%;
+    text-align: center;
+    float: right;
+    margin: 0 auto;
 }
 
 footer{

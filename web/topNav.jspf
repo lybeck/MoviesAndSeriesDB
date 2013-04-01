@@ -16,6 +16,5 @@
                 <li class='navbarLeft'><a href='#'>ADD MOVIE</a></li>
                 <li class='navbarLeft'><a href='#'>ADD SERIES</a></li>
                 <li class='navbarRight'><a href='logout'>LOGOUT</a></li>
-            </ul>
-            
+            </ul>     
        

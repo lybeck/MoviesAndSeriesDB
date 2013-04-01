@@ -8,6 +8,18 @@
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
 
-            And then here some search-functionality!
-            
+                <fieldset id="searchFS">
+                    <legend>Search from</legend>
+                    <p id="pLeft">
+                        Movies
+                        <input type="checkbox" value="None" id="customCB1" name="check"/>
+                        <label class="checkbox" for="customCB1"></label>
+                    </p>
+                    <p id="pRight">
+                        Series
+                        <input type="checkbox" value="None" id="customCB2" name="check"/>
+                        <label class="checkbox" for="customCB2"></label>
+                    </p>
+                </fieldset>
+
 <%@include file="bottom.jspf" %>
