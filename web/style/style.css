@@ -31,7 +31,7 @@ body,div,a{
 
 #comBox{
     position: relative;
-    width: 720px;
+    width: 700px;
     margin: 0 auto;
     top: -50px;
     text-align: center;
@@ -138,20 +138,61 @@ input[type=checkbox]:checked + .checkbox:after {
 	opacity: 1;
 }
 
-#searchFS{
+.styled-textfield{
+    position: relative;
+    height: 27px;
+    width: 150px;
+    text-decoration: none;
+    background-image: url('pbpVI-v2.png');
+    background-repeat: repeat-x;
+    border: 2px solid #131219;
+    border-radius: 8px;
+    color: #131219;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.styled-select{
+    width: 200px;
+    height: 25px;
+    overflow: hidden;
+    background: url(select-arrow.png) no-repeat right #e9eaf8;
+    border: 2px solid #131219;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+.styled-select select {
+    background: transparent;
+    width: 115%;
+    padding: 3px;
+    border: none;
+    border-style: none;
+    overflow: hidden;
+    -webkit-appearance: none;
+    color: #131219;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.searchFS{
     margin: 10px;
     border: 3px solid #131219;
     border-radius: 15px;
 }
 
-#searchFS #pLeft{
+.searchFS #pLeft{
     width: 42%;
     text-align: center;
     float: left;
     margin: 0 auto;
 }
 
-#searchFS #pRight{
+.searchFS #pRight{
     width: 58%;
     text-align: center;
     float: right;

@@ -24,11 +24,11 @@ body{
 .loginButton,.loginButton:active{
     position: relative;
     left: -6px;
-    top: -225px;
+    top: -229px;
 }
 
 body,#center{  
-    color: #474747;
+    color: #131219;
     font-family:Arial;
     font-size:15px;
     font-weight:bold;
@@ -37,13 +37,13 @@ body,#center{
 }
 
 input[type=text].loginBoxes, input[type=password].loginBoxes{
-    color: #474747;
-    height: 28px;
+    color: #131219;
+    height: 27px;
     text-decoration: none;
-    background-image: url('pbpVI.png');
+    background-image: url('pbpVI-v2.png');
     background-repeat: repeat-x;
     border-radius: 8px;
-    border: 0;
+    border: 2px solid #131219;
     
 }
 
@@ -80,7 +80,7 @@ input[type=text].loginBoxes, input[type=password].loginBoxes{
 #loginerror{
     position: relative;
     left: -6px;
-    top: -350px;
+    top: -354px;
     color: red;
     text-shadow: none;
 }
