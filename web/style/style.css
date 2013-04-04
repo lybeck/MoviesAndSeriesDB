@@ -25,6 +25,12 @@ body,div,a,.button,#searchResults{
     text-align: center;
 }
 
+h1,h2,h3,h4{
+    border-bottom: 3px solid #131219;
+    border-top: 3px solid #131219;
+    margin-bottom: 35px;
+}
+
 #topimage{
     position: relative;
     top: -40px;
@@ -224,7 +230,6 @@ input[type=checkbox]:checked + .checkbox:after {
     margin: 10px auto;
     width:90%;
     border-collapse: collapse;
-    box-shadow: 0 0 10px 4px #c3c4cc;
 }
 
 #searchResults th{

@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
+                
+                <h3>Search content from database</h3>
 
                 <fieldset class="searchFS">
                     <legend>Search from</legend>
