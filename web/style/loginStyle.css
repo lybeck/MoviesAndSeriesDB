@@ -36,10 +36,11 @@ body,#center{
     text-shadow:1px -2px 0px #ffffff;
 }
 
-input[type=text].loginBoxes, input[type=password].loginBoxes{
+.loginBoxes, .loginBoxes{
     color: #131219;
     height: 27px;
     text-decoration: none;
+    font-weight:bold;
     background-image: url('pbpVI-v2.png');
     background-repeat: repeat-x;
     border-radius: 8px;
@@ -73,7 +74,6 @@ input[type=text].loginBoxes, input[type=password].loginBoxes{
 .loginButton:hover {
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #48494f), color-stop(1, #e6e4eb) );
     background:-moz-linear-gradient( center top, #48494f 5%, #e6e4eb 100% );
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c4c2cc', endColorstr='#e6e4eb');
     background-color:#48494f;
 }
 
