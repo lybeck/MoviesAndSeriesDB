@@ -28,8 +28,9 @@
                 <fieldset class="searchFS" style="line-height: 25px;">
                     <legend>Search</legend>
                     
-                    <input type="text" value="Search #1" onclick="this.value='';"
-                           onblur="this.value=!this.value?'Search #1':this.value;"
+                    <input type="text" value="Search #1" 
+                           onclick="if(this.value == 'Search #1'){this.value=''};"
+                           onblur="if(this.value == ''){this.value = 'Search #1'};"
                            class="styled-textfield" name="txt1"
                            id="txt1" style="float: left; margin-left: 13%;"/>
                     <div class="styled-select" style="float: right; margin-right: 7%">
@@ -43,8 +44,9 @@
                     </div>
                     <br>
                     <br>
-                    <input type="text" value="Search #2" onclick="this.value='';"
-                           onblur="this.value=!this.value?'Search #2':this.value;"
+                    <input type="text" value="Search #2" 
+                           onclick="if(this.value == 'Search #2'){this.value=''};"
+                           onblur="if(this.value == ''){this.value = 'Search #2'};"
                            class="styled-textfield" name="txt2"
                            id="txt1" style="float: left; margin-left: 13%;"/>
                     <div class="styled-select" style="float: right; margin-right: 7%">
@@ -58,8 +60,9 @@
                     </div>
                     <br>
                     <br>
-                    <input type="text" value="Search #3" onclick="this.value='';"
-                           onblur="this.value=!this.value?'Search #3':this.value;"
+                    <input type="text" value="Search #3" 
+                           onclick="if(this.value == 'Search #3'){this.value=''};"
+                           onblur="if(this.value == ''){this.value = 'Search #3'};"
                            class="styled-textfield" name="txt3"
                            id="txt1" style="float: left; margin-left: 13%;"/>
                     <div class="styled-select" style="float: right; margin-right: 7%">
