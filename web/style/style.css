@@ -128,6 +128,9 @@ input[type=checkbox]{
     border: 3px solid #e9eaf8;
     border-top: none;
     border-right: none;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
 
     -webkit-transition: opacity 400ms ease, color 400ms ease;	
@@ -191,7 +194,7 @@ input[type=checkbox]:checked + .checkbox:after {
     background:-moz-linear-gradient( center top, #e6e4eb 5%, #48494f 100% );
     background-color:#e6e4eb;
     border-radius:8px;
-    box-shadow:inset 0px 0px 30px 0px #ededed;
+    box-shadow:inset 0px 0px 50px 0px #ededed;
     border:2px solid #131219;
     display:inline-block;
     padding:6px 34px;
