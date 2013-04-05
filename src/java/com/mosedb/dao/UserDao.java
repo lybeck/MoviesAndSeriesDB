@@ -30,7 +30,7 @@ public class UserDao extends AbstractDao {
         Connection connection = getConnection();
         String sql = "select username, firstname, lastname, admin from mosedb.users;";
         PreparedStatement pst = connection.prepareStatement(sql);
-        ResultSet result = processStatement(pst);
+        ResultSet result = pst.executeQuery();
         list = new ArrayList<User>();
         String usr, fst, lst;
         boolean adm;
@@ -55,7 +55,7 @@ public class UserDao extends AbstractDao {
         PreparedStatement pst = connection.prepareStatement(sql);
         pst.setString(1, username);
         pst.setString(2, password);
-        ResultSet result = processStatement(pst);
+        ResultSet result = pst.executeQuery();
         String usr, fst, lst;
         boolean adm;
         if (result.next()) {
@@ -65,7 +65,7 @@ public class UserDao extends AbstractDao {
             adm = result.getBoolean("admin");
             user = new User(usr, fst, lst, adm);
         }
-
+        connection.close();
         return user;
     }
 
