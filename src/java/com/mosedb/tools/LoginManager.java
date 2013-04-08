@@ -4,7 +4,7 @@
  */
 package com.mosedb.tools;
 
-import com.mosedb.dao.UserDao;
+import com.mosedb.business.UserService;
 import com.mosedb.models.User;
 import javax.servlet.http.HttpSession;
 
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 public class LoginManager {
 
     public static User doLogin(HttpSession session, String username, String password) throws Exception {
-        UserDao dao = new UserDao();
-        User user = dao.getUser(username, password);
+        UserService userService = new UserService();
+        User user = userService.getUser(username, password);
         session.setAttribute(userSessionKey(), user);
         return user;
     }

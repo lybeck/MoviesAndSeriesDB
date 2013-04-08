@@ -22,17 +22,28 @@ public abstract class AbstractDao {
     protected Connection getConnection() throws SQLException {
         return ConnectionManager.getConnection();
     }
-
-    protected ResultSet processStatement(PreparedStatement pst) throws SQLException {
-        try {
-            return pst.executeQuery();
-        } catch (SQLException e) {
-            if (e.getClass() == SQLTimeoutException.class) {
-                System.err.println("Connection to database timed out!");
-            } else {
-                System.err.println("Connection to database could not be made!");
-            }
-            throw e;
+    
+    protected boolean executeUpdate(String sql, Object... values) throws SQLException{
+        Connection connection = getConnection();
+        PreparedStatement pst = connection.prepareStatement(sql);
+        int i = 1;
+        for (Object value : values) {
+            pst.setObject(i++, value);
         }
+        int result = pst.executeUpdate();
+        connection.close();
+        return result != 0;
+    }
+    
+    protected ResultSet executeQuery(String sql, Object... values) throws SQLException {
+        Connection connection = getConnection();
+        PreparedStatement pst = connection.prepareStatement(sql);
+        int i = 1;
+        for (Object value : values) {
+            pst.setObject(i++, value);
+        }
+        ResultSet result = pst.executeQuery();
+        connection.close();
+        return result;
     }
 }
