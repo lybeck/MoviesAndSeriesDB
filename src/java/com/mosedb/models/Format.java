@@ -21,6 +21,12 @@ public class Format {
         this.mediaFormat = mediaFormat;
     }
 
+    public Format(int id, MediaFormat mediaFormat, String fileType) {
+        this.id = id;
+        this.mediaFormat = mediaFormat;
+        this.fileType = fileType;
+    }
+
     public Format(int id, MediaFormat mediaFormat, String fileType, Integer resoX, Integer resoY) {
         this.id = id;
         this.mediaFormat = mediaFormat;
@@ -67,6 +73,35 @@ public class Format {
 
     public void setResoX(Integer resoX) {
         this.resoX = resoX;
+    }
+
+    @Override
+    public String toString() {
+        String s = "(" + mediaFormat;
+        if (fileType != null) {
+            s += ", " + fileType;
+            if (resoX != null && resoY != null) {
+                s += ", " + resoX + "x" + resoY;
+            }
+        }
+        s += ")";
+        return s;
+    }
+
+    public static MediaFormat getMediaFormat(String mediaFormat) {
+        if (mediaFormat.equalsIgnoreCase("vhs")) {
+            return MediaFormat.vhs;
+        }
+        if (mediaFormat.equalsIgnoreCase("dvd")) {
+            return MediaFormat.dvd;
+        }
+        if (mediaFormat.equalsIgnoreCase("bd")) {
+            return MediaFormat.bd;
+        }
+        if (mediaFormat.equalsIgnoreCase("dc")) {
+            return MediaFormat.dc;
+        }
+        return null;
     }
 
     public static enum MediaFormat {

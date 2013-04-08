@@ -4,6 +4,8 @@
  */
 package com.mosedb.models;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +19,28 @@ public class Movie {
     private Map<LangId, String> names;
     private String owner;
     private boolean seen;
-    private int movieYear;
+    private Integer movieYear;
     private List<String> genres;
     private List<Format> formats;
+
+    public Movie(int id, String owner, boolean seen) {
+        this.id = id;
+        this.owner = owner;
+        this.seen = seen;
+        this.names = new EnumMap<LangId, String>(LangId.class);
+        this.genres = new ArrayList<String>();
+        this.formats = new ArrayList<Format>();
+    }
+
+    public Movie(int id, String owner, boolean seen, Integer movieYear) {
+        this.id = id;
+        this.owner = owner;
+        this.seen = seen;
+        this.movieYear = movieYear;
+        this.names = new EnumMap<LangId, String>(LangId.class);
+        this.genres = new ArrayList<String>();
+        this.formats = new ArrayList<Format>();
+    }
 
     public Movie(int id, Map<LangId, String> names, String owner, boolean seen, int movieYear, List<String> genres, List<Format> formats) {
         this.id = id;
@@ -71,11 +92,11 @@ public class Movie {
         this.seen = seen;
     }
 
-    public int getMovieYear() {
+    public Integer getMovieYear() {
         return movieYear;
     }
 
-    public void setMovieYear(int movieYear) {
+    public void setMovieYear(Integer movieYear) {
         this.movieYear = movieYear;
     }
 
@@ -90,19 +111,19 @@ public class Movie {
     public String getName(LangId langId) {
         return names.get(langId);
     }
-    
+
     public String getNameEng() {
         return getName(LangId.eng);
     }
-    
+
     public String getNameFi() {
         return getName(LangId.fi);
     }
-    
+
     public String getNameSwe() {
         return getName(LangId.swe);
     }
-    
+
     public String getNameOther() {
         return getName(LangId.other);
     }
@@ -114,6 +135,17 @@ public class Movie {
 
     public void addGenre(String genre) {
         genres.add(genre);
+    }
+
+    @Override
+    public String toString() {
+        return "movieid:\t" + id + "\n"
+                + "names:\t" + names + "\n"
+                + "owner:\t" + owner + "\n"
+                + "year:\t" + movieYear + "\n"
+                + "genres:\t" + genres + "\n"
+                + "formats:\t" + formats + "\n"
+                + "seen:\t" + seen;
     }
 
     public static LangId getLangId(String langId) {

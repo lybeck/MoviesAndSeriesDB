@@ -4,14 +4,22 @@
  */
 package com.mosedb.business;
 
+import com.mosedb.dao.FormatDao;
+import com.mosedb.dao.MovieDao;
+import com.mosedb.dao.MovieFormatDao;
+import com.mosedb.dao.MovieGenreDao;
+import com.mosedb.dao.MovieNameDao;
 import com.mosedb.models.Format;
 import com.mosedb.models.Movie;
 import com.mosedb.models.User;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,48 +29,88 @@ public class MovieService {
 
     public List<Movie> getMovies(User user) {
 
-        List<Movie> list = new ArrayList<Movie>();
-
-        Map<Movie.LangId, String> names;
-        List<String> genres;
-        List<Format> formats;
-
-        names = new EnumMap<Movie.LangId, String>(Movie.LangId.class);
-        names.put(Movie.LangId.eng, "Snow white");
-        names.put(Movie.LangId.fi, "Lumikki");
-        names.put(Movie.LangId.swe, "Snövit");
-        genres = new ArrayList<String>();
-        genres.add("Animation");
-        genres.add("Family");
-        genres.add("Fantasy");
-        formats = new ArrayList<Format>();
-        formats.add(new Format(1, Format.MediaFormat.bd));
-        formats.add(new Format(2, Format.MediaFormat.dc, "mkv", 1920, 1080));
-        list.add(new Movie(1, names, "roope", true, 1937, genres, formats));
-
-        names = new EnumMap<Movie.LangId, String>(Movie.LangId.class);
-        names.put(Movie.LangId.eng, "Terminator 2");
-        genres = new ArrayList<String>();
-        genres.add("Action");
-        genres.add("Sci-fi");
-        genres.add("Thriller");
-        formats = new ArrayList<Format>();
-        formats.add(new Format(1, Format.MediaFormat.vhs));
-        list.add(new Movie(1, names, "roope", false, 1991, genres, formats));
-
-        if (user.getUsername().equals("roope")) {
-            names = new EnumMap<Movie.LangId, String>(Movie.LangId.class);
-            names.put(Movie.LangId.eng, "Back to the Future");
-            names.put(Movie.LangId.fi, "Paluu tulevaisuuteen");
-            genres = new ArrayList<String>();
-            genres.add("Adventure");
-            genres.add("Comedy");
-            genres.add("Sci-fi");
-            formats = new ArrayList<Format>();
-            formats.add(new Format(2, Format.MediaFormat.dc, "avi", 480, 360));
-            list.add(new Movie(1, names, "roope", true, 1985, genres, formats));
+        List<Movie> movies;
+        try {
+            if (user.isAdmin()) {
+                movies = new MovieDao().getAllMovies();
+            } else {
+                movies = new MovieDao().getMovies(user.getUsername());
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error while retrieving movies by username. Error:");
+            System.err.println(ex);
+            return null;
         }
 
-        return list;
+        addInfoToMovies(movies);
+
+        return movies;
+    }
+
+    private void addInfoToMovies(List<Movie> movies) {
+        addNames(movies);
+        addGenres(movies);
+        addFormats(movies);
+
+        printMovies(movies);
+
+    }
+
+    private void addNames(List<Movie> movies) {
+        for (Movie movie : movies) {
+            try {
+                movie.setNames(new MovieNameDao().getMovieNames(movie.getId()));
+            } catch (SQLException ex) {
+                System.err.println("Error while trying to retirieve names for movie with id: " + movie.getId());
+                System.err.println("Error:");
+                System.err.println(ex);
+            }
+        }
+    }
+
+    private void addGenres(List<Movie> movies) {
+        for (Movie movie : movies) {
+            try {
+                movie.setGenres(new MovieGenreDao().getMovieGenres(movie.getId()));
+            } catch (SQLException ex) {
+                System.err.println("Error while trying to retirieve genres for movie with id: " + movie.getId());
+                System.err.println("Error:");
+                System.err.println(ex);
+            }
+        }
+    }
+
+    private void addFormats(List<Movie> movies) {
+        MovieFormatDao movieFormatDao = new MovieFormatDao();
+        for (Movie movie : movies) {
+            List<Integer> formatIds;
+            try {
+                formatIds = movieFormatDao.getFormatIds(movie.getId());
+            } catch (SQLException ex) {
+                System.err.println("Error while trying to retirieve formatIds for movie with id: " + movie.getId());
+                System.err.println("Error:");
+                System.err.println(ex);
+                continue;
+            }
+
+            FormatDao formatDao = new FormatDao();
+            List<Format> formats = new ArrayList<Format>();
+            for (Integer formatid : formatIds) {
+                try {
+                    formats.add(formatDao.getFormat(formatid));
+                } catch (SQLException ex) {
+                    System.err.println("Error while trying to retirieve formatIds for movie with id: " + movie.getId());
+                    System.err.println("Error:");
+                    System.err.println(ex);
+                }
+            }
+            movie.setFormats(formats);
+        }
+    }
+
+    private void printMovies(List<Movie> movies) {
+        for (Movie movie : movies) {
+            System.out.println(movie);
+        }
     }
 }

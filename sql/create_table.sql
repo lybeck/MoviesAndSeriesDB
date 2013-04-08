@@ -63,6 +63,12 @@ INSERT INTO mosedb.genre (genrename) VALUES ('Mystery');
 INSERT INTO mosedb.genre (genrename) VALUES ('News');
 INSERT INTO mosedb.genre (genrename) VALUES ('Reality-TV');
 INSERT INTO mosedb.genre (genrename) VALUES ('Romance');
+INSERT INTO mosedb.genre (genrename) VALUES ('Sci-Fi');
+INSERT INTO mosedb.genre (genrename) VALUES ('Sport');
+INSERT INTO mosedb.genre (genrename) VALUES ('Talk-Show');
+INSERT INTO mosedb.genre (genrename) VALUES ('Thriller');
+INSERT INTO mosedb.genre (genrename) VALUES ('War');
+INSERT INTO mosedb.genre (genrename) VALUES ('Western');
 
 -- format
 CREATE TABLE mosedb.format (

@@ -24,7 +24,13 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        return null;
+        try {
+            return userDao.getAllUsers();
+        } catch (SQLException ex) {
+            System.err.println("Error while trying to retrieve users. Error:");
+            System.err.println(ex);
+            return null;
+        }
     }
 
     public User getUser(String username, String password) {
