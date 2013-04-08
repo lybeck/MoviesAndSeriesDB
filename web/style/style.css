@@ -95,11 +95,11 @@ h1,h2,h3,h4{
     color:#131219;
 }
 
-input[type=checkbox]{
+input[type=checkbox], input[type=radio]{
     display: none;
 }
 
-.checkbox {
+.customCheck {
     cursor: pointer;
     position: absolute;
     vertical-align: middle;
@@ -116,7 +116,7 @@ input[type=checkbox]{
     background: linear-gradient(top, #222 0%, #45484d 100%);
 }
 
-.checkbox:after {
+.customCheck:after {
     opacity: 0;
     content: '';
     position: absolute;
@@ -140,11 +140,12 @@ input[type=checkbox]{
     transition: opacity 400ms ease, color 400ms ease;	
 }
 
-.checkbox:hover:after {
+.customCheck:hover:after {
         opacity: 0.3;
 }
 
-input[type=checkbox]:checked + .checkbox:after {
+input[type=checkbox]:checked + .customCheck:after, 
+input[type=radio]:checked + .customCheck:after {
 	opacity: 1;
 }
 
@@ -215,14 +216,14 @@ input[type=checkbox]:checked + .checkbox:after {
     border-radius: 15px;
 }
 
-.searchFS #pLeft{
+.searchFS .pLeft{
     width: 42%;
     text-align: center;
     float: left;
     margin: 0 auto;
 }
 
-.searchFS #pRight{
+.searchFS .pRight{
     width: 58%;
     text-align: center;
     float: right;

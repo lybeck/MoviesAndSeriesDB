@@ -23,15 +23,27 @@ public abstract class AbstractDao {
         return ConnectionManager.getConnection();
     }
     
-    protected void executeUpdate(String sql, Object... values) throws SQLException{
+    protected boolean executeUpdate(String sql, Object... values) throws SQLException{
         Connection connection = getConnection();
         PreparedStatement pst = connection.prepareStatement(sql);
         int i = 1;
         for (Object value : values) {
             pst.setObject(i++, value);
         }
-        pst.executeUpdate();
+        int result = pst.executeUpdate();
         connection.close();
-//        System.out.println(pst.toString());
+        return result != 0;
+    }
+    
+    protected ResultSet executeQuery(String sql, Object... values) throws SQLException {
+        Connection connection = getConnection();
+        PreparedStatement pst = connection.prepareStatement(sql);
+        int i = 1;
+        for (Object value : values) {
+            pst.setObject(i++, value);
+        }
+        ResultSet result = pst.executeQuery();
+        connection.close();
+        return result;
     }
 }

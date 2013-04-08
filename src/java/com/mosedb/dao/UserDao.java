@@ -26,12 +26,9 @@ public class UserDao extends AbstractDao {
      * @return List of all users, null if connection failed.
      */
     public List<User> getAllUsers() throws SQLException {
-        List<User> list = null;
-        Connection connection = getConnection();
         String sql = "select username, firstname, lastname, admin from mosedb.users;";
-        PreparedStatement pst = connection.prepareStatement(sql);
-        ResultSet result = pst.executeQuery();
-        list = new ArrayList<User>();
+        ResultSet result = executeQuery(sql);
+        List<User> list = new ArrayList<User>();
         String usr, fst, lst;
         boolean adm;
         while (result.next()) {
@@ -41,23 +38,16 @@ public class UserDao extends AbstractDao {
             adm = result.getBoolean("admin");
             list.add(new User(usr, fst, lst, adm));
         }
-        connection.close();
         return list;
     }
 
     public User getUser(String username, String password) throws SQLException {
-        
-        User user = null;
-        
-        Connection connection = getConnection();
         String sql = "select username, firstname, lastname, admin from mosedb.users"
                 + " where username = ? and password = ?";
-        PreparedStatement pst = connection.prepareStatement(sql);
-        pst.setString(1, username);
-        pst.setString(2, password);
-        ResultSet result = pst.executeQuery();
+        ResultSet result = executeQuery(sql, username, password);
         String usr, fst, lst;
         boolean adm;
+        User user = null;
         if (result.next()) {
             usr = result.getString("username");
             fst = result.getString("firstname");
@@ -65,7 +55,6 @@ public class UserDao extends AbstractDao {
             adm = result.getBoolean("admin");
             user = new User(usr, fst, lst, adm);
         }
-        connection.close();
         return user;
     }
 
