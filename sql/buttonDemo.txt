@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Button-Test</h2>
+
+<button onclick="addField()">Try it</button><br>
+<input type="text" value="#1" id="1"><br>
+<input type="text" value="#1" id="2"><br>
+<input type="text" value="#1" id="3"><br>
+<div id="asdasd4"></div>
+<button onclick="myFunction()">Try it</button>
+
+
+<script>
+function addField()
+{
+  var inputs = document.getElementsByTagName('input');
+  var nextSearch=inputs.length+1;
+  var searchString="\"Search #" + nextSearch + "\"";
+  var searchType="\"text\"";
+  
+  var code="<input type=" + searchType + " value=" +
+  searchString + " id=\"" + nextSearch + "\">" + 
+  "</div><br><div id=\"asdasd" + (nextSearch+1) + "\"></div>";
+
+  document.getElementById("asdasd" + nextSearch).innerHTML=code;
+}
+</script>
+
+<script>
+function myFunction()
+{
+ var inputs = document.getElementsByTagName('input');
+ for(var i=0; i<inputs.length; i++){
+   var txt="Search #" + (i+1);
+   document.getElementById((i+1)).value=txt;
+ }
+}
+</script>
+</body>
+</html>
+

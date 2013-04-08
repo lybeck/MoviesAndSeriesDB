@@ -12,15 +12,15 @@
 
                 <fieldset class="searchFS">
                     <legend>Search from</legend>
-                    <p id="pLeft">
+                    <p class="pLeft">
                         Movies
-                        <input type="checkbox" value="None" id="customCB1" name="check1"/>
-                        <label class="checkbox" for="customCB1"></label>
+                        <input type="checkbox" value="None" id="customCB1" name="check1" checked/>
+                        <label class="customCheck" for="customCB1"></label>
                     </p>
-                    <p id="pRight">
+                    <p class="pRight">
                         Series
-                        <input type="checkbox" value="None" id="customCB2" name="check2"/>
-                        <label class="checkbox" for="customCB2"></label>
+                        <input type="checkbox" value="None" id="customCB2" name="check1" checked/>
+                        <label class="customCheck" for="customCB2"></label>
                     </p>
                 </fieldset>                
                 
@@ -74,6 +74,24 @@
                             <option>Year</option>
                         </select>   
                     </div>
+                    <br>
+                    <br>
+                    <p class="pLeft" style="width: 22%; text-align: right;">
+                        seen
+                        <input type="radio" value="None" id="seenRadio1" name="seenRadio"/>
+                        <label class="customCheck" for="seenRadio1"></label>
+                    </p>    
+                    
+                    not seen
+                    <input type="radio" value="None" id="seenRadio2" name="seenRadio"/>
+                    <label class="customCheck" for="seenRadio2"></label>
+                    
+                    <p class="pRight" style="width: 29%; text-align: left;">
+                        both
+                        <input type="radio" value="None" id="seenRadio3" name="seenRadio" checked/>
+                        <label class="customCheck" for="seenRadio3"></label>
+                    </p>   
+                    
                 </fieldset> 
 
 
