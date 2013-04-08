@@ -47,6 +47,10 @@
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/searchAction</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>

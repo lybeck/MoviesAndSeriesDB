@@ -38,7 +38,7 @@ h1,h2,h3,h4{
 
 #comBox{
     position: relative;
-    width: 700px;
+    width: 900px;
     margin: 0 auto;
     top: -50px;
     text-align: center;
@@ -244,6 +244,8 @@ input[type=radio]:checked + .customCheck:after {
 
 #searchResults td{
     border: 1px solid red;
+    font-size: 13px;
+    font-weight: lighter;
 }
 
 #searchResults tr.red td{

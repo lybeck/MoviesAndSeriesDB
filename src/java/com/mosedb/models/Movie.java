@@ -90,6 +90,22 @@ public class Movie {
     public String getName(LangId langId) {
         return names.get(langId);
     }
+    
+    public String getNameEng() {
+        return getName(LangId.eng);
+    }
+    
+    public String getNameFi() {
+        return getName(LangId.fi);
+    }
+    
+    public String getNameSwe() {
+        return getName(LangId.swe);
+    }
+    
+    public String getNameOther() {
+        return getName(LangId.other);
+    }
 
     public void addName(String langId, String name) {
         LangId lid = getLangId(langId);

@@ -48,7 +48,7 @@ public class MovieService {
         genres.add("Thriller");
         formats = new ArrayList<Format>();
         formats.add(new Format(1, Format.MediaFormat.vhs));
-        list.add(new Movie(1, names, "roope", true, 1991, genres, formats));
+        list.add(new Movie(1, names, "roope", false, 1991, genres, formats));
 
         if (user.getUsername().equals("roope")) {
             names = new EnumMap<Movie.LangId, String>(Movie.LangId.class);
