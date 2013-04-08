@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 public class MovieService {
 
     public List<Movie> getMovies(User user) {
-
         List<Movie> movies;
         try {
             if (user.isAdmin()) {
@@ -57,9 +56,10 @@ public class MovieService {
     }
 
     private void addNames(List<Movie> movies) {
+        MovieNameDao movieNameDao = new MovieNameDao();
         for (Movie movie : movies) {
             try {
-                movie.setNames(new MovieNameDao().getMovieNames(movie.getId()));
+                movie.setNames(movieNameDao.getMovieNames(movie.getId()));
             } catch (SQLException ex) {
                 System.err.println("Error while trying to retirieve names for movie with id: " + movie.getId());
                 System.err.println("Error:");
@@ -69,9 +69,10 @@ public class MovieService {
     }
 
     private void addGenres(List<Movie> movies) {
+        MovieGenreDao movieGenreDao = new MovieGenreDao();
         for (Movie movie : movies) {
             try {
-                movie.setGenres(new MovieGenreDao().getMovieGenres(movie.getId()));
+                movie.setGenres(movieGenreDao.getMovieGenres(movie.getId()));
             } catch (SQLException ex) {
                 System.err.println("Error while trying to retirieve genres for movie with id: " + movie.getId());
                 System.err.println("Error:");
@@ -82,6 +83,7 @@ public class MovieService {
 
     private void addFormats(List<Movie> movies) {
         MovieFormatDao movieFormatDao = new MovieFormatDao();
+        FormatDao formatDao = new FormatDao();
         for (Movie movie : movies) {
             List<Integer> formatIds;
             try {
@@ -93,7 +95,6 @@ public class MovieService {
                 continue;
             }
 
-            FormatDao formatDao = new FormatDao();
             List<Format> formats = new ArrayList<Format>();
             for (Integer formatid : formatIds) {
                 try {
