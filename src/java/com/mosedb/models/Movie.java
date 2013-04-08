@@ -87,24 +87,29 @@ public class Movie {
         this.genres = genres;
     }
 
-    public String getName(String langId) {
+    public String getName(LangId langId) {
         return names.get(langId);
     }
 
     public void addName(String langId, String name) {
-        LangId id = LangId.other;
-        if (langId.equalsIgnoreCase("eng")) {
-            id = LangId.eng;
-        } else if (langId.equalsIgnoreCase("fi")) {
-            id = LangId.fi;
-        } else if (langId.equalsIgnoreCase("swe")) {
-            id = LangId.swe;
-        }
-        names.put(id, name);
+        LangId lid = getLangId(langId);
+        names.put(lid, name);
     }
 
     public void addGenre(String genre) {
         genres.add(genre);
+    }
+
+    public static LangId getLangId(String langId) {
+        LangId enumLangId = LangId.other;
+        if (langId.equalsIgnoreCase("eng")) {
+            enumLangId = LangId.eng;
+        } else if (langId.equalsIgnoreCase("fi")) {
+            enumLangId = LangId.fi;
+        } else if (langId.equalsIgnoreCase("swe")) {
+            enumLangId = LangId.swe;
+        }
+        return enumLangId;
     }
 
     public static enum LangId {
