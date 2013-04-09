@@ -92,11 +92,4 @@ public class UserDao extends AbstractDao {
         }
         System.out.println();
     }
-
-    public static void main(String[] args) {
-        printAllUsers();
-        printUser("lasse", "salasana");
-        printUser("roope", "koira");
-        printUser("lasse", "gouasndf");
-    }
 }

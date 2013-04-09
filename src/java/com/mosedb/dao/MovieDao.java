@@ -26,7 +26,7 @@ public class MovieDao extends AbstractDao {
      *
      * @param user The owner of the movie.
      * @param seen Status of the movie, seen or not.
-     * @return The movieid of the movie.
+     * @return The movieid of the movie, -1 if failed.
      * @throws SQLException
      */
     public int addMovie(User user, boolean seen) throws SQLException {
@@ -44,7 +44,7 @@ public class MovieDao extends AbstractDao {
      * @param user The owner of the movie.
      * @param movieyear Year the movie was released.
      * @param seen Status of the movie, seen or not.
-     * @return The movieid of the movie.
+     * @return The movieid of the movie, -1 if failed.
      * @throws SQLException
      */
     public int addMovie(User user, int movieyear, boolean seen) throws SQLException {

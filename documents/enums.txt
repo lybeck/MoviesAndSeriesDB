@@ -1,3 +1,3 @@
 LangId: eng, fi, swe, other
-MediaFormat: VHS, DVD, BD, DC
+MediaFormat: vhs, dvd, bd, dc
 

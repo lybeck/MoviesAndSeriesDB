@@ -4,7 +4,6 @@
  */
 package com.mosedb.dao;
 
-import com.mosedb.models.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

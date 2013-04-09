@@ -33,7 +33,7 @@ public abstract class AbstractDao {
                 pst.setObject(i++, value);
             }
         }
-        System.out.println(pst);
+//        System.out.println(pst);
         int result = pst.executeUpdate();
         connection.close();
         return result != 0;

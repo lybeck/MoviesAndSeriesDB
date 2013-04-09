@@ -38,6 +38,22 @@ public class Format {
         this.resoY = resoY;
     }
 
+    public Format(MediaFormat mediaFormat) {
+        this.mediaFormat = mediaFormat;
+    }
+
+    public Format(MediaFormat mediaFormat, String fileType) {
+        this.mediaFormat = mediaFormat;
+        this.fileType = fileType;
+    }
+
+    public Format(MediaFormat mediaFormat, String fileType, Integer resoX, Integer resoY) {
+        this.mediaFormat = mediaFormat;
+        this.fileType = fileType;
+        this.resoX = resoX;
+        this.resoY = resoY;
+    }
+
     public Integer getResoY() {
         return resoY;
     }
@@ -114,6 +130,14 @@ public class Format {
             return MediaFormat.dc;
         }
         return null;
+    }
+
+    public boolean hasFileInfo() {
+        return mediaFormat == MediaFormat.dc && fileType != null;
+    }
+
+    public boolean hasResoInfo() {
+        return resoX != null && resoY != null && resoX != 0 && resoY != 0;
     }
 
     public static enum MediaFormat {

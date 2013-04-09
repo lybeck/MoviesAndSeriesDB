@@ -52,6 +52,14 @@ public class Movie {
         this.formats = formats;
     }
 
+    public Movie(Map<LangId, String> names, boolean seen, Integer movieYear, List<String> genres, List<Format> formats) {
+        this.names = names;
+        this.seen = seen;
+        this.movieYear = movieYear;
+        this.genres = genres;
+        this.formats = formats;
+    }
+
     public List<Format> getFormats() {
         return formats;
     }
