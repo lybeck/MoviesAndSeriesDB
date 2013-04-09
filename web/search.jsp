@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
+<script src="JavaScript/searchJS.js"></script>
                 
                 <h3>Search content from database</h3>
                 <form action="searchAction" method="post">
@@ -28,6 +29,14 @@
 
                     <fieldset class="searchFS" style="line-height: 25px;">
                         <legend>Search</legend>
+                        <input type="button" class="button" value="+" 
+                               style="padding: 0px 3px; margin: 0;"
+                               onclick="addSearchLine();">
+                        &emsp;&emsp;&emsp;
+                        <input type="button" class="button" value="-" 
+                               style="padding: 0px 3px; margin: 0;"
+                               onclick="removeSearchLine();">
+                        <br>
 
                         <input type="text" value="Search #1" 
                                onclick="if(this.value == 'Search #1'){this.value=''};"
@@ -45,38 +54,7 @@
                         </div>
                         <br>
                         <br>
-                        <input type="text" value="Search #2" 
-                               onclick="if(this.value == 'Search #2'){this.value=''};"
-                               onblur="if(this.value == ''){this.value = 'Search #2'};"
-                               class="styled-textfield" name="txt2"
-                               id="txt1" style="float: left; margin-left: 13%;"/>
-                        <div class="styled-select" style="float: right; margin-right: 7%">
-                            <select name="select2">
-                                <option>[Choose searchword]</option>
-                                <option>Name</option>
-                                <option>Genre</option>
-                                <option>Media format</option>
-                                <option>Year</option>
-                            </select>   
-                        </div>
-                        <br>
-                        <br>
-                        <input type="text" value="Search #3" 
-                               onclick="if(this.value == 'Search #3'){this.value=''};"
-                               onblur="if(this.value == ''){this.value = 'Search #3'};"
-                               class="styled-textfield" name="txt3"
-                               id="txt1" style="float: left; margin-left: 13%;"/>
-                        <div class="styled-select" style="float: right; margin-right: 7%">
-                            <select name="select3">
-                                <option>[Choose searchword]</option>
-                                <option>Name</option>
-                                <option>Genre</option>
-                                <option>Media format</option>
-                                <option>Year</option>
-                            </select>   
-                        </div>
-                        <br>
-                        <br>
+                        <div id="txtDiv1"></div>
                         <p class="pLeft" style="width: 27%; text-align: right;">
                             seen
                             <input type="radio" value="None" id="seenRadio1" name="seenRadio"/>

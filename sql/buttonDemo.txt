@@ -3,12 +3,11 @@
 <body>
 <h2>Button-Test</h2>
 
-<button onclick="addField()">Try it</button><br>
+<button onclick="addField()">Add Field</button> &emsp;
+<button onclick="removeField()">Remove Field</button> &emsp;
+<button onclick="myFunction()">Rename Field</button><br><br>
 <input type="text" value="#1" id="1"><br>
-<input type="text" value="#1" id="2"><br>
-<input type="text" value="#1" id="3"><br>
-<div id="asdasd4"></div>
-<button onclick="myFunction()">Try it</button>
+<div id="asdasd2"></div>
 
 
 <script>
@@ -16,14 +15,29 @@ function addField()
 {
   var inputs = document.getElementsByTagName('input');
   var nextSearch=inputs.length+1;
+  if(nextSearch>4){
+     return;
+  }
   var searchString="\"Search #" + nextSearch + "\"";
   var searchType="\"text\"";
   
   var code="<input type=" + searchType + " value=" +
   searchString + " id=\"" + nextSearch + "\">" + 
-  "</div><br><div id=\"asdasd" + (nextSearch+1) + "\"></div>";
+  "<br><div id=\"asdasd" + (nextSearch+1) + "\"></div>";
 
   document.getElementById("asdasd" + nextSearch).innerHTML=code;
+}
+</script>
+
+<script>
+function removeField()
+{
+  var inputs = document.getElementsByTagName('input');
+  var lastSearch=inputs.length;
+  if(lastSearch == 1){
+     return;
+  }
+  document.getElementById("asdasd" + lastSearch).innerHTML="";
 }
 </script>
 
@@ -39,4 +53,3 @@ function myFunction()
 </script>
 </body>
 </html>
-
