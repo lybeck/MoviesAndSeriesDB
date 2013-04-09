@@ -16,12 +16,12 @@
                         <legend>Search from</legend>
                         <p class="pLeft">
                             Movies
-                            <input type="radio" value="None" id="customCB1" name="check1" checked/>
+                            <input type="radio" value="movie" id="customCB1" name="check1" checked/>
                             <label class="customCheck" for="customCB1"></label>
                         </p>
                         <p class="pRight">
                             Series
-                            <input type="radio" value="None" id="customCB2" name="check1"/>
+                            <input type="radio" value="series" id="customCB2" name="check1"/>
                             <label class="customCheck" for="customCB2"></label>
                         </p>
                     </fieldset>                
@@ -88,7 +88,7 @@
                         <th>Seen</th>
                     </tr>
                     <c:choose>
-                        <c:when test="${empty movieList}">
+                        <c:when test="${empty movieList || movieList == null}">
                             </table>                           
                             <p>No hits!</p>
                         </c:when>
