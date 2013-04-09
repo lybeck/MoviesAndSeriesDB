@@ -45,7 +45,6 @@
                                id="txt1" style="float: left; margin-left: 13%;"/>
                         <div class="styled-select" style="float: right; margin-right: 7%">
                             <select name="select1">
-                                <option>[Choose searchword]</option>
                                 <option>Name</option>
                                 <option>Genre</option>
                                 <option>Media format</option>

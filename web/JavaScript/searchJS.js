@@ -20,8 +20,7 @@ function addSearchLine(){
                (textInputs+1) + "\"" + " id=\"txt" + (textInputs+1) +
                "\" style=\"float: left; margin-left: 13%;\"/>" +
                "<div class=\"styled-select\" style=\"float: right; margin-right: 7%\">" + 
-               " <select name=\"select" + (textInputs+1) + "\">" + 
-               " <option>[Choose searchword]</option>" + 
+               " <select name=\"select" + (textInputs+1) + "\">" +  
                " <option>Name</option>" + 
                " <option>Genre</option>" +
                " <option>Media format</option>" +
