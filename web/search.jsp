@@ -48,7 +48,6 @@
                                 <option>Name</option>
                                 <option>Genre</option>
                                 <option>Media format</option>
-                                <option>Year</option>
                             </select>   
                         </div>
                         <br>

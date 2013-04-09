@@ -6,7 +6,7 @@ function addSearchLine(){
             textInputs = textInputs+1;
         }
     }
-    if(textInputs == 4){
+    if(textInputs == 2){
         return;
     }
     
@@ -21,10 +21,9 @@ function addSearchLine(){
                "\" style=\"float: left; margin-left: 13%;\"/>" +
                "<div class=\"styled-select\" style=\"float: right; margin-right: 7%\">" + 
                " <select name=\"select" + (textInputs+1) + "\">" +  
-               " <option>Name</option>" + 
                " <option>Genre</option>" +
                " <option>Media format</option>" +
-               " <option>Year</option> </select> </div> <br><br>" + 
+               " </select> </div> <br><br>" + 
                " <div id=\"txtDiv" + (textInputs+1) + "\"></div>";
 
     document.getElementById("txtDiv" + textInputs).innerHTML=code;
