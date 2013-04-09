@@ -5,12 +5,12 @@
 package com.mosedb.dao;
 
 import com.mosedb.models.Movie;
-import com.mosedb.models.Movie.LangId;
-import com.mosedb.models.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -58,5 +58,19 @@ public class MovieNameDao extends AbstractDao {
             map.put(id, name);
         }
         return map;
+    }
+
+    public Set<Integer> getMovieIdsByName(String name) throws SQLException {
+        String sql = "select movieid from mosedb.moviename "
+                + "where lower(moviename) like lower('%" + name + "%')";
+        ResultSet result = executeQuery(sql);
+        Set<Integer> set = new HashSet<Integer>();
+        while (result.next()) {
+            int id = result.getInt("movieid");
+            if (!set.contains(id)) {
+                set.add(id);
+            }
+        }
+        return set;
     }
 }

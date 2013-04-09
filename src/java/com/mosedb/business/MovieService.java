@@ -18,6 +18,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,5 +114,73 @@ public class MovieService {
         for (Movie movie : movies) {
             System.out.println(movie);
         }
+    }
+
+    public List<Movie> getByName(User user, String name) {
+        MovieNameDao movieNameDao = new MovieNameDao();
+        Set<Integer> movieIds;
+        try {
+            movieIds = movieNameDao.getMovieIdsByName(name);
+        } catch (SQLException ex) {
+            System.err.println("Error while trying to get movieids by name from movienamedao.");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return new ArrayList<Movie>();
+        }
+
+        return getMoviesByIds(user, movieIds);
+    }
+
+    public List<Movie> getByGenre(User user, String genre) {
+        MovieGenreDao movieGenreDao = new MovieGenreDao();
+        Set<Integer> movieIds;
+        try {
+            movieIds = movieGenreDao.getMovieIdsByGenre(genre);
+        } catch (SQLException ex) {
+            System.err.println("Error while trying to get movieids by name from movienamedao.");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return new ArrayList<Movie>();
+        }
+
+        return getMoviesByIds(user, movieIds);
+    }
+
+    /**
+     * TODO: implement this method!!
+     */
+    public List<Movie> getByMediaFormat(User user, String mediaformat) {
+        MovieNameDao movieNameDao = new MovieNameDao();
+        Set<Integer> movieIds;
+        try {
+            movieIds = movieNameDao.getMovieIdsByName(mediaformat);
+        } catch (SQLException ex) {
+            System.err.println("Error while trying to get movieids by name from movienamedao.");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return new ArrayList<Movie>();
+        }
+
+        return getMoviesByIds(user, movieIds);
+    }
+
+    private List<Movie> getMoviesByIds(User user, Set<Integer> movieIds) {
+        MovieDao movieDao = new MovieDao();
+        List<Movie> movies;
+        try {
+            if (user.isAdmin()) {
+                movies = movieDao.getMovies(movieIds);
+            } else {
+                movies = movieDao.getMovies(user.getUsername(), movieIds);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error while retrieving movies by username. Error:");
+            System.err.println(ex);
+            return null;
+        }
+
+        addInfoToMovies(movies);
+
+        return movies;
     }
 }

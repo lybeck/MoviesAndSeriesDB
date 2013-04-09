@@ -8,6 +8,7 @@ insert into mosedb.movie (owner, movieyear, seen) values ('noadmin', 1991, false
 insert into mosedb.movie (owner, movieyear) values ('roope', 1985);
 insert into mosedb.movie (owner, movieyear) values ('lasse', 1977);
 insert into mosedb.movie (owner, movieyear) values ('lasse', 1972);
+insert into mosedb.movie (owner, movieyear) values ('roope', 1989);
 
 insert into mosedb.moviename (movieid, langid, moviename)
     values (1, 'eng', 'Snow white');
@@ -31,6 +32,14 @@ insert into mosedb.moviename (movieid, langid, moviename)
     values (5, 'fi', 'Kummisetä');
 insert into mosedb.moviename (movieid, langid, moviename)
     values (5, 'swe', 'Gudfadern');
+insert into mosedb.moviename (movieid, langid, moviename)
+    values (6, 'eng', 'Batman');
+insert into mosedb.moviename (movieid, langid, moviename)
+    values (6, 'fi', 'Lepakkomies');
+insert into mosedb.moviename (movieid, langid, moviename)
+    values (6, 'swe', 'Läderlappen');
+insert into mosedb.moviename (movieid, langid, moviename)
+    values (6, 'other', 'Nahkhiirmees');
 
 insert into mosedb.moviegenre (movieid, genrename)
     values (1, 'Animation');
@@ -60,6 +69,10 @@ insert into mosedb.moviegenre (movieid, genrename)
     values (5, 'Crime');
 insert into mosedb.moviegenre (movieid, genrename)
     values (5, 'Drama');
+insert into mosedb.moviegenre (movieid, genrename)
+    values (6, 'Action');
+insert into mosedb.moviegenre (movieid, genrename)
+    values (6, 'Fantasy');
 
 insert into mosedb.format (mediaformat)
     values ('vhs'); -- 1
@@ -81,6 +94,8 @@ insert into mosedb.format (mediaformat)
     values ('bd'); -- 9
 insert into mosedb.format (mediaformat, filetype)
     values ('dc', 'mkv'); -- 10
+insert into mosedb.format (mediaformat)
+    values ('vhs'); -- 11
 
 insert into mosedb.movieformat (movieid, formatid)
     values(1,1);
@@ -102,3 +117,5 @@ insert into mosedb.movieformat (movieid, formatid)
     values(5,9);
 insert into mosedb.movieformat (movieid, formatid)
     values(5,10);
+insert into mosedb.movieformat (movieid, formatid)
+    values(6,11);

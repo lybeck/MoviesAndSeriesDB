@@ -8,7 +8,9 @@ import com.mosedb.models.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -56,5 +58,18 @@ public class MovieGenreDao extends AbstractDao {
             return false;
         }
         return result.getInt("isgenre") == 1;
+    }
+
+    public Set<Integer> getMovieIdsByGenre(String genrename) throws SQLException {
+        String sql = "select movieid from mosedb.moviegenre where lower(genrename)=lower(?)";
+        ResultSet result = executeQuery(sql, genrename);
+        Set<Integer> set = new HashSet<Integer>();
+        while (result.next()) {
+            int id = result.getInt("movieid");
+            if (!set.contains(id)) {
+                set.add(id);
+            }
+        }
+        return set;
     }
 }
