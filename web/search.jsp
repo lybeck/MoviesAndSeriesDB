@@ -34,7 +34,7 @@
                                onclick="addSearchLine();">
                         &emsp;&emsp;&emsp;
                         <input type="button" class="button" value="-" 
-                               style="padding: 0px 3px; margin: 0;"
+                               style="padding: 0px 5px; margin: 0;"
                                onclick="removeSearchLine();">
                         <br>
 
