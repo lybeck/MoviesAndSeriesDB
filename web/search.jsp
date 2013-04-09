@@ -78,11 +78,13 @@
                 
                 <table id="searchResults">
                     <tr>
+                        <c:if test="${admin_key != null && admin_key}">
+                            <th>Owner</th>
+                        </c:if>
                         <th>Eng</th>
                         <th>Fin</th>
                         <th>Swe</th>
                         <th>Other</th>
-                        <th>Movie/Series</th>
                         <th>Seen</th>
                     </tr>
                     <c:choose>
@@ -97,7 +99,12 @@
                                         <tr>
                                     <%} else {%>
                                         <tr class="red">
-                                    <%}%>     
+                                    <%}%>
+                                        <c:if test="${admin_key != null && admin_key}">
+                                            <td>
+                                                ${movie.getOwner()}
+                                            </td>
+                                        </c:if>
                                         <td>
                                             <c:if test="${movie.getNameEng() != null}" >
                                                 ${movie.getNameEng()} 
@@ -118,7 +125,6 @@
                                                 ${movie.getNameOther()} 
                                             </c:if>
                                         </td>
-                                        <td>Movie</td>
                                         <td><c:choose>
                                                 <c:when test="${movie.isSeen()}" >
                                                     yes

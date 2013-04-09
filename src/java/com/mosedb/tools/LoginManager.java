@@ -18,6 +18,12 @@ public class LoginManager {
         UserService userService = new UserService();
         User user = userService.getUser(username, password);
         session.setAttribute(userSessionKey(), user);
+
+        if (user.isAdmin()) {
+            session.setAttribute(adminSessionKey(), true);
+        } else {
+            session.setAttribute(adminSessionKey(), false);
+        }            
         return user;
     }
 
@@ -25,11 +31,20 @@ public class LoginManager {
         return "user_id";
     }
 
+    private static String adminSessionKey() {
+        return "admin_key";
+    }
+
     public static User getLoggedUser(HttpSession session) {
         return (User) session.getAttribute(userSessionKey());
+    }
+    
+    public static boolean loggedUserIsAdmin(HttpSession session){
+        return (Boolean) session.getAttribute(adminSessionKey());
     }
 
     public static void doLogout(HttpSession session) {
         session.removeAttribute(userSessionKey());
+        session.removeAttribute(adminSessionKey());
     }
 }
