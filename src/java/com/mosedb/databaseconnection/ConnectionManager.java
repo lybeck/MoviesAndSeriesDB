@@ -32,28 +32,4 @@ public class ConnectionManager {
 
         return connection;
     }
-
-    static void testQuery() throws SQLException {
-        Connection connection = getConnection();
-        if (connection == null) {
-            System.err.println("Could not connect to database...");
-            return;
-        }
-        String stm = "select * from mosedb.users";
-        PreparedStatement pst = connection.prepareStatement(stm);
-        ResultSet result = pst.executeQuery();
-        while (result.next()) {
-            System.out.println("Result:");
-            for (int i = 1; i <= 4; i++) {
-                System.out.println("  " + result.getString(i));
-            }
-            System.out.println("  " + result.getBoolean(5));
-        }
-        connection.close();
-    }
-
-    public static void main(String[] args) throws SQLException {
-        System.out.println("Query test:");
-        testQuery();
-    }
 }

@@ -4,6 +4,9 @@
  */
 package com.mosedb.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author llybeck
@@ -86,6 +89,15 @@ public class Format {
         }
         s += ")";
         return s;
+    }
+
+    public static List<String> getAllMediaFormats() {
+        MediaFormat[] values = MediaFormat.values();
+        List<String> list = new ArrayList<String>(values.length);
+        for (int i = 0; i < values.length; i++) {
+            list.add(values[i].toString());
+        }
+        return list;
     }
 
     public static MediaFormat getMediaFormat(String mediaFormat) {
