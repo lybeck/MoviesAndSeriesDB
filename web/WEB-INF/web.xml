@@ -22,6 +22,10 @@
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>com.mosedb.servlets.SearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddMovieServlet</servlet-name>
+        <servlet-class>com.mosedb.servlets.AddMovieServlet</servlet-class>
+    </servlet>
     
     
     <context-param>
@@ -49,6 +53,10 @@
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/searchAction</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMovieServlet</servlet-name>
+        <url-pattern>/addMovie</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>

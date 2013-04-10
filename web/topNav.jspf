@@ -13,8 +13,8 @@
         
         <div id='comBox'>
             <ul id='navbar'>
-                <li class='navbarLeft'><a href='#'>SEARCH</a></li>
-                <li class='navbarLeft'><a href='#'>ADD MOVIE</a></li>
+                <li class='navbarLeft'><a href='search'>SEARCH</a></li>
+                <li class='navbarLeft'><a href='addMovie'>ADD MOVIE</a></li>
                 <li class='navbarLeft'><a href='#'>ADD SERIES</a></li>
                 <c:if test="${admin_key != null && admin_key}">
                     <li class='navbarLeft'><a href='#'>ADMIN TOOLS</a></li>
