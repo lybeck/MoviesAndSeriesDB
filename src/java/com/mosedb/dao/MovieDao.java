@@ -21,6 +21,10 @@ import java.util.Set;
  */
 public class MovieDao extends AbstractDao {
 
+    public MovieDao() throws SQLException {
+        super();
+    }
+
     /**
      * Adds a movie entry to the database.
      *

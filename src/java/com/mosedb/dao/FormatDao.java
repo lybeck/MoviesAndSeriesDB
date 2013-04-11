@@ -14,6 +14,10 @@ import java.sql.SQLException;
  */
 public class FormatDao extends AbstractDao {
 
+    public FormatDao() throws SQLException {
+        super();
+    }
+
     public int addFormat(Format.MediaFormat mediaformat) throws SQLException {
         String sql = "insert into mosedb.format (mediaformat) values (cast(? as mosedb.mediaformat)) returning formatid";
         ResultSet result = executeQuery(sql, mediaformat);

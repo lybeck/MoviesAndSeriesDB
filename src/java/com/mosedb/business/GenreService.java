@@ -16,15 +16,12 @@ import java.util.logging.Logger;
  */
 public class GenreService {
 
-    private GenreDao genreDao;
-
-    public GenreService() {
-        this.genreDao = new GenreDao();
-    }
-
     public List<String> getAllGenres() {
         try {
-            return genreDao.getAllGenres();
+            GenreDao genreDao = new GenreDao();
+            List<String> allGenres = genreDao.getAllGenres();
+            genreDao.closeConnection();
+            return allGenres;
         } catch (SQLException ex) {
             System.err.println("Failed to fetch genres.");
             System.err.println("Error:");

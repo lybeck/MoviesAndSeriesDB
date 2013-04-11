@@ -17,6 +17,10 @@ import java.util.Set;
  */
 public class MovieGenreDao extends AbstractDao {
 
+    public MovieGenreDao() throws SQLException {
+        super();
+    }
+
     public boolean addMovieGenre(int movieid, String genrename) throws SQLException {
         String sql = "insert into mosedb.moviegenre (movieid, genrename) values (?,?)";
         return executeUpdate(sql, movieid, genrename);

@@ -5,8 +5,6 @@
 package com.mosedb.dao;
 
 import com.mosedb.models.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,6 +17,10 @@ import java.util.logging.Logger;
  * @author llybeck
  */
 public class UserDao extends AbstractDao {
+
+    public UserDao() throws SQLException {
+        super();
+    }
 
     /**
      * Retrieves all users from the database.

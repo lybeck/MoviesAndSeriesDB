@@ -30,12 +30,21 @@ public class MovieService {
 
     public List<Movie> getMovies(User user) {
         long start = System.currentTimeMillis();
+        MovieDao movieDao;
+        try {
+            movieDao = new MovieDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return null;
+        }
         List<Movie> movies;
         try {
             if (user.isAdmin()) {
-                movies = new MovieDao().getAllMovies();
+                movies = movieDao.getAllMovies();
             } else {
-                movies = new MovieDao().getMovies(user.getUsername());
+                movies = movieDao.getMovies(user.getUsername());
             }
         } catch (SQLException ex) {
             System.err.println("Error while retrieving movies by username. Error:");
@@ -47,6 +56,9 @@ public class MovieService {
         long end = System.currentTimeMillis();
         double time = (end - start) * 1.0 / 1000;
         System.out.println("Search for movies took " + time + " seconds.");
+
+        movieDao.closeConnection();
+
         return movies;
     }
 
@@ -60,7 +72,15 @@ public class MovieService {
     }
 
     private void addNames(List<Movie> movies) {
-        MovieNameDao movieNameDao = new MovieNameDao();
+        MovieNameDao movieNameDao;
+        try {
+            movieNameDao = new MovieNameDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return;
+        }
         for (Movie movie : movies) {
             try {
                 movie.setNames(movieNameDao.getMovieNames(movie.getId()));
@@ -70,57 +90,78 @@ public class MovieService {
                 System.err.println(ex);
             }
         }
+        movieNameDao.closeConnection();
     }
 
-    private void addGenres(List<Movie> movies) {
-        MovieGenreDao movieGenreDao = new MovieGenreDao();
-        for (Movie movie : movies) {
-            try {
-                movie.setGenres(movieGenreDao.getMovieGenres(movie.getId()));
-            } catch (SQLException ex) {
-                System.err.println("Error while trying to retirieve genres for movie with id: " + movie.getId());
-                System.err.println("Error:");
-                System.err.println(ex);
-            }
+    private void addGenres(Movie movie) {
+        MovieGenreDao movieGenreDao;
+        try {
+            movieGenreDao = new MovieGenreDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return;
         }
+        try {
+            movie.setGenres(movieGenreDao.getMovieGenres(movie.getId()));
+        } catch (SQLException ex) {
+            System.err.println("Error while trying to retirieve genres for movie with id: " + movie.getId());
+            System.err.println("Error:");
+            System.err.println(ex);
+        }
+        movieGenreDao.closeConnection();
     }
 
-    private void addFormats(List<Movie> movies) {
-        MovieFormatDao movieFormatDao = new MovieFormatDao();
-        FormatDao formatDao = new FormatDao();
-        for (Movie movie : movies) {
-            List<Integer> formatIds;
+    private void addFormats(Movie movie) {
+        MovieFormatDao movieFormatDao;
+        FormatDao formatDao;
+        try {
+            movieFormatDao = new MovieFormatDao();
+            formatDao = new FormatDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return;
+        }
+        List<Integer> formatIds;
+        try {
+            formatIds = movieFormatDao.getFormatIds(movie.getId());
+        } catch (SQLException ex) {
+            System.err.println("Error while trying to retirieve formatIds for movie with id: " + movie.getId());
+            System.err.println("Error:");
+            System.err.println(ex);
+            return;
+        }
+
+        List<Format> formats = new ArrayList<Format>();
+        for (Integer formatid : formatIds) {
             try {
-                formatIds = movieFormatDao.getFormatIds(movie.getId());
+                formats.add(formatDao.getFormat(formatid));
             } catch (SQLException ex) {
                 System.err.println("Error while trying to retirieve formatIds for movie with id: " + movie.getId());
                 System.err.println("Error:");
                 System.err.println(ex);
-                continue;
             }
-
-            List<Format> formats = new ArrayList<Format>();
-            for (Integer formatid : formatIds) {
-                try {
-                    formats.add(formatDao.getFormat(formatid));
-                } catch (SQLException ex) {
-                    System.err.println("Error while trying to retirieve formatIds for movie with id: " + movie.getId());
-                    System.err.println("Error:");
-                    System.err.println(ex);
-                }
-            }
-            movie.setFormats(formats);
         }
-    }
 
-    private void printMovies(List<Movie> movies) {
-        for (Movie movie : movies) {
-            System.out.println(movie);
-        }
+        movie.setFormats(formats);
+
+        movieFormatDao.closeConnection();
+        formatDao.closeConnection();
     }
 
     public List<Movie> getByName(User user, String name) {
-        MovieNameDao movieNameDao = new MovieNameDao();
+        MovieNameDao movieNameDao;
+        try {
+            movieNameDao = new MovieNameDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return null;
+        }
         Set<Integer> movieIds;
         try {
             movieIds = movieNameDao.getMovieIdsByName(name);
@@ -128,14 +169,24 @@ public class MovieService {
             System.err.println("Error while trying to get movieids by name from movienamedao.");
             System.err.println("Error:");
             System.err.println(ex);
-            return new ArrayList<Movie>();
+            return null;
         }
+
+        movieNameDao.closeConnection();
 
         return getMoviesByIds(user, movieIds);
     }
 
     public List<Movie> getByGenre(User user, String genre) {
-        MovieGenreDao movieGenreDao = new MovieGenreDao();
+        MovieGenreDao movieGenreDao;
+        try {
+            movieGenreDao = new MovieGenreDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return null;
+        }
         Set<Integer> movieIds;
         try {
             movieIds = movieGenreDao.getMovieIdsByGenre(genre);
@@ -143,8 +194,10 @@ public class MovieService {
             System.err.println("Error while trying to get movieids by name from movienamedao.");
             System.err.println("Error:");
             System.err.println(ex);
-            return new ArrayList<Movie>();
+            return null;
         }
+
+        movieGenreDao.closeConnection();
 
         return getMoviesByIds(user, movieIds);
     }
@@ -153,7 +206,15 @@ public class MovieService {
      * TODO: implement this method!!
      */
     public List<Movie> getByMediaFormat(User user, String mediaformat) {
-        MovieNameDao movieNameDao = new MovieNameDao();
+        MovieNameDao movieNameDao;
+        try {
+            movieNameDao = new MovieNameDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return null;
+        }
         Set<Integer> movieIds;
         try {
             movieIds = movieNameDao.getMovieIdsByName(mediaformat);
@@ -161,14 +222,24 @@ public class MovieService {
             System.err.println("Error while trying to get movieids by name from movienamedao.");
             System.err.println("Error:");
             System.err.println(ex);
-            return new ArrayList<Movie>();
+            return null;
         }
+
+        movieNameDao.closeConnection();
 
         return getMoviesByIds(user, movieIds);
     }
 
     private List<Movie> getMoviesByIds(User user, Set<Integer> movieIds) {
-        MovieDao movieDao = new MovieDao();
+        MovieDao movieDao;
+        try {
+            movieDao = new MovieDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return null;
+        }
         List<Movie> movies;
         try {
             if (user.isAdmin()) {
@@ -183,6 +254,8 @@ public class MovieService {
         }
 
         addInfoToMovies(movies);
+
+        movieDao.closeConnection();
 
         return movies;
     }
@@ -209,7 +282,15 @@ public class MovieService {
     }
 
     private int addToTableMovie(Movie movie, User user) {
-        MovieDao movieDao = new MovieDao();
+        MovieDao movieDao;
+        try {
+            movieDao = new MovieDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return -1;
+        }
         int id = -1;
         try {
             if (movie.getMovieYear() == null) {
@@ -222,12 +303,23 @@ public class MovieService {
             System.err.println("Error:");
             System.err.println(ex);
         }
+
+        movieDao.closeConnection();
+
         return id;
 
     }
 
     private boolean addToTableMoviename(Movie movie) {
-        MovieNameDao movieNameDao = new MovieNameDao();
+        MovieNameDao movieNameDao;
+        try {
+            movieNameDao = new MovieNameDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return false;
+        }
         String name;
         try {
             name = movie.getNameEng();
@@ -252,11 +344,24 @@ public class MovieService {
             System.err.println(ex);
             return false;
         }
+
+        movieNameDao.closeConnection();
+
         return true;
     }
 
     private void removeMovieDueToNameAdditionError(int movieId) {
-        MovieNameDao movieNameDao = new MovieNameDao();
+        MovieNameDao movieNameDao;
+        MovieDao movieDao;
+        try {
+            movieNameDao = new MovieNameDao();
+            movieDao = new MovieDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return;
+        }
         try {
             movieNameDao.removeMovieName(movieId);
         } catch (SQLException ex) {
@@ -264,7 +369,6 @@ public class MovieService {
             System.err.println("Error:");
             System.err.println(ex);
         }
-        MovieDao movieDao = new MovieDao();
         try {
             movieDao.removeMovie(movieId);
         } catch (SQLException ex) {
@@ -272,13 +376,24 @@ public class MovieService {
             System.err.println("Error:");
             System.err.println(ex);
         }
+
+        movieNameDao.closeConnection();
+        movieDao.closeConnection();
     }
 
     private void addToTableMoviegenre(Movie movie) {
         if (movie.getGenres() == null) {
             return;
         }
-        MovieGenreDao movieGenreDao = new MovieGenreDao();
+        MovieGenreDao movieGenreDao;
+        try {
+            movieGenreDao = new MovieGenreDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return;
+        }
         try {
             movieGenreDao.addMovieGenres(movie.getId(), movie.getGenres());
         } catch (SQLException ex) {
@@ -286,14 +401,26 @@ public class MovieService {
             System.err.println("Error:");
             System.err.println(ex);
         }
+
+        movieGenreDao.closeConnection();
     }
 
     private void addToTablesFormatInfo(Movie movie) {
         if (movie.getFormats() == null) {
             return;
         }
-        FormatDao formatDao = new FormatDao();
-        MovieFormatDao movieFormatDao = new MovieFormatDao();
+        FormatDao formatDao;
+        MovieFormatDao movieFormatDao;
+        try {
+            formatDao = new FormatDao();
+            movieFormatDao = new MovieFormatDao();
+        } catch (SQLException ex) {
+            System.err.println("Error while connecting to database!");
+            System.err.println("Error:");
+            System.err.println(ex);
+            return;
+        }
+
         try {
             int formatId;
             for (Format format : movie.getFormats()) {
@@ -319,6 +446,9 @@ public class MovieService {
             System.err.println("Error:");
             System.err.println(ex);
         }
+
+        formatDao.closeConnection();
+        movieFormatDao.closeConnection();
     }
 
     public static void main(String[] args) {
@@ -332,47 +462,77 @@ public class MovieService {
         List<Format> formats = new ArrayList<Format>();
 
         names.clear();
-        names.put(Movie.LangId.eng, "The Shawshank Redemption");
+
+        names.put(Movie.LangId.eng,
+                "The Shawshank Redemption");
         seen = false;
         movieYear = 1994;
+
         genres.clear();
+
         genres.add("Crime");
         genres.add("Drama");
         formats.clear();
-        formats.add(new Format(Format.MediaFormat.dvd));
+
+        formats.add(
+                new Format(Format.MediaFormat.dvd));
         movie = new Movie(names, seen, movieYear, genres, formats);
+
         movieService.addMovie(user, movie);
 
         names.clear();
-        names.put(Movie.LangId.eng, "Pulp Fiction");
+
+        names.put(Movie.LangId.eng,
+                "Pulp Fiction");
         seen = false;
         movieYear = 1994;
+
         genres.clear();
-        genres.add("Crime");
-        genres.add("Thriller");
+
+        genres.add(
+                "Crime");
+        genres.add(
+                "Thriller");
         formats.clear();
-        formats.add(new Format(Format.MediaFormat.dc, "avi"));
-        formats.add(new Format(Format.MediaFormat.dc, "mkv", 1920, 1080));
+
+        formats.add(
+                new Format(Format.MediaFormat.dc, "avi"));
+        formats.add(
+                new Format(Format.MediaFormat.dc, "mkv", 1920, 1080));
         movie = new Movie(names, seen, movieYear, genres, formats);
+
         movieService.addMovie(user, movie);
 
         names.clear();
-        names.put(Movie.LangId.eng, "The Dark Knight");
-        names.put(Movie.LangId.fi, "Yön Ritari");
+
+        names.put(Movie.LangId.eng,
+                "The Dark Knight");
+        names.put(Movie.LangId.fi,
+                "Yön Ritari");
         seen = true;
         movieYear = 2008;
-        genres.clear();
-        genres.add("Action");
-        genres.add("Crime");
-        genres.add("Drama");
-        formats.clear();
-        formats.add(new Format(Format.MediaFormat.dvd));
-        formats.add(new Format(Format.MediaFormat.dc, "avi"));
-        formats.add(new Format(Format.MediaFormat.dc, "mkv", 1280, 720));
-        movie = new Movie(names, seen, movieYear, genres, formats);
-        movieService.addMovie(user, movie);
 
-        for (int i = 0; i < 500; i++) {
+        genres.clear();
+
+        genres.add(
+                "Action");
+        genres.add(
+                "Crime");
+        genres.add(
+                "Drama");
+        formats.clear();
+
+        formats.add(
+                new Format(Format.MediaFormat.dvd));
+        formats.add(
+                new Format(Format.MediaFormat.dc, "avi"));
+        formats.add(
+                new Format(Format.MediaFormat.dc, "mkv", 1280, 720));
+        movie = new Movie(names, seen, movieYear, genres, formats);
+
+        movieService.addMovie(user, movie);
+        for (int i = 0;
+                i < 500; i++) {
             names.put(Movie.LangId.eng, "Test Movie " + (i + 1));
             names.put(Movie.LangId.fi, "Testileffa " + (i + 1));
             names.put(Movie.LangId.swe, "Test Film " + (i + 1));

@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,12 +20,13 @@ import java.sql.SQLException;
  */
 public abstract class AbstractDao {
 
-    protected Connection getConnection() throws SQLException {
-        return ConnectionManager.getConnection();
+    private Connection connection;
+
+    public AbstractDao() throws SQLException {
+        this.connection = ConnectionManager.getConnection();
     }
 
     protected boolean executeUpdate(String sql, Object... values) throws SQLException {
-        Connection connection = getConnection();
         PreparedStatement pst = connection.prepareStatement(sql);
         int i = 1;
         for (Object value : values) {
@@ -35,12 +38,10 @@ public abstract class AbstractDao {
         }
 //        System.out.println(pst);
         int result = pst.executeUpdate();
-        connection.close();
         return result != 0;
     }
 
     protected ResultSet executeQuery(String sql, Object... values) throws SQLException {
-        Connection connection = getConnection();
         PreparedStatement pst = connection.prepareStatement(sql);
         int i = 1;
         for (Object value : values) {
@@ -51,7 +52,14 @@ public abstract class AbstractDao {
             }
         }
         ResultSet result = pst.executeQuery();
-        connection.close();
         return result;
+    }
+    
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AbstractDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
