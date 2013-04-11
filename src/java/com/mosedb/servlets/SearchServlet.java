@@ -7,6 +7,7 @@ package com.mosedb.servlets;
 import com.mosedb.business.MovieService;
 import com.mosedb.models.Movie;
 import com.mosedb.models.User;
+import com.mosedb.tools.AttributeManager;
 import com.mosedb.tools.LoginManager;
 import java.io.IOException;
 import java.util.List;
@@ -46,7 +47,7 @@ public class SearchServlet extends MosedbServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
-            User user = LoginManager.getLoggedUser(session);
+            User user = AttributeManager.getUserSessionKey(session);
             MovieService movieService = new MovieService();
 
 
@@ -69,7 +70,7 @@ public class SearchServlet extends MosedbServlet {
                 }
             }
 
-            request.setAttribute("movieList", movieList);
+            AttributeManager.setMovieList(request, movieList);
             
             restorePage("search.jsp", request, response);
         } else {

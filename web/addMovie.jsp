@@ -16,7 +16,7 @@
     <fieldset class="styledFS" id="leftFields">
         <legend>Names</legend>
         <c:if test="${errorMessage != null}">
-            <p id="nameerror" style="color: red">${errorMessage}</p>
+            <p style="color: red">${errorMessage}</p>
         </c:if>
         &emsp; Eng
         <br>
@@ -73,7 +73,7 @@
     </fieldset>
 
     <br>
-    <input type="submit" value="Add movie" />
+    <input type="submit" class="button" value="Add movie" />
     <p></p>
 
 </form>

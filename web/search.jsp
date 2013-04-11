@@ -82,7 +82,7 @@
 
 <table id="searchResults">
     <tr>
-        <c:if test="${admin_key != null && admin_key}">
+        <c:if test="${adminSessionKey != null && adminSessionKey}">
             <th>Owner</th>
             </c:if>
         <th>Eng</th>
@@ -104,7 +104,7 @@
                 <%} else {%>
             <tr class="red">
                 <%}%>
-                <c:if test="${admin_key != null && admin_key}">
+                <c:if test="${adminSessionKey != null && adminSessionKey}">
                     <td>
                         ${movie.getOwner()}
                     </td>

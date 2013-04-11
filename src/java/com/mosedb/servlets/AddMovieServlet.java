@@ -11,6 +11,7 @@ import com.mosedb.models.Format.MediaFormat;
 import com.mosedb.models.Movie;
 import com.mosedb.models.Movie.LangId;
 import com.mosedb.models.User;
+import com.mosedb.tools.AttributeManager;
 import com.mosedb.tools.LoginManager;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,16 +47,16 @@ public class AddMovieServlet extends MosedbServlet {
             HttpSession session = request.getSession(true);
 
             List<String> genreList = new GenreService().getAllGenres();
-            session.setAttribute("genreList", genreList);
+            AttributeManager.setGenreList(session, genreList);
             List<String> formatList = Format.getAllMediaFormats();
-            session.setAttribute("formatList", formatList);
+            AttributeManager.setFormatList(session, formatList);
             List<String> yearList = new ArrayList<String>();
             yearList.add("");
             int thisYear = new Date().getYear() + 1900;
             for (int y = thisYear; y >= 1900; --y) {
                 yearList.add(y + "");
             }
-            session.setAttribute("yearList", yearList);
+            AttributeManager.setYearList(session, yearList);
 
             redirectToPage("addMovie.jsp", request, response);
         } else {
@@ -67,7 +68,7 @@ public class AddMovieServlet extends MosedbServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<LangId, String> names = getNameMap(request);
         if (names.isEmpty()) {
-            setErrorMessage("One name must be specified!", request);
+            AttributeManager.setErrorMessage(request, "One name must be specified!");
             restorePage("addMovie.jsp", request, response);
             return;
         }
@@ -76,7 +77,7 @@ public class AddMovieServlet extends MosedbServlet {
         List<Format> formatList = getFormats(request);
 
         Movie movie = new Movie(names, true, movieYear, genreList, formatList);
-        User user = LoginManager.getLoggedUser(request.getSession(true));
+        User user = AttributeManager.getUserSessionKey(request.getSession(true));
         boolean success = new MovieService().addMovie(user, movie);
 
         restorePage("addMovie.jsp", request, response);

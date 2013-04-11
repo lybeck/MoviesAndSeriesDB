@@ -16,7 +16,7 @@
                 <li class='navbarLeft'><a href='search'>SEARCH</a></li>
                 <li class='navbarLeft'><a href='addMovie'>ADD MOVIE</a></li>
                 <li class='navbarLeft'><a href='#'>ADD SERIES</a></li>
-                <c:if test="${admin_key != null && admin_key}">
+                <c:if test="${adminSessionKey != null && adminSessionKey}">
                     <li class='navbarLeft'><a href='#'>ADMIN TOOLS</a></li>
                 </c:if>
                 <li class='navbarRight'><a href='logout'>LOGOUT</a></li>

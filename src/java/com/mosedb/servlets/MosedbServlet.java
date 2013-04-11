@@ -4,6 +4,7 @@
  */
 package com.mosedb.servlets;
 
+import com.mosedb.tools.AttributeManager;
 import com.mosedb.tools.LoginManager;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -52,7 +53,7 @@ public class MosedbServlet extends HttpServlet {
 
     protected boolean isUserLoggedIn(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        return LoginManager.getLoggedUser(session) != null;
+        return AttributeManager.getUserSessionKey(session) != null;
     }
 
     private void redirectToLoginPage(HttpServletResponse response) throws IOException {
