@@ -12,9 +12,12 @@
 <script src="JavaScript/addMovieJS.js"></script>
 
 <h3>Add movie to database</h3>
-<form action="addMovieAction" method="post">
+<form action="addMovie" method="post">
     <fieldset class="styledFS" id="leftFields">
         <legend>Names</legend>
+        <c:if test="${errorMessage != null}">
+            <p id="nameerror" style="color: red">${errorMessage}</p>
+        </c:if>
         &emsp; Eng
         <br>
         <input type="text" class="styled-textfield" id="namefields"
@@ -37,26 +40,42 @@
     </fieldset>
     <fieldset class="styledFS" id="leftFields">
         <legend>Movie info</legend>
+
+        Year:
+        <div class="styled-select" id="yearBar">
+            <select name='yearDropbox'>
+                <c:if test='${yearList != null}'>
+                    <c:forEach var='year' items='${yearList}'>
+                        <option>${year}</option>
+                    </c:forEach>
+                </c:if>
+            </select>
+        </div>
+
+        <p></p>
+
         Add / remove genre:
         <input type="button" class="button" value="+" id="plusButton"
                onclick="addGenreDropbox();">
         <input type="button" class="button" value="-" id="minusButton"
                onclick="removeGenreDropbox();">
-        &emsp;
-        year:
-        <input type="text" class="styled-textfield" name="year"
-               style="width: 70px;">
+
         <p></p>
-        
-        <select id='select0' name='hidden' style="display: none;">
-                    <c:if test='${genreList != null}'>
-                        <c:forEach var='genre' items='${genreList}'>
-                            <option>${genre}</option>
-                        </c:forEach>
-                    </c:if>
+
+        <select id='genreSelect0' name='hidden' style="display: none;">
+            <c:if test='${genreList != null}'>
+                <c:forEach var='genre' items='${genreList}'>
+                    <option>${genre}</option>
+                </c:forEach>
+            </c:if>
         </select>
         <div id='genreDropboxDiv1'></div>
-        </fieldset>
-    </form>
+    </fieldset>
 
-    <%@include file="bottom.jspf" %>
+    <br>
+    <input type="submit" value="Add movie" />
+    <p></p>
+
+</form>
+
+<%@include file="bottom.jspf" %>

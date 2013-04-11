@@ -175,9 +175,14 @@ input[type=radio]:checked + .customCheck:after {
     margin: 0 auto;
 }
 
+#yearBar{
+    margin: 0 0 0 0;
+    width: 100px;
+}
+
 .styled-select select {
     background: transparent;
-    width: 115%;
+    width: 120%;
     padding: 3px;
     border: none;
     border-style: none;
