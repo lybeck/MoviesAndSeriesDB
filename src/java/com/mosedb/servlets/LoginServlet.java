@@ -5,6 +5,7 @@
 package com.mosedb.servlets;
 
 import com.mosedb.models.User;
+import com.mosedb.tools.AttributeManager;
 import com.mosedb.tools.LoginManager;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -39,7 +40,7 @@ public class LoginServlet extends MosedbServlet {
             if (user != null) {
                 redirectHome(request, response);
             } else {
-                setErrorMessage("Invalid username or password!", request);
+                AttributeManager.setErrorMessage(request, "Invalid username or password!");
                 restorePage("login.jsp", request, response);
             }
         } catch (Exception e) {

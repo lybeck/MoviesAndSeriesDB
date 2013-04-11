@@ -17,34 +17,17 @@ public class LoginManager {
     public static User doLogin(HttpSession session, String username, String password) throws Exception {
         UserService userService = new UserService();
         User user = userService.getUser(username, password);
-        session.setAttribute(userSessionKey(), user);
+        AttributeManager.setUserSessionKey(session, user);
 
         if (user == null || !user.isAdmin()) {  
-            session.setAttribute(adminSessionKey(), false);
+            AttributeManager.setAdminSessionKey(session, false);
         } else {
-            session.setAttribute(adminSessionKey(), true);
+            AttributeManager.setAdminSessionKey(session, true);
         }
         return user;
     }
 
-    private static String userSessionKey() {
-        return "user_id";
-    }
-
-    private static String adminSessionKey() {
-        return "admin_key";
-    }
-
-    public static User getLoggedUser(HttpSession session) {
-        return (User) session.getAttribute(userSessionKey());
-    }
-
-    public static boolean loggedUserIsAdmin(HttpSession session) {
-        return (Boolean) session.getAttribute(adminSessionKey());
-    }
-
     public static void doLogout(HttpSession session) {
-        session.removeAttribute(userSessionKey());
-        session.removeAttribute(adminSessionKey());
+        AttributeManager.removeAll(session);
     }
 }
