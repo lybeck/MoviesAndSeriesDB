@@ -24,7 +24,9 @@ public class FormatDao extends AbstractDao {
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("formatid");
+        int id = result.getInt("formatid");
+        result.close();
+        return id;
     }
 
     public int addFormatDigitalCopy(String filetype) throws SQLException {
@@ -35,7 +37,9 @@ public class FormatDao extends AbstractDao {
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("formatid");
+        int id = result.getInt("formatid");
+        result.close();
+        return id;
     }
 
     public int addFormatDigitalCopy(String filetype, int resox, int resoy) throws SQLException {
@@ -46,7 +50,9 @@ public class FormatDao extends AbstractDao {
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("formatid");
+        int id = result.getInt("formatid");
+        result.close();
+        return id;
     }
 
     public boolean removeFormat(int formatid) throws SQLException {
@@ -69,6 +75,7 @@ public class FormatDao extends AbstractDao {
                 format = new Format(formatid, mediaformat, filetype, resox, resoy);
             }
         }
+        result.close();
         return format;
     }
 }

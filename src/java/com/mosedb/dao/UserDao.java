@@ -40,6 +40,7 @@ public class UserDao extends AbstractDao {
             adm = result.getBoolean("admin");
             list.add(new User(usr, fst, lst, adm));
         }
+        result.close();
         return list;
     }
 
@@ -57,41 +58,7 @@ public class UserDao extends AbstractDao {
             adm = result.getBoolean("admin");
             user = new User(usr, fst, lst, adm);
         }
+        result.close();
         return user;
-    }
-
-    private static void printAllUsers() {
-        List<User> list;
-        try {
-            list = new UserDao().getAllUsers();
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-        if (list == null) {
-            return;
-        }
-        System.out.println("Users in the database:");
-        System.out.println();
-        for (User user : list) {
-            System.out.println(user);
-            System.out.println();
-        }
-    }
-
-    private static void printUser(String username, String password) {
-        User user = null;
-        try {
-            user = new UserDao().getUser(username, password);
-        } catch (SQLException ex) {
-            System.err.println("Error trying to search user from database.");
-        }
-        System.out.println("With username: " + username + ", password: " + password);
-        if (user == null) {
-            System.out.println("No user found!");
-        } else {
-            System.out.println(user);
-        }
-        System.out.println();
     }
 }

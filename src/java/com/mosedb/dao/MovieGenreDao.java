@@ -51,6 +51,7 @@ public class MovieGenreDao extends AbstractDao {
         while (result.next()) {
             list.add(result.getString("genrename"));
         }
+        result.close();
         return list;
     }
 
@@ -60,7 +61,9 @@ public class MovieGenreDao extends AbstractDao {
         if (!result.next()) {
             return false;
         }
-        return result.getInt("isgenre") == 1;
+        boolean isGenre = result.getInt("isgenre") == 1;
+        result.close();
+        return isGenre;
     }
 
     public Set<Integer> getMovieIdsByGenre(String genrename) throws SQLException {
@@ -73,6 +76,7 @@ public class MovieGenreDao extends AbstractDao {
                 set.add(id);
             }
         }
+        result.close();
         return set;
     }
 }

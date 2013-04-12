@@ -41,6 +41,7 @@ public class MovieFormatDao extends AbstractDao {
         while (result.next()) {
             list.add(result.getInt("formatid"));
         }
+        result.close();
         return list;
     }
 }

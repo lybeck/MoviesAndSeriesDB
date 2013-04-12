@@ -26,6 +26,7 @@ public class GenreDao extends AbstractDao {
         while (result.next()) {
             list.add(result.getString("genrename"));
         }
+        result.close();
         return list;
     }
 }
