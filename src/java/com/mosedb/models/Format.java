@@ -142,6 +142,6 @@ public class Format {
 
     public static enum MediaFormat {
 
-        vhs, dvd, bd, dc;
+        dvd, bd, dc, vhs;
     }
 }

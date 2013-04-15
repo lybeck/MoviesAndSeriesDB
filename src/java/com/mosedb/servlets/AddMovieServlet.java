@@ -40,9 +40,10 @@ public class AddMovieServlet extends MosedbServlet {
     private static final String YEAR = "yearDropbox";
     private static final String GENRE_SELECT = "genreDropbox";
     private static final String MEDIA_FORMAT_SELECT = "mediaFormatDropbox";
-    private static final String FILE_TYPE = "mediaFormatDropbox";
-    private static final String RESOLUTION_X = "mediaFormatDropbox";
-    private static final String RESOLUTION_Y = "mediaFormatDropbox";
+    private static final String SEEN_CHECKBOX = "seenCheckbox";
+    private static final String FILE_TYPE = "fileType";
+    private static final String RESOLUTION_X = "resox";
+    private static final String RESOLUTION_Y = "resoy";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -79,10 +80,13 @@ public class AddMovieServlet extends MosedbServlet {
             Integer movieYear = getYear(request);
             List<String> genreList = getGenres(request);
             List<Format> formatList = getFormats(request);
+            boolean seen = isSeen(request);
 
-            Movie movie = new Movie(names, true, movieYear, genreList, formatList);
+            Movie movie = new Movie(names, seen, movieYear, genreList, formatList);
             User user = AttributeManager.getUserSessionKey(request.getSession(true));
             boolean success = new MovieService().addMovie(user, movie);
+
+            System.out.println(movie);
 
             restorePage("addMovie.jsp", request, response);
         } else {
@@ -147,9 +151,37 @@ public class AddMovieServlet extends MosedbServlet {
                 break;
             }
             MediaFormat mediaFormat = Format.getMediaFormat(mediaFormatString);
-            formatList.add(new Format(mediaFormat));
+            if (mediaFormat == MediaFormat.dc) {
+                formatList.add(getDigitalFormat(request, i));
+            } else {
+                formatList.add(new Format(mediaFormat));
+            }
             ++i;
         }
         return formatList;
+    }
+
+    private Format getDigitalFormat(HttpServletRequest request, int i) {
+        String fileType = request.getParameter(FILE_TYPE + i).trim();
+        if (fileType.isEmpty()) {
+            fileType = null;
+        }
+        String resoXString = request.getParameter(RESOLUTION_X + i).trim();
+        String resoYString = request.getParameter(RESOLUTION_Y + i).trim();
+        if (resoXString == null || resoXString.isEmpty() || resoYString == null || resoYString.isEmpty()) {
+            return new Format(MediaFormat.dc, fileType);
+        } else {
+            try {
+                int resoX = Integer.parseInt(resoXString);
+                int resoY = Integer.parseInt(resoYString);
+                return new Format(MediaFormat.dc, fileType, resoX, resoY);
+            } catch (NumberFormatException e) {
+                return new Format(MediaFormat.dc, fileType);
+            }
+        }
+    }
+
+    private boolean isSeen(HttpServletRequest request) {
+        return request.getParameter(SEEN_CHECKBOX) != null;
     }
 }

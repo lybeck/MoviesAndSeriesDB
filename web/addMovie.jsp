@@ -18,7 +18,7 @@
         
         <div style="position: relative; right: -150px; z-index: 2; top: 25px;">
             seen
-            <input type="checkbox" id="customSeen" name="seen" checked>
+            <input type="checkbox" id="customSeen" name="seenCheckbox" checked>
             <label class="customCheck" for="customSeen"></label>
         </div>
         
