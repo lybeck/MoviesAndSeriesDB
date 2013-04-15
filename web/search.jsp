@@ -106,31 +106,31 @@
                 <%}%>
                 <c:if test="${adminSessionKey != null && adminSessionKey}">
                     <td>
-                        ${movie.getOwner()}
+                        ${movie.owner}
                     </td>
                 </c:if>
                 <td>
-                    <c:if test="${movie.getNameEng() != null}" >
-                        ${movie.getNameEng()} 
+                    <c:if test="${movie.nameEng != null}" >
+                        ${movie.nameEng} 
                     </c:if>
                 </td>
                 <td>
-                    <c:if test="${movie.getNameFi() != null}" >
-                        ${movie.getNameFi()} 
+                    <c:if test="${movie.nameFi != null}" >
+                        ${movie.nameFi} 
                     </c:if>
                 </td>
                 <td>
-                    <c:if test="${movie.getNameSwe() != null}" >
-                        ${movie.getNameSwe()} 
+                    <c:if test="${movie.nameSwe != null}" >
+                        ${movie.nameSwe} 
                     </c:if>
                 </td>
                 <td>
-                    <c:if test="${movie.getNameOther() != null}" >
-                        ${movie.getNameOther()} 
+                    <c:if test="${movie.nameOther != null}" >
+                        ${movie.nameOther} 
                     </c:if>
                 </td>
                 <td><c:choose>
-                        <c:when test="${movie.isSeen()}" >
+                        <c:when test="${movie.seen}" >
                             yes
                         </c:when>
                         <c:otherwise>
