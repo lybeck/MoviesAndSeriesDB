@@ -285,7 +285,7 @@ input[type=radio]:checked + .customCheck:after {
 
 #leftFields{
     text-align: left;
-    width: 40%;
+    width: 50%;
 }
 
 footer{
