@@ -113,6 +113,7 @@ public class AttributeManager {
         session.removeAttribute(errorMessage);
         session.removeAttribute(formatList);
         session.removeAttribute(genreList);
+        session.removeAttribute(movieList);
         session.removeAttribute(userSessionKey);
         session.removeAttribute(yearList);
     }

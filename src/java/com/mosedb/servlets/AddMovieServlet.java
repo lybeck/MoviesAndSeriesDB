@@ -66,21 +66,25 @@ public class AddMovieServlet extends MosedbServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<LangId, String> names = getNameMap(request);
-        if (names.isEmpty()) {
-            AttributeManager.setErrorMessage(request, "One name must be specified!");
+        if (isUserLoggedIn(request)) {
+            Map<LangId, String> names = getNameMap(request);
+            if (names.isEmpty()) {
+                AttributeManager.setErrorMessage(request, "One name must be specified!");
+                restorePage("addMovie.jsp", request, response);
+                return;
+            }
+            Integer movieYear = getYear(request);
+            List<String> genreList = getGenres(request);
+            List<Format> formatList = getFormats(request);
+
+            Movie movie = new Movie(names, true, movieYear, genreList, formatList);
+            User user = AttributeManager.getUserSessionKey(request.getSession(true));
+            boolean success = new MovieService().addMovie(user, movie);
+
             restorePage("addMovie.jsp", request, response);
-            return;
+        } else {
+            redirectHome(request, response);
         }
-        Integer movieYear = getYear(request);
-        List<String> genreList = getGenres(request);
-        List<Format> formatList = getFormats(request);
-
-        Movie movie = new Movie(names, true, movieYear, genreList, formatList);
-        User user = AttributeManager.getUserSessionKey(request.getSession(true));
-        boolean success = new MovieService().addMovie(user, movie);
-
-        restorePage("addMovie.jsp", request, response);
     }
 
     private Map<LangId, String> getNameMap(HttpServletRequest request) {
