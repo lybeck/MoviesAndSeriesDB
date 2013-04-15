@@ -14,6 +14,7 @@ import com.mosedb.models.User;
 import com.mosedb.tools.AttributeManager;
 import com.mosedb.tools.LoginManager;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -22,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -105,13 +108,13 @@ public class AddMovieServlet extends MosedbServlet {
             names.put(LangId.eng, engName);
         }
         if (!fiName.isEmpty()) {
-            names.put(LangId.fi, engName);
+            names.put(LangId.fi, fiName);
         }
         if (!sweName.isEmpty()) {
-            names.put(LangId.swe, engName);
+            names.put(LangId.swe, sweName);
         }
         if (!otherName.isEmpty()) {
-            names.put(LangId.other, engName);
+            names.put(LangId.other, otherName);
         }
         return names;
     }
