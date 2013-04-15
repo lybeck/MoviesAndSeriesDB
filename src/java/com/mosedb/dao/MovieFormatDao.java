@@ -15,6 +15,10 @@ import java.util.List;
  */
 public class MovieFormatDao extends AbstractDao {
 
+    public MovieFormatDao() throws SQLException {
+        super();
+    }
+
     public boolean addMovieFormat(int movieid, int formatid) throws SQLException {
         String sql = "insert into mosedb.movieformat (movieid,formatid) values (?,?)";
         return executeUpdate(sql, movieid, formatid);
@@ -37,6 +41,7 @@ public class MovieFormatDao extends AbstractDao {
         while (result.next()) {
             list.add(result.getInt("formatid"));
         }
+        result.close();
         return list;
     }
 }

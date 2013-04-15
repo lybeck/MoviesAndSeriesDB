@@ -15,6 +15,10 @@ import java.util.List;
  */
 public class GenreDao extends AbstractDao {
 
+    public GenreDao() throws SQLException {
+        super();
+    }
+
     public List<String> getAllGenres() throws SQLException {
         String sql = "select genrename from mosedb.genre order by genrename";
         ResultSet result = executeQuery(sql);
@@ -22,6 +26,7 @@ public class GenreDao extends AbstractDao {
         while (result.next()) {
             list.add(result.getString("genrename"));
         }
+        result.close();
         return list;
     }
 }

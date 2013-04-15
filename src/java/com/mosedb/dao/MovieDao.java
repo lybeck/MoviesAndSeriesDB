@@ -21,6 +21,10 @@ import java.util.Set;
  */
 public class MovieDao extends AbstractDao {
 
+    public MovieDao() throws SQLException {
+        super();
+    }
+
     /**
      * Adds a movie entry to the database.
      *
@@ -35,7 +39,9 @@ public class MovieDao extends AbstractDao {
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("movieid");
+        int id = result.getInt("movieid");
+        result.close();
+        return id;
     }
 
     /**
@@ -53,7 +59,9 @@ public class MovieDao extends AbstractDao {
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("movieid");
+        int id = result.getInt("movieid");
+        result.close();
+        return id;
     }
 
     /**
@@ -95,11 +103,12 @@ public class MovieDao extends AbstractDao {
                 list.add(new Movie(movieid, owner, seen));
             }
         }
+        result.close();
         return list;
     }
 
     public List<Movie> getAllMovies() throws SQLException {
-        String sql = "select movieid, owner, movieyear, seen from mosedb.movie";
+        String sql = "select movieid, owner, movieyear, seen from mosedb.movie order by owner";
         ResultSet result = executeQuery(sql);
         List<Movie> list = new ArrayList<Movie>();
         while (result.next()) {
@@ -113,6 +122,7 @@ public class MovieDao extends AbstractDao {
                 list.add(new Movie(movieid, owner, seen));
             }
         }
+        result.close();
         return list;
     }
 
@@ -145,6 +155,7 @@ public class MovieDao extends AbstractDao {
                 list.add(new Movie(movieid, owner, seen));
             }
         }
+        result.close();
         return list;
     }
 
@@ -163,6 +174,7 @@ public class MovieDao extends AbstractDao {
                 sql += " or movieid=" + id;
             }
         }
+        sql += " order by owner";
         System.out.println(sql);
         ResultSet result = executeQuery(sql);
         List<Movie> list = new ArrayList<Movie>();
@@ -177,6 +189,7 @@ public class MovieDao extends AbstractDao {
                 list.add(new Movie(movieid, owner, seen));
             }
         }
+        result.close();
         return list;
     }
 }

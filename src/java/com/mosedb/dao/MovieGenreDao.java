@@ -17,6 +17,10 @@ import java.util.Set;
  */
 public class MovieGenreDao extends AbstractDao {
 
+    public MovieGenreDao() throws SQLException {
+        super();
+    }
+
     public boolean addMovieGenre(int movieid, String genrename) throws SQLException {
         String sql = "insert into mosedb.moviegenre (movieid, genrename) values (?,?)";
         return executeUpdate(sql, movieid, genrename);
@@ -47,6 +51,7 @@ public class MovieGenreDao extends AbstractDao {
         while (result.next()) {
             list.add(result.getString("genrename"));
         }
+        result.close();
         return list;
     }
 
@@ -56,7 +61,9 @@ public class MovieGenreDao extends AbstractDao {
         if (!result.next()) {
             return false;
         }
-        return result.getInt("isgenre") == 1;
+        boolean isGenre = result.getInt("isgenre") == 1;
+        result.close();
+        return isGenre;
     }
 
     public Set<Integer> getMovieIdsByGenre(String genrename) throws SQLException {
@@ -69,6 +76,7 @@ public class MovieGenreDao extends AbstractDao {
                 set.add(id);
             }
         }
+        result.close();
         return set;
     }
 }

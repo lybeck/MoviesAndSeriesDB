@@ -18,6 +18,10 @@ import java.util.Set;
  */
 public class MovieNameDao extends AbstractDao {
 
+    public MovieNameDao() throws SQLException {
+        super();
+    }
+
     public boolean addMovieName(int movieid, Movie.LangId langid, String moviename) throws SQLException {
         String sql = "insert into mosedb.moviename (movieid, langid, moviename) values (?,cast(? as mosedb.langid),?)";
         return executeUpdate(sql, movieid, langid, moviename);
@@ -45,6 +49,7 @@ public class MovieNameDao extends AbstractDao {
         if (result.next()) {
             name = result.getString("moviename");
         }
+        result.close();
         return name;
     }
 
@@ -57,6 +62,7 @@ public class MovieNameDao extends AbstractDao {
             String name = result.getString("moviename");
             map.put(id, name);
         }
+        result.close();
         return map;
     }
 
@@ -71,6 +77,7 @@ public class MovieNameDao extends AbstractDao {
                 set.add(id);
             }
         }
+        result.close();
         return set;
     }
 }

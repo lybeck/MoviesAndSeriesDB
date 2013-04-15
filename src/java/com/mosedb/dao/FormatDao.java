@@ -14,13 +14,19 @@ import java.sql.SQLException;
  */
 public class FormatDao extends AbstractDao {
 
+    public FormatDao() throws SQLException {
+        super();
+    }
+
     public int addFormat(Format.MediaFormat mediaformat) throws SQLException {
         String sql = "insert into mosedb.format (mediaformat) values (cast(? as mosedb.mediaformat)) returning formatid";
         ResultSet result = executeQuery(sql, mediaformat);
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("formatid");
+        int id = result.getInt("formatid");
+        result.close();
+        return id;
     }
 
     public int addFormatDigitalCopy(String filetype) throws SQLException {
@@ -31,7 +37,9 @@ public class FormatDao extends AbstractDao {
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("formatid");
+        int id = result.getInt("formatid");
+        result.close();
+        return id;
     }
 
     public int addFormatDigitalCopy(String filetype, int resox, int resoy) throws SQLException {
@@ -42,7 +50,9 @@ public class FormatDao extends AbstractDao {
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("formatid");
+        int id = result.getInt("formatid");
+        result.close();
+        return id;
     }
 
     public boolean removeFormat(int formatid) throws SQLException {
@@ -65,6 +75,7 @@ public class FormatDao extends AbstractDao {
                 format = new Format(formatid, mediaformat, filetype, resox, resoy);
             }
         }
+        result.close();
         return format;
     }
 }
