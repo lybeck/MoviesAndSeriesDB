@@ -16,7 +16,7 @@
     <fieldset class="styledFS" style='text-align: left; width: 40%; float:right;'>
         <legend>Movie info</legend>
         
-        <div style="position: relative; right: -150px; z-index: 2;">
+        <div style="position: relative; right: -150px; z-index: 2; top: 25px;">
             seen
             <input type="checkbox" id="customSeen" name="seen" checked>
             <label class="customCheck" for="customSeen"></label>

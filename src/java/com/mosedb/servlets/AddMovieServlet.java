@@ -40,6 +40,9 @@ public class AddMovieServlet extends MosedbServlet {
     private static final String YEAR = "yearDropbox";
     private static final String GENRE_SELECT = "genreDropbox";
     private static final String MEDIA_FORMAT_SELECT = "mediaFormatDropbox";
+    private static final String FILE_TYPE = "mediaFormatDropbox";
+    private static final String RESOLUTION_X = "mediaFormatDropbox";
+    private static final String RESOLUTION_Y = "mediaFormatDropbox";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
