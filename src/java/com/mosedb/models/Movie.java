@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author llybeck
  */
-public class Movie {
+public class Movie implements Comparable<Movie> {
 
     private int id;
     private Map<LangId, String> names;
@@ -166,6 +166,59 @@ public class Movie {
             enumLangId = LangId.swe;
         }
         return enumLangId;
+    }
+
+    @Override
+    public int compareTo(Movie o) {
+        String otherString = o.getOwner();
+        if (!owner.equals(otherString)) {
+            return owner.compareTo(otherString);
+        }
+        String thisString = getNameEng();
+        otherString = o.getNameEng();
+        if (thisString == null && otherString != null && !otherString.isEmpty()) {
+            return 1;
+        }
+        if (otherString == null && thisString != null && !thisString.isEmpty()) {
+            return -1;
+        }
+        if (thisString != null && otherString != null && !thisString.equals(otherString)) {
+            return thisString.toLowerCase().compareTo(otherString.toLowerCase());
+        }
+        thisString = getNameFi();
+        otherString = o.getNameFi();
+        if (thisString == null && otherString != null && !otherString.isEmpty()) {
+            return 1;
+        }
+        if (otherString == null && thisString != null && !thisString.isEmpty()) {
+            return -1;
+        }
+        if (thisString != null && otherString != null && !thisString.equals(otherString)) {
+            return thisString.toLowerCase().compareTo(otherString.toLowerCase());
+        }
+        thisString = getNameSwe();
+        otherString = o.getNameSwe();
+        if (thisString == null && otherString != null && !otherString.isEmpty()) {
+            return 1;
+        }
+        if (otherString == null && thisString != null && !thisString.isEmpty()) {
+            return -1;
+        }
+        if (thisString != null && otherString != null && !thisString.equals(otherString)) {
+            return thisString.toLowerCase().compareTo(otherString.toLowerCase());
+        }
+        thisString = getNameOther();
+        otherString = o.getNameOther();
+        if (thisString == null && otherString != null && !otherString.isEmpty()) {
+            return 1;
+        }
+        if (otherString == null && thisString != null && !thisString.isEmpty()) {
+            return -1;
+        }
+        if (thisString != null && otherString != null && !thisString.equals(otherString)) {
+            return thisString.toLowerCase().compareTo(otherString.toLowerCase());
+        }
+        return 0;
     }
 
     public static enum LangId {

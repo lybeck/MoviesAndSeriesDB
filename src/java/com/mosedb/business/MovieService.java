@@ -14,6 +14,7 @@ import com.mosedb.models.Movie;
 import com.mosedb.models.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +60,9 @@ public class MovieService {
 
         movieDao.closeConnection();
 
+        Collections.sort(movies);
+        movies.get(0).compareTo(movies.get(1));
+        
         return movies;
     }
 
