@@ -61,4 +61,10 @@ public class UserDao extends AbstractDao {
         result.close();
         return user;
     }
+
+    public void addUser(User user, String password) throws SQLException {
+        String sql = "insert into mosedb.users (username, password, firstname, lastname, admin) "
+                + "values (?,?,?,?,?)";
+        executeUpdate(sql, user.getUsername(), password, user.getFirstName(), user.getLastName(), user.isAdmin());
+    }
 }

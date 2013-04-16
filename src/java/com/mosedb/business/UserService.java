@@ -42,4 +42,15 @@ public class UserService {
             return null;
         }
     }
+    
+    public void addUser(User user, String password) {
+        try {
+            UserDao userDao = new UserDao();
+            userDao.addUser(user, password);
+            userDao.closeConnection();
+        } catch (SQLException ex) {
+            System.err.println("Error while trying to add user. Error:");
+            System.err.println(ex);
+        }
+    }
 }

@@ -205,10 +205,7 @@ public class MovieService {
 
         return getMoviesByIds(user, movieIds);
     }
-
-    /**
-     * TODO: implement this method!!
-     */
+    
     public List<Movie> getByMediaFormat(User user, String mediaformat) {
         MovieNameDao movieNameDao;
         try {
