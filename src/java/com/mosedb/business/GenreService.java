@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author llybeck
  */
-public class GenreService {
+public class GenreService extends AbstractService {
 
     public List<String> getAllGenres() {
         try {
@@ -23,9 +23,7 @@ public class GenreService {
             genreDao.closeConnection();
             return allGenres;
         } catch (SQLException ex) {
-            System.err.println("Failed to fetch genres.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Failed to fetch genres.", ex);
             return null;
         }
     }

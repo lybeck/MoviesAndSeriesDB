@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  *
  * @author llybeck
  */
-public class MovieService {
+public class MovieService extends AbstractService {
 
     public List<Movie> getMovies(User user) {
         long start = System.currentTimeMillis();
@@ -35,9 +35,7 @@ public class MovieService {
         try {
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return null;
         }
         List<Movie> movies;
@@ -48,8 +46,7 @@ public class MovieService {
                 movies = movieDao.getMovies(user.getUsername());
             }
         } catch (SQLException ex) {
-            System.err.println("Error while retrieving movies by username. Error:");
-            System.err.println(ex);
+            reportError("Error while retrieving movies by username.", ex);
             return null;
         }
 
@@ -62,7 +59,7 @@ public class MovieService {
 
         Collections.sort(movies);
         movies.get(0).compareTo(movies.get(1));
-        
+
         return movies;
     }
 
@@ -80,18 +77,14 @@ public class MovieService {
         try {
             movieNameDao = new MovieNameDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return;
         }
         for (Movie movie : movies) {
             try {
                 movie.setNames(movieNameDao.getMovieNames(movie.getId()));
             } catch (SQLException ex) {
-                System.err.println("Error while trying to retirieve names for movie with id: " + movie.getId());
-                System.err.println("Error:");
-                System.err.println(ex);
+                reportError("Error while trying to retirieve names for movie with id: " + movie.getId(), ex);
             }
         }
         movieNameDao.closeConnection();
@@ -102,17 +95,13 @@ public class MovieService {
         try {
             movieGenreDao = new MovieGenreDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return;
         }
         try {
             movie.setGenres(movieGenreDao.getMovieGenres(movie.getId()));
         } catch (SQLException ex) {
-            System.err.println("Error while trying to retirieve genres for movie with id: " + movie.getId());
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while trying to retirieve genres for movie with id: " + movie.getId(), ex);
         }
         movieGenreDao.closeConnection();
     }
@@ -124,18 +113,14 @@ public class MovieService {
             movieFormatDao = new MovieFormatDao();
             formatDao = new FormatDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return;
         }
         List<Integer> formatIds;
         try {
             formatIds = movieFormatDao.getFormatIds(movie.getId());
         } catch (SQLException ex) {
-            System.err.println("Error while trying to retirieve formatIds for movie with id: " + movie.getId());
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while trying to retirieve formatIds for movie with id: " + movie.getId(), ex);
             return;
         }
 
@@ -144,9 +129,7 @@ public class MovieService {
             try {
                 formats.add(formatDao.getFormat(formatid));
             } catch (SQLException ex) {
-                System.err.println("Error while trying to retirieve formatIds for movie with id: " + movie.getId());
-                System.err.println("Error:");
-                System.err.println(ex);
+                reportError("Error while trying to retirieve formatIds for movie with id: " + movie.getId(), ex);
             }
         }
 
@@ -161,18 +144,14 @@ public class MovieService {
         try {
             movieNameDao = new MovieNameDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return null;
         }
         Set<Integer> movieIds;
         try {
             movieIds = movieNameDao.getMovieIdsByName(name);
         } catch (SQLException ex) {
-            System.err.println("Error while trying to get movieids by name from movienamedao.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while trying to get movieids by name from movienamedao.", ex);
             return null;
         }
 
@@ -186,18 +165,14 @@ public class MovieService {
         try {
             movieGenreDao = new MovieGenreDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return null;
         }
         Set<Integer> movieIds;
         try {
             movieIds = movieGenreDao.getMovieIdsByGenre(genre);
         } catch (SQLException ex) {
-            System.err.println("Error while trying to get movieids by name from movienamedao.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while trying to get movieids by name from movienamedao.", ex);
             return null;
         }
 
@@ -205,24 +180,20 @@ public class MovieService {
 
         return getMoviesByIds(user, movieIds);
     }
-    
+
     public List<Movie> getByMediaFormat(User user, String mediaformat) {
         MovieNameDao movieNameDao;
         try {
             movieNameDao = new MovieNameDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return null;
         }
         Set<Integer> movieIds;
         try {
             movieIds = movieNameDao.getMovieIdsByName(mediaformat);
         } catch (SQLException ex) {
-            System.err.println("Error while trying to get movieids by name from movienamedao.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while trying to get movieids by name from movienamedao.", ex);
             return null;
         }
 
@@ -236,9 +207,7 @@ public class MovieService {
         try {
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return null;
         }
         List<Movie> movies;
@@ -249,8 +218,7 @@ public class MovieService {
                 movies = movieDao.getMovies(user.getUsername(), movieIds);
             }
         } catch (SQLException ex) {
-            System.err.println("Error while retrieving movies by username. Error:");
-            System.err.println(ex);
+            reportError("Error while retrieving movies by username.", ex);
             return null;
         }
 
@@ -287,9 +255,7 @@ public class MovieService {
         try {
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return -1;
         }
         int id = -1;
@@ -300,9 +266,7 @@ public class MovieService {
                 id = movieDao.addMovie(user, movie.getMovieYear(), movie.isSeen());
             }
         } catch (SQLException ex) {
-            System.err.println("Failed to add movie to table mosedb.movie.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Failed to add movie to table mosedb.movie.", ex);
         }
 
         movieDao.closeConnection();
@@ -316,9 +280,7 @@ public class MovieService {
         try {
             movieNameDao = new MovieNameDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return false;
         }
         String name;
@@ -340,9 +302,7 @@ public class MovieService {
                 movieNameDao.addMovieName(movie.getId(), Movie.LangId.other, name);
             }
         } catch (SQLException ex) {
-            System.err.println("Failed to add movie to table mosedb.moviename.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Failed to add movie to table mosedb.moviename.", ex);
             return false;
         }
 
@@ -358,24 +318,18 @@ public class MovieService {
             movieNameDao = new MovieNameDao();
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return;
         }
         try {
             movieNameDao.removeMovieName(movieId);
         } catch (SQLException ex) {
-            System.err.println("Failed to remove movienames from table mosedb.moviename.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Failed to remove movienames from table mosedb.moviename.", ex);
         }
         try {
             movieDao.removeMovie(movieId);
         } catch (SQLException ex) {
-            System.err.println("Failed to remove movie from table mosedb.movie.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Failed to remove movie from table mosedb.movie.", ex);
         }
 
         movieNameDao.closeConnection();
@@ -390,17 +344,13 @@ public class MovieService {
         try {
             movieGenreDao = new MovieGenreDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return;
         }
         try {
             movieGenreDao.addMovieGenres(movie.getId(), movie.getGenres());
         } catch (SQLException ex) {
-            System.err.println("Failed to add genres to table mosedb.moviegenre.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Failed to add genres to table mosedb.moviegenre.", ex);
         }
 
         movieGenreDao.closeConnection();
@@ -416,9 +366,7 @@ public class MovieService {
             formatDao = new FormatDao();
             movieFormatDao = new MovieFormatDao();
         } catch (SQLException ex) {
-            System.err.println("Error while connecting to database!");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Error while connecting to database!", ex);
             return;
         }
 
@@ -443,9 +391,7 @@ public class MovieService {
                 movieFormatDao.addMovieFormat(movie.getId(), formatId);
             }
         } catch (SQLException ex) {
-            System.err.println("Failed to add movieformats.");
-            System.err.println("Error:");
-            System.err.println(ex);
+            reportError("Failed to add movieformats.", ex);
         }
 
         formatDao.closeConnection();

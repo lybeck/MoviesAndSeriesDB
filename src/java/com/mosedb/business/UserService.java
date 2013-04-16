@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author llybeck
  */
-public class UserService {
+public class UserService extends AbstractService {
 
     public List<User> getAllUsers() {
         try {
@@ -24,8 +24,7 @@ public class UserService {
             userDao.closeConnection();
             return allUsers;
         } catch (SQLException ex) {
-            System.err.println("Error while trying to retrieve users. Error:");
-            System.err.println(ex);
+            reportError("Error while trying to retrieve users.", ex);
             return null;
         }
     }
@@ -37,20 +36,18 @@ public class UserService {
             userDao.closeConnection();
             return user;
         } catch (SQLException ex) {
-            System.err.println("Error while trying to retrieve user. Error:");
-            System.err.println(ex);
+            reportError("Error while trying to retrieve user.", ex);
             return null;
         }
     }
-    
+
     public void addUser(User user, String password) {
         try {
             UserDao userDao = new UserDao();
             userDao.addUser(user, password);
             userDao.closeConnection();
         } catch (SQLException ex) {
-            System.err.println("Error while trying to add user. Error:");
-            System.err.println(ex);
+            reportError("Error while trying to add user.", ex);
         }
     }
 }
