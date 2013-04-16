@@ -50,4 +50,14 @@ public class UserService extends AbstractService {
             reportError("Error while trying to add user.", ex);
         }
     }
+    
+    public void deleteUser(String username) {
+        try {
+            UserDao userDao = new UserDao();
+            userDao.deleteUser(username);
+            userDao.closeConnection();
+        } catch (SQLException ex) {
+            reportError("Error while trying to delete user.", ex);
+        }
+    }
 }

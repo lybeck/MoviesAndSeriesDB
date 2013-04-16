@@ -67,4 +67,9 @@ public class UserDao extends AbstractDao {
                 + "values (?,?,?,?,?)";
         executeUpdate(sql, user.getUsername(), password, user.getFirstName(), user.getLastName(), user.isAdmin());
     }
+    
+    public void deleteUser(String username) throws SQLException {
+        String sql = "delete from moseedb.users where username=?";
+        executeUpdate(sql, username);
+    }
 }
