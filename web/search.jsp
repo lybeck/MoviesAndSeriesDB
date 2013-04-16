@@ -80,7 +80,7 @@
     <input type="submit" class="button" value="Search">
 </form>
 
-<table id="searchResults">
+<table class="customTable">
     <tr>
         <c:if test="${adminSessionKey != null && adminSessionKey}">
             <th>Owner</th>
