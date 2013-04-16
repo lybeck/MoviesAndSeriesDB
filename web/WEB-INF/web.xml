@@ -26,6 +26,18 @@
         <servlet-name>AddMovieServlet</servlet-name>
         <servlet-class>com.mosedb.servlets.AddMovieServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminToolsServlet</servlet-name>
+        <servlet-class>com.mosedb.servlets.AdminToolsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteUserServlet</servlet-name>
+        <servlet-class>com.mosedb.servlets.DeleteUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddUserServlet</servlet-name>
+        <servlet-class>com.mosedb.servlets.AddUserServlet</servlet-class>
+    </servlet>
     
     
     <context-param>
@@ -57,6 +69,18 @@
     <servlet-mapping>
         <servlet-name>AddMovieServlet</servlet-name>
         <url-pattern>/addMovie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminToolsServlet</servlet-name>
+        <url-pattern>/adminTools</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteUserServlet</servlet-name>
+        <url-pattern>/deleteUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddUserServlet</servlet-name>
+        <url-pattern>/addUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>

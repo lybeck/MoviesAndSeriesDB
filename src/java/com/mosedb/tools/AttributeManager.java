@@ -17,6 +17,7 @@ public class AttributeManager {
     private static String formatList = "formatList";
     private static String genreList = "genreList";
     private static String movieList = "movieList";
+    private static String userList = "userList";
     private static String userSessionKey = "userSessionKey";
     private static String yearList = "yearList";
 
@@ -38,6 +39,10 @@ public class AttributeManager {
     
     public static List<Movie> getMovieList(HttpSession session) {
         return (List<Movie>) session.getAttribute(movieList);
+    }
+    
+    public static List<User> getUserList(HttpSession session) {
+        return (List<User>) session.getAttribute(userList);
     }
 
     public static User getUserSessionKey(HttpSession session) {
@@ -69,6 +74,10 @@ public class AttributeManager {
     public static void setMovieList(HttpSession session, List<Movie> movies) {
         session.setAttribute(movieList, movies);
     }
+    
+    public static void setUserList(HttpSession session, List<User> users) {
+        session.setAttribute(userList, users);
+    }
 
     public static void setUserSessionKey(HttpSession session, User user) {
         session.setAttribute(userSessionKey, user);
@@ -99,6 +108,9 @@ public class AttributeManager {
     public static void setMovieList(HttpServletRequest request, List<Movie> movies) {
         request.setAttribute(movieList, movies);
     }
+    public static void setUserList(HttpServletRequest request, List<User> users) {
+        request.setAttribute(userList, users);
+    }
 
     public static void setUserSessionKey(HttpServletRequest request, User user) {
         request.setAttribute(userSessionKey, user);
@@ -114,6 +126,7 @@ public class AttributeManager {
         session.removeAttribute(formatList);
         session.removeAttribute(genreList);
         session.removeAttribute(movieList);
+        session.removeAttribute(userList);
         session.removeAttribute(userSessionKey);
         session.removeAttribute(yearList);
     }

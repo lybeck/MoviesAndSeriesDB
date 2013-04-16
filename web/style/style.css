@@ -16,7 +16,7 @@ body{
         color-stop(20%,#e9eaf8), color-stop(80%,#e9eaf8), color-stop(100%,#c1c2cc));  
 }
 
-body,div,a,.button,#searchResults{
+body,div,a,.button,#customTable{
     color: #131219;
     font-family:Arial;
     font-size:15px;
@@ -241,26 +241,31 @@ input[type=radio]:checked + .customCheck:after {
     margin: 0 auto;
 }
 
-#searchResults{
+.customTable{
     margin: 10px auto;
     width:90%;
     border-collapse: collapse;
 }
 
-#searchResults th{
+.customTable th{
     background-color: #FF8787;
     border: 1px solid red;
     padding: 5px;
 }
 
-#searchResults td{
+.customTable td{
     border: 1px solid red;
     font-size: 13px;
     font-weight: lighter;
 }
 
-#searchResults tr.red td{
+.customTable tr.red td{
     background-color: #F0D3D3;
+}
+
+.customTable td.padded,
+.customTable tr.red td.padded{
+    padding: 0 35px 17px 0;
 }
 
 #plusButton{
@@ -286,6 +291,14 @@ input[type=radio]:checked + .customCheck:after {
 #leftFields{
     text-align: left;
     width: 50%;
+}
+
+#usernameFields{
+    width: 50%;
+}
+
+#usernameFS{
+    margin: 10px 20% 10px 20%;
 }
 
 footer{
