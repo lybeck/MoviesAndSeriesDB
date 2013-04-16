@@ -70,7 +70,7 @@ public class SearchServlet extends MosedbServlet {
             Boolean seenParameter = null;
             if (seenCheck.equals(SEEN_CHECKED)) {
                 seenParameter = true;
-            } else if(seenCheck.equals(NOT_SEEN_CHECKED)) {
+            } else if (seenCheck.equals(NOT_SEEN_CHECKED)) {
                 seenParameter = false;
             }
 
@@ -79,24 +79,16 @@ public class SearchServlet extends MosedbServlet {
 
                 if (search1 == null || search1.isEmpty() || search1.equalsIgnoreCase(searchFieldDefault(1))
                         || drop1 == null) {
-                    if (seenParameter == null) {
-                        movieList = movieService.getMovies(user);
-                    } else {
-                        movieList = movieService.getMovies(user, seenParameter);
-                    }
+                    movieList = movieService.getMovies(user, seenParameter);
                 } else {
                     if (drop1.equals(NAME_SEARCH)) {
-                        if (seenParameter == null) {
-                            movieList = movieService.getByName(user, search1);
-                        } else {
-                            movieList = movieService.getByName(user, search1, seenParameter);
-                        }
+                        movieList = movieService.getByName(user, search1, seenParameter);
                     } else if (drop1.equals(GENRE_SEARCH)) {
-                        movieList = movieService.getByGenre(user, search1);
+                        movieList = movieService.getByGenre(user, search1, seenParameter);
                     } else if (drop1.equals(MEDIAFORMAT_SEARCH)) {
-                        movieList = movieService.getByMediaFormat(user, search1);
+                        movieList = movieService.getByMediaFormat(user, search1, seenParameter);
                     } else {
-                        movieList = movieService.getMovies(user);
+                        movieList = movieService.getMovies(user, seenParameter);
                     }
                 }
 

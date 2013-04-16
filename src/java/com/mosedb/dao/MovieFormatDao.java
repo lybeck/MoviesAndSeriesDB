@@ -7,7 +7,9 @@ package com.mosedb.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -43,5 +45,20 @@ public class MovieFormatDao extends AbstractDao {
         }
         result.close();
         return list;
+    }
+
+    public Set<Integer> getMovieIdsByMediaFormat(String mediaformat) throws SQLException {
+        String sql = "select movieid from mosedb.format f, mosedb.movieformat mf "
+                + "where f.formatid=mf.formatid and f.mediaformat=cast(? as mosedb.mediaformat)";
+        ResultSet result = executeQuery(sql, mediaformat);
+        Set<Integer> set = new HashSet<Integer>();
+        while (result.next()) {
+            int id = result.getInt("movieid");
+            if (!set.contains(id)) {
+                set.add(id);
+            }
+        }
+        result.close();
+        return set;
     }
 }

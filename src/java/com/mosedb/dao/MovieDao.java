@@ -107,7 +107,10 @@ public class MovieDao extends AbstractDao {
         return list;
     }
 
-    public List<Movie> getMovies(String owner, boolean seenSearch) throws SQLException {
+    public List<Movie> getMovies(String owner, Boolean seenSearch) throws SQLException {
+        if (seenSearch == null) {
+            return getMovies(owner);
+        }
         String sql = "select movieid, movieyear, seen from mosedb.movie where owner=? and seen=?";
         ResultSet result = executeQuery(sql, owner, seenSearch);
         List<Movie> list = new ArrayList<Movie>();
@@ -144,7 +147,10 @@ public class MovieDao extends AbstractDao {
         return list;
     }
 
-    public List<Movie> getAllMovies(boolean seenSearch) throws SQLException {
+    public List<Movie> getAllMovies(Boolean seenSearch) throws SQLException {
+        if (seenSearch == null) {
+            return getAllMovies();
+        }
         String sql = "select movieid, owner, movieyear, seen from mosedb.movie where seen=? order by owner";
         ResultSet result = executeQuery(sql, seenSearch);
         List<Movie> list = new ArrayList<Movie>();
@@ -196,7 +202,10 @@ public class MovieDao extends AbstractDao {
         return list;
     }
 
-    public List<Movie> getMovies(String owner, Set<Integer> movieids, boolean seenSearch) throws SQLException {
+    public List<Movie> getMovies(String owner, Set<Integer> movieids, Boolean seenSearch) throws SQLException {
+        if (seenSearch == null) {
+            return getMovies(owner, movieids);
+        }
         if (movieids == null || movieids.isEmpty()) {
             return new ArrayList<Movie>();
         }
@@ -262,7 +271,10 @@ public class MovieDao extends AbstractDao {
         return list;
     }
 
-    public List<Movie> getMovies(Set<Integer> movieids, boolean seenSearch) throws SQLException {
+    public List<Movie> getMovies(Set<Integer> movieids, Boolean seenSearch) throws SQLException {
+        if (seenSearch == null) {
+            return getMovies(movieids);
+        }
         if (movieids == null || movieids.isEmpty()) {
             return new ArrayList<Movie>();
         }
