@@ -14,6 +14,7 @@ public class AttributeManager {
     
     private static String adminSessionKey = "adminSessionKey";
     private static String errorMessage = "errorMessage";
+    private static String successMessage = "successMessage";
     private static String formatList = "formatList";
     private static String genreList = "genreList";
     private static String movieList = "movieList";
@@ -118,6 +119,18 @@ public class AttributeManager {
 
     public static void setYearList(HttpServletRequest request, List<String> years) {
         request.setAttribute(yearList, years);
+    }
+
+    public static void setSuccessMessage(HttpServletRequest request, String message) {
+        request.setAttribute(successMessage, message);
+    }
+    
+    public static void removeErrorMessage(HttpServletRequest request) {
+        request.removeAttribute(errorMessage);
+    }
+    
+    public static void removeSuccessMessage(HttpServletRequest request) {
+        request.removeAttribute(successMessage);
     }
     
     public static void removeAll(HttpSession session){
