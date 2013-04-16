@@ -57,7 +57,10 @@
     <fieldset class="styledFS" id="leftFields">
         <legend>Names</legend>
         <c:if test="${errorMessage != null}">
-            <p style="color: red">${errorMessage}</p>
+            <p id="errorMessage">${errorMessage}</p>
+        </c:if>
+        <c:if test="${successMessage != null}">
+            <p id="successMessage">${successMessage}</p>
         </c:if>
         &emsp; Eng
         <br>

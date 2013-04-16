@@ -41,13 +41,15 @@ public class UserService extends AbstractService {
         }
     }
 
-    public void addUser(User user, String password) {
+    public boolean addUser(User user, String password) {
         try {
             UserDao userDao = new UserDao();
-            userDao.addUser(user, password);
+            boolean success = userDao.addUser(user, password);
             userDao.closeConnection();
+            return success;
         } catch (SQLException ex) {
             reportError("Error while trying to add user.", ex);
+            return false;
         }
     }
     

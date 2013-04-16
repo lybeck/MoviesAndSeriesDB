@@ -307,3 +307,15 @@ footer{
     font-weight: lighter;
     color: #666666;
 }
+
+#successMessage{
+    position: relative;
+    color: green;
+    text-shadow: none;
+}
+
+#errorMessage{
+    position: relative;
+    color: red;
+    text-shadow: none;
+}

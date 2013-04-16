@@ -88,8 +88,11 @@ public class AddMovieServlet extends MosedbServlet {
             Movie movie = new Movie(names, seen, movieYear, genreList, formatList);
             User user = AttributeManager.getUserSessionKey(request.getSession(true));
             boolean success = new MovieService().addMovie(user, movie);
-
-            System.out.println(movie);
+            if (success) {
+                AttributeManager.setSuccessMessage(request, "Movie successfully added!");
+            } else {
+                AttributeManager.setErrorMessage(request, "Movie addition caused an unknown error..");
+            }
 
             restorePage("addMovie.jsp", request, response);
         } else {

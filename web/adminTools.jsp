@@ -14,16 +14,22 @@
 <h3>Manage users</h3>
 <form action="addUser" method="post">
     <fieldset class="styledFS" id="usernameFS">
+        <c:if test="${errorMessage != null}" >
+            <p id="errorMessage">${errorMessage}</p>
+        </c:if>
+        <c:if test="${successMessage != null}" >
+            <p id="successMessage">${successMessage}</p>
+        </c:if>
         <legend>Add user</legend>
-        username : <input type="text" class="styled-textfield" id='usernameFields' name='username'>
+        Username : <input type="text" class="styled-textfield" id='usernameFields' name='username'>
         <p></p>
-        password : <input type="password" class="styled-textfield" id='usernameFields' name='password'>
+        Password : <input type="password" class="styled-textfield" id='usernameFields' name='password'>
         <p></p>
-        first name : <input type="text" class="styled-textfield" id='usernameFields' name='firstName'>
+        First name : <input type="text" class="styled-textfield" id='usernameFields' name='firstName'>
         <p></p>
-        last name : <input type="text" class="styled-textfield" id='usernameFields' name='lastName'>
+        Last name : <input type="text" class="styled-textfield" id='usernameFields' name='lastName'>
         <p></p> 
-        admin  
+        Admin  
         <input type="checkbox" name='adminBox' id="adminBox">
         <label class="customCheck" for="adminBox" style="margin: 19px 0 0 3px;"></label> &emsp;&emsp;&emsp;      
         <input type="submit" class="button" value="Add user">
@@ -35,11 +41,11 @@
 <form action="deleteUser" method="post">
     <table class="customTable">
         <tr>
-            <th>username</th>
-            <th>first name</th>
-            <th>last name</th>
-            <th>admin</th>
-            <th>select</th>
+            <th>Username</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Admin</th>
+            <th>Select</th>
         </tr>
         <c:choose>
             <c:when test="${empty userList || userList == null}">
@@ -79,7 +85,8 @@
             </c:otherwise>
         </c:choose>
     </table>
-    <input type="submit" class="button" value="delete selected users">
+    <input type="submit" class="button" value="Delete selected users"
+           onclick="return confirm('Are you sure you want to delete the selected users?')">
 </form>
     
 <%@include file="bottom.jspf" %>

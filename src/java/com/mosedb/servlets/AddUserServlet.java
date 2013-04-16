@@ -31,14 +31,21 @@ public class AddUserServlet extends MosedbServlet {
             User user = AttributeManager.getUserSessionKey(request.getSession(true));
             if (user.isAdmin()) {
                 User userToBeAdded = getUserFromFields(request);
-                if(userToBeAdded!=null){
+                if (userToBeAdded != null) {
                     String password = request.getParameter(PASSWORD_FIELD).trim();
-                    if(!password.isEmpty()){
-                        UserService userService=new UserService();
-                        userService.addUser(userToBeAdded, password);
+                    if (!password.isEmpty()) {
+                        UserService userService = new UserService();
+                        boolean success = userService.addUser(userToBeAdded, password);
+                        if (success) {
+                            AttributeManager.setSuccessMessage(request, "User added successfully!");
+                        } else {
+                            AttributeManager.setErrorMessage(request, "Username already exists!");
+                        }
                     }
                 }
-                redirectToPage("adminTools", request, response);
+                UserService userservice = new UserService();
+                AttributeManager.setUserList(request, userservice.getAllUsers());
+                restorePage("adminTools.jsp", request, response);
             } else {
                 redirectHome(request, response);
             }
@@ -56,6 +63,7 @@ public class AddUserServlet extends MosedbServlet {
         boolean isAdminChecked = (adminCheck != null);
 
         if (username.isEmpty() || firstName.isEmpty() || lastName.isEmpty()) {
+            AttributeManager.setErrorMessage(request, "All fields must be filled!");
             return null;
         }
         return new User(username, firstName, lastName, isAdminChecked);
