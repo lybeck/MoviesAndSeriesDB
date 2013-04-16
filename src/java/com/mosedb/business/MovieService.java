@@ -14,6 +14,7 @@ import com.mosedb.models.Movie;
 import com.mosedb.models.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -58,7 +59,35 @@ public class MovieService extends AbstractService {
         movieDao.closeConnection();
 
         Collections.sort(movies);
-        movies.get(0).compareTo(movies.get(1));
+
+        return movies;
+    }
+
+    public List<Movie> getMovies(User user, boolean seen) {
+        MovieDao movieDao;
+        try {
+            movieDao = new MovieDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return null;
+        }
+        List<Movie> movies;
+        try {
+            if (user.isAdmin()) {
+                movies = movieDao.getAllMovies(seen);
+            } else {
+                movies = movieDao.getMovies(user.getUsername(), seen);
+            }
+        } catch (SQLException ex) {
+            reportError("Error while retrieving movies by username.", ex);
+            return null;
+        }
+
+        addInfoToMovies(movies);
+
+        movieDao.closeConnection();
+
+        Collections.sort(movies);
 
         return movies;
     }
@@ -139,7 +168,10 @@ public class MovieService extends AbstractService {
         formatDao.closeConnection();
     }
 
-    public List<Movie> getByName(User user, String name) {
+    public List<Movie> getByName(User user, String search) {
+        search = search.trim();
+        search = search.replaceAll("\\s+", " ");
+        List<String> searchList = Arrays.asList(search.split(" "));
         MovieNameDao movieNameDao;
         try {
             movieNameDao = new MovieNameDao();
@@ -149,7 +181,11 @@ public class MovieService extends AbstractService {
         }
         Set<Integer> movieIds;
         try {
-            movieIds = movieNameDao.getMovieIdsByName(name);
+            if (searchList.size() == 1) {
+                movieIds = movieNameDao.getMovieIdsByName(search);
+            } else {
+                movieIds = movieNameDao.getMovieIdsByName(searchList);
+            }
         } catch (SQLException ex) {
             reportError("Error while trying to get movieids by name from movienamedao.", ex);
             return null;
@@ -158,6 +194,34 @@ public class MovieService extends AbstractService {
         movieNameDao.closeConnection();
 
         return getMoviesByIds(user, movieIds);
+    }
+
+    public List<Movie> getByName(User user, String search, boolean seen) {
+        search = search.trim();
+        search = search.replaceAll("\\s+", " ");
+        List<String> searchList = Arrays.asList(search.split(" "));
+        MovieNameDao movieNameDao;
+        try {
+            movieNameDao = new MovieNameDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return null;
+        }
+        Set<Integer> movieIds;
+        try {
+            if (searchList.size() == 1) {
+                movieIds = movieNameDao.getMovieIdsByName(search);
+            } else {
+                movieIds = movieNameDao.getMovieIdsByName(searchList);
+            }
+        } catch (SQLException ex) {
+            reportError("Error while trying to get movieids by name from movienamedao.", ex);
+            return null;
+        }
+
+        movieNameDao.closeConnection();
+
+        return getMoviesByIds(user, movieIds, seen);
     }
 
     public List<Movie> getByGenre(User user, String genre) {
@@ -216,6 +280,33 @@ public class MovieService extends AbstractService {
                 movies = movieDao.getMovies(movieIds);
             } else {
                 movies = movieDao.getMovies(user.getUsername(), movieIds);
+            }
+        } catch (SQLException ex) {
+            reportError("Error while retrieving movies by username.", ex);
+            return null;
+        }
+
+        addInfoToMovies(movies);
+
+        movieDao.closeConnection();
+
+        return movies;
+    }
+
+    private List<Movie> getMoviesByIds(User user, Set<Integer> movieIds, boolean seen) {
+        MovieDao movieDao;
+        try {
+            movieDao = new MovieDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return null;
+        }
+        List<Movie> movies;
+        try {
+            if (user.isAdmin()) {
+                movies = movieDao.getMovies(movieIds, seen);
+            } else {
+                movies = movieDao.getMovies(user.getUsername(), movieIds, seen);
             }
         } catch (SQLException ex) {
             reportError("Error while retrieving movies by username.", ex);

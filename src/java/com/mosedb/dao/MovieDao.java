@@ -107,9 +107,46 @@ public class MovieDao extends AbstractDao {
         return list;
     }
 
+    public List<Movie> getMovies(String owner, boolean seenSearch) throws SQLException {
+        String sql = "select movieid, movieyear, seen from mosedb.movie where owner=? and seen=?";
+        ResultSet result = executeQuery(sql, owner, seenSearch);
+        List<Movie> list = new ArrayList<Movie>();
+        while (result.next()) {
+            int movieid = result.getInt("movieid");
+            int movieyear = result.getInt("movieyear");
+            boolean seen = result.getBoolean("seen");
+            if (movieyear != 0) {
+                list.add(new Movie(movieid, owner, seen, movieyear));
+            } else {
+                list.add(new Movie(movieid, owner, seen));
+            }
+        }
+        result.close();
+        return list;
+    }
+
     public List<Movie> getAllMovies() throws SQLException {
         String sql = "select movieid, owner, movieyear, seen from mosedb.movie order by owner";
         ResultSet result = executeQuery(sql);
+        List<Movie> list = new ArrayList<Movie>();
+        while (result.next()) {
+            int movieid = result.getInt("movieid");
+            String owner = result.getString("owner");
+            int movieyear = result.getInt("movieyear");
+            boolean seen = result.getBoolean("seen");
+            if (movieyear != 0) {
+                list.add(new Movie(movieid, owner, seen, movieyear));
+            } else {
+                list.add(new Movie(movieid, owner, seen));
+            }
+        }
+        result.close();
+        return list;
+    }
+
+    public List<Movie> getAllMovies(boolean seenSearch) throws SQLException {
+        String sql = "select movieid, owner, movieyear, seen from mosedb.movie where seen=? order by owner";
+        ResultSet result = executeQuery(sql, seenSearch);
         List<Movie> list = new ArrayList<Movie>();
         while (result.next()) {
             int movieid = result.getInt("movieid");
@@ -142,8 +179,41 @@ public class MovieDao extends AbstractDao {
             }
         }
         sql += ")";
-        System.out.println(sql);
+//        System.out.println(sql);
         ResultSet result = executeQuery(sql, owner);
+        List<Movie> list = new ArrayList<Movie>();
+        while (result.next()) {
+            int movieid = result.getInt("movieid");
+            int movieyear = result.getInt("movieyear");
+            boolean seen = result.getBoolean("seen");
+            if (movieyear != 0) {
+                list.add(new Movie(movieid, owner, seen, movieyear));
+            } else {
+                list.add(new Movie(movieid, owner, seen));
+            }
+        }
+        result.close();
+        return list;
+    }
+
+    public List<Movie> getMovies(String owner, Set<Integer> movieids, boolean seenSearch) throws SQLException {
+        if (movieids == null || movieids.isEmpty()) {
+            return new ArrayList<Movie>();
+        }
+        String sql = "select movieid, movieyear, seen from mosedb.movie where owner=? and seen=?";
+        sql += " and (";
+        boolean first = true;
+        for (Integer id : movieids) {
+            if (first) {
+                sql += "movieid=" + id;
+                first = false;
+            } else {
+                sql += " or movieid=" + id;
+            }
+        }
+        sql += ")";
+//        System.out.println(sql);
+        ResultSet result = executeQuery(sql, owner, seenSearch);
         List<Movie> list = new ArrayList<Movie>();
         while (result.next()) {
             int movieid = result.getInt("movieid");
@@ -175,8 +245,40 @@ public class MovieDao extends AbstractDao {
             }
         }
         sql += " order by owner";
-        System.out.println(sql);
         ResultSet result = executeQuery(sql);
+        List<Movie> list = new ArrayList<Movie>();
+        while (result.next()) {
+            int movieid = result.getInt("movieid");
+            String owner = result.getString("owner");
+            int movieyear = result.getInt("movieyear");
+            boolean seen = result.getBoolean("seen");
+            if (movieyear != 0) {
+                list.add(new Movie(movieid, owner, seen, movieyear));
+            } else {
+                list.add(new Movie(movieid, owner, seen));
+            }
+        }
+        result.close();
+        return list;
+    }
+
+    public List<Movie> getMovies(Set<Integer> movieids, boolean seenSearch) throws SQLException {
+        if (movieids == null || movieids.isEmpty()) {
+            return new ArrayList<Movie>();
+        }
+        String sql = "select movieid, owner, movieyear, seen from mosedb.movie";
+        sql += " where (";
+        boolean first = true;
+        for (Integer id : movieids) {
+            if (first) {
+                sql += "movieid=" + id;
+                first = false;
+            } else {
+                sql += " or movieid=" + id;
+            }
+        }
+        sql += ") and seen=? order by owner";
+        ResultSet result = executeQuery(sql, seenSearch);
         List<Movie> list = new ArrayList<Movie>();
         while (result.next()) {
             int movieid = result.getInt("movieid");

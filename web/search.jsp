@@ -61,17 +61,17 @@
         <div id="txtDiv1"></div>
         <p class="pLeft" style="width: 27%; text-align: right;">
             seen
-            <input type="radio" value="None" id="seenRadio1" name="seenRadio"/>
+            <input type="radio" value="seen" id="seenRadio1" name="seenRadio"/>
             <label class="customCheck" for="seenRadio1"></label>
         </p>    
 
         not seen
-        <input type="radio" value="None" id="seenRadio2" name="seenRadio"/>
+        <input type="radio" value="notSeen" id="seenRadio2" name="seenRadio"/>
         <label class="customCheck" for="seenRadio2"></label>
 
         <p class="pRight" style="width: 35%; text-align: left;">
             both
-            <input type="radio" value="None" id="seenRadio3" name="seenRadio" checked/>
+            <input type="radio" value="both" id="seenRadio3" name="seenRadio" checked/>
             <label class="customCheck" for="seenRadio3"></label>
         </p>   
     </fieldset> 
