@@ -34,9 +34,9 @@ CREATE TABLE mosedb.users (
     PRIMARY KEY (username)
 );
 INSERT INTO mosedb.users (username, password, firstname, lastname, admin)
-    VALUES ('lasse', 'salasana', 'Lasse', 'Lybeck', true);
+    VALUES ('lasse-admin', 'salasana', 'Lasse', 'Lybeck', true);
 INSERT INTO mosedb.users (username, password, firstname, lastname, admin)
-    VALUES ('roope', 'koira', 'Robert', 'Sirviö', true);
+    VALUES ('roope-admin', 'koira', 'Robert', 'Sirviö', true);
 
 -- genre
 CREATE TABLE mosedb.genre (

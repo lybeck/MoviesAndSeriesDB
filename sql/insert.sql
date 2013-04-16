@@ -1,5 +1,9 @@
 
 insert into mosedb.users (username, password, firstname, lastname)
+    values ('lasse', 'salasana', 'Lasse', 'Lybeck');
+insert into mosedb.users (username, password, firstname, lastname)
+    values ('roope', 'koira', 'Robert', 'Sirviö');
+insert into mosedb.users (username, password, firstname, lastname)
     values ('noadmin', 'asd', 'No', 'Admin');
 
 
