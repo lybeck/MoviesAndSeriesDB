@@ -38,6 +38,10 @@
         <servlet-name>AddUserServlet</servlet-name>
         <servlet-class>com.mosedb.servlets.AddUserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MovieInfoServlet</servlet-name>
+        <servlet-class>com.mosedb.servlets.MovieInfoServlet</servlet-class>
+    </servlet>
     
     
     <context-param>
@@ -81,6 +85,10 @@
     <servlet-mapping>
         <servlet-name>AddUserServlet</servlet-name>
         <url-pattern>/addUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MovieInfoServlet</servlet-name>
+        <url-pattern>/movieInfo</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>

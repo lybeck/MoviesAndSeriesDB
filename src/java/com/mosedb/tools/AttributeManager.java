@@ -14,10 +14,11 @@ public class AttributeManager {
     
     private static String adminSessionKey = "adminSessionKey";
     private static String errorMessage = "errorMessage";
-    private static String successMessage = "successMessage";
     private static String formatList = "formatList";
     private static String genreList = "genreList";
+    private static String movie = "movie";
     private static String movieList = "movieList";
+    private static String successMessage = "successMessage";
     private static String userList = "userList";
     private static String userSessionKey = "userSessionKey";
     private static String yearList = "yearList";
@@ -36,6 +37,10 @@ public class AttributeManager {
 
     public static List<String> getGenreList(HttpSession session) {
         return (List<String>) session.getAttribute(genreList);
+    }
+        
+    public static Movie getMovie(HttpSession session) {
+        return (Movie) session.getAttribute(movie);
     }
     
     public static List<Movie> getMovieList(HttpSession session) {
@@ -72,6 +77,10 @@ public class AttributeManager {
         session.setAttribute(genreList, genres);
     }
     
+    public static void setMovie(HttpSession session, Movie mov) {
+        session.setAttribute(movie, mov);
+    }
+    
     public static void setMovieList(HttpSession session, List<Movie> movies) {
         session.setAttribute(movieList, movies);
     }
@@ -106,6 +115,10 @@ public class AttributeManager {
         request.setAttribute(genreList, genres);
     }
     
+    public static void setMovie(HttpServletRequest request, Movie mov) {
+        request.setAttribute(movie, mov);
+    }
+    
     public static void setMovieList(HttpServletRequest request, List<Movie> movies) {
         request.setAttribute(movieList, movies);
     }
@@ -138,7 +151,9 @@ public class AttributeManager {
         session.removeAttribute(errorMessage);
         session.removeAttribute(formatList);
         session.removeAttribute(genreList);
+        session.removeAttribute(movie);
         session.removeAttribute(movieList);
+        session.removeAttribute(successMessage);
         session.removeAttribute(userList);
         session.removeAttribute(userSessionKey);
         session.removeAttribute(yearList);
