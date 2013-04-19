@@ -364,6 +364,8 @@ public class MovieService extends AbstractService {
         try {
             Movie movie = movieDao.getMovieById(id);
             movieDao.closeConnection();
+            if(movie == null)
+                return null;
             movie.setNames(movieNameDao.getMovieNames(id));
             movieNameDao.closeConnection();
             movie.setGenres(movieGenreDao.getMovieGenres(id));

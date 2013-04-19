@@ -93,7 +93,7 @@
         <p></p>
         format #1
         <div class='styled-select' style='margin: 0 0 0 0'>
-            <select id='formatSelect1' onclick='addAdditionalInfo(1);' name='mediaFormatDropbox1'>
+            <select id='formatSelect1' onchange='addAdditionalInfo(1);' name='mediaFormatDropbox1'>
                 <c:if test='${formatList != null}'>
                     <c:forEach var='format' items='${formatList}'>
                         <option>${format}</option>

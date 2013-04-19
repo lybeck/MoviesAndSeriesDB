@@ -211,6 +211,13 @@ input[type=radio]:checked + .customCheck:after {
     cursor: pointer;
 }
 
+.button.small{
+    font-size: 95%;
+    padding: 0px 10px;
+    border-radius: 6px;
+    margin: 0;
+}
+
 .button:hover {
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #48494f), color-stop(1, #e6e4eb) );
     background:-moz-linear-gradient( center top, #48494f 5%, #e6e4eb 100% );

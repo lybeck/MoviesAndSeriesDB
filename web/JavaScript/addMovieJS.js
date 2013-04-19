@@ -43,7 +43,7 @@ function addMediaFormatDropbox() {
 
     var boxDiv = "<div class='styled-select' style='margin: 0 0 0 0'>";
     var selectDiv = "<select name='mediaFormatDropbox" + (formatBoxes + 1) + "' id='formatSelect" + 
-            (formatBoxes + 1) + "' onclick='addAdditionalInfo(" + (formatBoxes + 1) + ");'>";
+            (formatBoxes + 1) + "' onchange='addAdditionalInfo(" + (formatBoxes + 1) + ");'>";
     var loops = document.getElementById("formatSelect1").innerHTML;
     var nextDiv = "</select></div>" + "<div id='additionalInfoDiv" + (formatBoxes+1) + 
             "'></div><p></p><div id='mediaFormatDropboxDiv" + (formatBoxes + 1) +

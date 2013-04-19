@@ -17,7 +17,10 @@
 
         <div style="position: relative; right: -150px; z-index: 2; top: 25px;">
             seen
-            <input type="checkbox" id="customSeen" name="seenCheckbox" checked>
+            <input type="checkbox" id="customSeen" name="seenCheckbox" 
+                   <c:if test='${movie.seen}'>
+                       checked
+                       </c:if> >
             <label class="customCheck" for="customSeen"></label>
         </div>
 
@@ -27,7 +30,14 @@
                 <select name='yearDropbox'>
                     <c:if test='${yearList != null}'>
                         <c:forEach var='year' items='${yearList}'>
-                            <option>${year}</option>
+                            <c:choose>
+                                <c:when test="${movie.movieYear == year}">
+                                    <option selected="true">${year}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option>${year}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </c:if>
                 </select>
@@ -51,9 +61,11 @@
             </select>
             <c:if test="${movie != null}">
                 <% int indx = 1;%>
+                <div id='genreDropboxDiv<%out.print(indx);%>'>
                 <c:forEach var='selectedGenre' items='${movie.genres}'>
-                    <div class='styled-select' style='margin: 0 0 0 0'></div>
-                        <select name='genreDropbox<%out.println(indx);%>' id='genreSelect<%out.println(indx);%>'>
+                    Genre #<%out.print(indx);%>
+                    <div class='styled-select' style='margin: 0 0 0 0'>
+                        <select name='genreDropbox<%out.print(indx);%>' id='genreSelect<%out.print(indx);%>'>
                                 <c:forEach var='genre' items='${genreList}'>
                                     <c:choose>
                                         <c:when test="${selectedGenre == genre}">
@@ -68,12 +80,14 @@
                     </div>
                     <p></p>
                     <% indx++;%>
+                    <div id='genreDropboxDiv<%out.print(indx);%>'>
                 </c:forEach>
-            <div id='genreDropboxDiv<%out.println(indx);%>'></div>
+            <%for(int i = 0; i<indx ; i++){%>
+            </div>
+            <%}%>
             </c:if>
 
     </fieldset>
-
     <fieldset class="styledFS" id="leftFields">
         <legend>Names</legend>
         <c:if test="${errorMessage != null}">
@@ -145,16 +159,16 @@
             <% int indx2 = 1;%>
             <c:forEach var='selectedFormat' items='${movie.formats}'>
                 <% if (indx2 != 1) {%>
-                <div id='mediaFormatDropboxDiv1'>
+                <div id='mediaFormatDropboxDiv<%out.print(indx2-1);%>'>
                 <%} else {%>
                 <%}%>
-                format #<%out.println(indx2);%>
+                format #<%out.print(indx2);%>
                 <div class='styled-select' style='margin: 0 0 0 0'>
-                    <select name='mediaFormatDropbox<%out.println(indx2);%>' id='formatSelect<%out.println(indx2);%>'
-                        onclick='addAdditionalInfo(<%out.println(indx2);%>)'>
+                    <select name='mediaFormatDropbox<%out.print(indx2);%>' id='formatSelect<%out.print(indx2);%>'
+                        onchange='addAdditionalInfo(<%out.print(indx2);%>)'>
                     <c:forEach var='format' items='${formatList}'>
                         <c:choose>
-                            <c:when test="${selectedFormat == format}">
+                            <c:when test="${selectedFormat.mediaFormat == format}">
                                 <option selected="true">${format}</option>
                             </c:when>
                             <c:otherwise>
@@ -164,11 +178,11 @@
                     </c:forEach> 
                     </select>
                 </div>
-                <div id="additionalInfoDiv<%out.println(indx2);%>">
-                <c:if test="${selectedFormat == 'dc'}">
+                <div id="additionalInfoDiv<%out.print(indx2);%>">
+                <c:if test="${selectedFormat.mediaFormat == 'dc'}">
                     <br>File-type : 
                     <input type='text' class='styled-textfield'
-                    id='formatFields' name='fileType<%out.println(indx2);%>'
+                    id='formatFields' name='fileType<%out.print(indx2);%>'
                     <c:if test="${selectedFormat.fileType != null}">
                     value='${selectedFormat.fileType}'
                     </c:if>
@@ -176,7 +190,7 @@
 
                     &emsp;Width : 
                     <input type='text' class='styled-textfield'
-                    id='formatFields' name='resox<%out.println(indx2);%>'
+                    id='formatFields' name='resox<%out.print(indx2);%>'
                     <c:if test="${selectedFormat.resoX != null}">
                     value='${selectedFormat.resoX}'
                     </c:if>
@@ -184,7 +198,7 @@
 
                     &emsp;Height : 
                     <input type='text' class='styled-textfield'
-                    id='formatFields' name='resoy<%out.println(indx2);%>'
+                    id='formatFields' name='resoy<%out.print(indx2);%>'
                     <c:if test="${selectedFormat.resoY != null}">
                     value='${selectedFormat.resoY}'
                     </c:if>

@@ -81,23 +81,23 @@
 </form>
 
 <c:if test="${movieList != null}">
-<table class="customTable">
-    <tr>
-        <c:if test="${adminSessionKey != null && adminSessionKey}">
-            <th>Owner</th>
-            </c:if>
-        <th>Eng</th>
-        <th>Fin</th>
-        <th>Swe</th>
-        <th>Other</th>
-        <th>Seen</th>
-    </tr>
     <c:choose>
-        <c:when test="${empty movieList}">
-        </table>                           
+        <c:when test="${empty movieList}">                          
         <p>No hits!</p>
     </c:when>
     <c:otherwise>
+        <table class="customTable">
+            <tr>
+                <c:if test="${adminSessionKey != null && adminSessionKey}">
+                    <th>Owner</th>
+                    </c:if>
+                <th>Eng</th>
+                <th>Fin</th>
+                <th>Swe</th>
+                <th>Other</th>
+                <th>Seen</th>
+                <th>Edit</th>
+            </tr>
         <% int indx = 1;%>
         <c:forEach var="movie" items="${movieList}">
             <% if (indx % 2 == 1) {%>
@@ -137,7 +137,12 @@
                         <c:otherwise>
                             no 
                         </c:otherwise>
-                    </c:choose></td>
+                    </c:choose>
+                </td>
+                <td>
+                    <input type="submit" class="button small" value="Edit" 
+                           name='${movie.id}'>
+                </td>
             </tr>
             <% indx = indx + 1;%>
         </c:forEach>
