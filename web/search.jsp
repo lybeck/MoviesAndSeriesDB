@@ -80,6 +80,7 @@
     <input type="submit" class="button" value="Search">
 </form>
 
+<c:if test="${movieList != null}">
 <table class="customTable">
     <tr>
         <c:if test="${adminSessionKey != null && adminSessionKey}">
@@ -92,7 +93,7 @@
         <th>Seen</th>
     </tr>
     <c:choose>
-        <c:when test="${empty movieList || movieList == null}">
+        <c:when test="${empty movieList}">
         </table>                           
         <p>No hits!</p>
     </c:when>
@@ -140,9 +141,9 @@
             </tr>
             <% indx = indx + 1;%>
         </c:forEach>
+    </c:otherwise>
+    </c:choose>
     </table>       
-</c:otherwise>
-</c:choose>
-
+</c:if>
 
 <%@include file="bottom.jspf" %>
