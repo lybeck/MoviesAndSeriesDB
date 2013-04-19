@@ -348,6 +348,32 @@ public class MovieService extends AbstractService {
     }
 
     public Movie getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        MovieDao movieDao;
+        MovieNameDao movieNameDao;
+        MovieGenreDao movieGenreDao;
+        MovieFormatDao movieFormatDao;
+        try {
+            movieDao = new MovieDao();
+            movieNameDao = new MovieNameDao();
+            movieGenreDao = new MovieGenreDao();
+            movieFormatDao = new MovieFormatDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return null;
+        }
+        try {
+            Movie movie = movieDao.getMovieById(id);
+            movieDao.closeConnection();
+            movie.setNames(movieNameDao.getMovieNames(id));
+            movieNameDao.closeConnection();
+            movie.setGenres(movieGenreDao.getMovieGenres(id));
+            movieGenreDao.closeConnection();
+            movie.setFormats(movieFormatDao.getFormats(id));
+            movieFormatDao.closeConnection();
+            return movie;
+        } catch (SQLException ex) {
+            reportError("Error while retrieving movie by id.", ex);
+            return null;
+        }
     }
 }

@@ -306,4 +306,19 @@ public class MovieDao extends AbstractDao {
         result.close();
         return list;
     }
+
+    public Movie getMovieById(int id) throws SQLException {
+        String sql = "select owner, movieyear, seen from mosedb.movie where movieid=?";
+        ResultSet result = executeQuery(sql, id);
+        if (!result.next()) {
+            return null;
+        }
+        String owner = result.getString("owner");
+        Integer movieYear = result.getInt("movieyear");
+        if (movieYear == 0) {
+            movieYear = null;
+        }
+        boolean seen = result.getBoolean("seen");
+        return new Movie(id, owner, seen, movieYear);
+    }
 }

@@ -4,6 +4,8 @@
  */
 package com.mosedb.dao;
 
+import com.mosedb.models.Format;
+import com.mosedb.models.Format.MediaFormat;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -60,5 +62,37 @@ public class MovieFormatDao extends AbstractDao {
         }
         result.close();
         return set;
+    }
+
+    public List<Format> getFormats(int movieid) throws SQLException {
+        String sql = "select f.mediaformat, f.filetype, f.resox, f.resoy "
+                + "from mosedb.movieformat mf, mosedb.format f "
+                + "where mf.movieid=? and f.formatid=mf.formatid";
+        ResultSet result = executeQuery(sql, movieid);
+        List<Format> list = new ArrayList<Format>();
+        while (result.next()) {
+            Format format;
+            MediaFormat mediaFormat = Format.getMediaFormat(result.getString("mediaformat"));
+            if (mediaFormat == MediaFormat.dc) {
+                String filetype = result.getString("filetype");
+                int resox = result.getInt("resox");
+                int resoy = result.getInt("resoy");
+                if (resox == 0 || resoy == 0) {
+                    format = new Format(mediaFormat, filetype);
+                } else {
+                    format = new Format(mediaFormat, filetype, resox, resoy);
+                }
+            } else {
+                format = new Format(Format.MediaFormat.dvd);
+            }
+            list.add(format);
+        }
+        return list;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        MovieFormatDao movieFormatDao = new MovieFormatDao();
+        System.out.println(movieFormatDao.getFormats(4));
+        movieFormatDao.closeConnection();
     }
 }
