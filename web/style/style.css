@@ -224,6 +224,12 @@ input[type=radio]:checked + .customCheck:after {
     background-color:#48494f;
 }
 
+.button:disabled {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e9eaf8), color-stop(1, #e9eaf8) );
+    background:-moz-linear-gradient( center top, #e9eaf8 5%, #e9eaf8 100% );
+    cursor: default;
+}
+
 .styledFS{
     margin: 10px;
     border: 3px solid #131219;

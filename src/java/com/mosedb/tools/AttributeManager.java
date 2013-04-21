@@ -158,5 +158,9 @@ public class AttributeManager {
         session.removeAttribute(userSessionKey);
         session.removeAttribute(yearList);
     }
+    
+    public static void removeMovie(HttpSession session){
+        session.removeAttribute(movie);
+    }
 
 }

@@ -80,75 +80,77 @@
     <input type="submit" class="button" value="Search">
 </form>
 
-<c:if test="${movieList != null}">
-    <c:choose>
-        <c:when test="${empty movieList}">                          
-        <p>No hits!</p>
-    </c:when>
-    <c:otherwise>
-        <table class="customTable">
-            <tr>
-                <c:if test="${adminSessionKey != null && adminSessionKey}">
-                    <th>Owner</th>
+<form action="movieInfo" method="post">
+    <c:if test="${movieList != null}">
+        <c:choose>
+            <c:when test="${empty movieList}">                          
+            <p>No hits!</p>
+        </c:when>
+        <c:otherwise>
+            <table class="customTable">
+                <tr>
+                    <c:if test="${adminSessionKey != null && adminSessionKey}">
+                        <th>Owner</th>
+                        </c:if>
+                    <th>Eng</th>
+                    <th>Fin</th>
+                    <th>Swe</th>
+                    <th>Other</th>
+                    <th>Seen</th>
+                    <th>Edit</th>
+                </tr>
+            <% int indx = 1;%>
+            <c:forEach var="movie" items="${movieList}">
+                <% if (indx % 2 == 1) {%>
+                <tr>
+                    <%} else {%>
+                <tr class="red">
+                    <%}%>
+                    <c:if test="${adminSessionKey != null && adminSessionKey}">
+                        <td>
+                            ${movie.owner}
+                        </td>
                     </c:if>
-                <th>Eng</th>
-                <th>Fin</th>
-                <th>Swe</th>
-                <th>Other</th>
-                <th>Seen</th>
-                <th>Edit</th>
-            </tr>
-        <% int indx = 1;%>
-        <c:forEach var="movie" items="${movieList}">
-            <% if (indx % 2 == 1) {%>
-            <tr>
-                <%} else {%>
-            <tr class="red">
-                <%}%>
-                <c:if test="${adminSessionKey != null && adminSessionKey}">
                     <td>
-                        ${movie.owner}
+                        <c:if test="${movie.nameEng != null}" >
+                            ${movie.nameEng} 
+                        </c:if>
                     </td>
-                </c:if>
-                <td>
-                    <c:if test="${movie.nameEng != null}" >
-                        ${movie.nameEng} 
-                    </c:if>
-                </td>
-                <td>
-                    <c:if test="${movie.nameFi != null}" >
-                        ${movie.nameFi} 
-                    </c:if>
-                </td>
-                <td>
-                    <c:if test="${movie.nameSwe != null}" >
-                        ${movie.nameSwe} 
-                    </c:if>
-                </td>
-                <td>
-                    <c:if test="${movie.nameOther != null}" >
-                        ${movie.nameOther} 
-                    </c:if>
-                </td>
-                <td><c:choose>
-                        <c:when test="${movie.seen}" >
-                            yes
-                        </c:when>
-                        <c:otherwise>
-                            no 
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>
-                    <input type="submit" class="button small" value="Edit" 
-                           name='${movie.id}'>
-                </td>
-            </tr>
-            <% indx = indx + 1;%>
-        </c:forEach>
-    </c:otherwise>
-    </c:choose>
-    </table>       
-</c:if>
+                    <td>
+                        <c:if test="${movie.nameFi != null}" >
+                            ${movie.nameFi} 
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${movie.nameSwe != null}" >
+                            ${movie.nameSwe} 
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${movie.nameOther != null}" >
+                            ${movie.nameOther} 
+                        </c:if>
+                    </td>
+                    <td><c:choose>
+                            <c:when test="${movie.seen}" >
+                                yes
+                            </c:when>
+                            <c:otherwise>
+                                no 
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td>
+                        <button type="submit" class="button small" value="${movie.id}" 
+                               name='Edit'>Edit</button>
+                    </td>
+                </tr>
+                <% indx = indx + 1;%>
+            </c:forEach>
+        </c:otherwise>
+        </c:choose>
+        </table>       
+    </c:if>
+</form>
 
 <%@include file="bottom.jspf" %>

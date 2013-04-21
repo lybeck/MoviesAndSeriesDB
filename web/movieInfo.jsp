@@ -12,6 +12,10 @@
 
 <h3>Edit movie-info</h3>
 <form action="updateMovieInfo" method="post">
+    <c:if test="${movie == null}">
+        <p id="errorMessage">Failed to retrieve movie-information from database!</p>
+    </c:if>
+        
     <fieldset class="styledFS" style='text-align: left; width: 40%; float:right;'>
         <legend>Movie info</legend>
 
@@ -216,7 +220,8 @@
     </fieldset>
 
     <br>
-    <input type="submit" class="button" value="Update changes" />
+    <input type="submit" class="button" value="Update changes" 
+           <c:if test="${movie == null}">disabled</c:if>/>
     <p></p>
 </form>
 

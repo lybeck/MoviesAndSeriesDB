@@ -52,7 +52,7 @@ public class AddMovieServlet extends MosedbServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
-
+            
             List<String> genreList = new GenreService().getAllGenres();
             AttributeManager.setGenreList(session, genreList);
             List<String> formatList = Format.getAllMediaFormats();
