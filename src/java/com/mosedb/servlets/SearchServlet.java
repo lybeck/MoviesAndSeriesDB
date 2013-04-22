@@ -45,6 +45,7 @@ public class SearchServlet extends MosedbServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
             User user = AttributeManager.getUserSessionKey(session);

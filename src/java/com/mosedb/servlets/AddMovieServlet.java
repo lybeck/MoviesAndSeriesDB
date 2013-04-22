@@ -29,6 +29,7 @@ public class AddMovieServlet extends AbstractMovieInfoServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
 
@@ -52,6 +53,7 @@ public class AddMovieServlet extends AbstractMovieInfoServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             Map<LangId, String> names = getNameMap(request);
             if (names.isEmpty()) {
