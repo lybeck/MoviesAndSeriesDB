@@ -9,10 +9,9 @@
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
 <script src="JavaScript/addMovieJS.js"></script>
-<script src="JavaScript/addMovieInfoJS.js"></script>
 
 <h3>Edit movie-info</h3>
-<form action="updateMovieInfo" method="post">
+<form action="updateMovie" method="post">
     <c:if test="${movie == null}">
         <p id="errorMessage">Failed to retrieve movie-information from database!</p>
     </c:if>
@@ -226,9 +225,11 @@
     </fieldset>
 
     <br>
-    <input type="submit" class="button" value="Update changes" 
-           <c:if test="${movie == null}">disabled</c:if>/>
-    <p></p>
+    <button type="submit" class="button" value="update_changes" name="submit"
+           <c:if test="${movie == null}">disabled</c:if>>Update changes</button> 
+    &emsp;
+    <button type="submit" class="button" value="delete_movie" name="submit"
+           <c:if test="${movie == null}">disabled</c:if>>Delete movie</button> 
 </form>
 
 <%@include file="bottom.jspf" %>
