@@ -104,7 +104,7 @@ public class MovieNameDao extends AbstractDao {
         String sql = "select movieid from mosedb.moviename "
                 + "where lower(moviename) like lower('%" + list.get(0) + "%')";
         for (int i = 1; i < list.size(); i++) {
-            sql += " or lower(moviename) like lower('%" + list.get(i) + "%')";
+            sql += " and lower(moviename) like lower('%" + list.get(i) + "%')";
         }
         ResultSet result = executeQuery(sql);
         Set<Integer> set = new HashSet<Integer>();
