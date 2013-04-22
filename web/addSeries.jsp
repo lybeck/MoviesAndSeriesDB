@@ -1,26 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<<%@include file="topNav.jspf" %>
+<%@include file="topNav.jspf" %>
 <script src="JavaScript/addMovieJS.js"></script>
 
 <h3>Add series to database</h3>
 <form action="addSeries" method="post">
     <fieldset class="styledFS" style='text-align: left; width: 40%; float:right;'>
-        <legend>Series info</legend>
-        
-            Year:
-            <div class="styled-select" id="yearBar">
-                <select name='yearDropbox'>
-                    <c:if test='${yearList != null}'>
-                        <c:forEach var='year' items='${yearList}'>
-                            <option>${year}</option>
-                        </c:forEach>
-                    </c:if>
-                </select>
-            </div>
-
-            <p></p>
-
+        <legend>Genre</legend>
             Add / remove genre:
             <input type="button" class="button" value="+" id="plusButton"
                    onclick="addGenreDropbox();">
@@ -69,35 +55,9 @@
         <input type="text" class="styled-textfield" id="namefields"
                name="otherName"/>
     </fieldset>
-    <fieldset class="styledFS" id="leftFields">
-            <legend>Media info</legend>
-        Add / remove Media format:
-        <input type="button" class="button" value="+" id="plusButton"
-               onclick="addMediaFormatDropbox();">
-        <input type="button" class="button" value="-" id="minusButton"
-               onclick="removeMediaFormatDropbox();">
-
-        <p></p>
-        format #1
-        <div class='styled-select' style='margin: 0 0 0 0'>
-            <select id='formatSelect1' onchange='addAdditionalInfo(1);' name='mediaFormatDropbox1'>
-                <c:if test='${formatList != null}'>
-                    <c:forEach var='format' items='${formatList}'>
-                        <option>${format}</option>
-                    </c:forEach>
-                </c:if>
-            </select>
-        </div>
-        <div id="additionalInfoDiv1"></div>
-        <p></p>
-        <div id='mediaFormatDropboxDiv1'></div>
-        </fieldset>
-
-        <br>
-        <input type="submit" class="button" value="Add movie" />
-        <p></p>
-    </div>
-
+    
+    <button type="submit" class="button" name="add_series" value="add_series" >
+        Add Series</button>
 </form>
 
 <%@include file="bottom.jspf" %>
