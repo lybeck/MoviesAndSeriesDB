@@ -91,6 +91,26 @@ function addAdditionalInfo(boxNumber) {
     }
 }
 
+function addMediaFormatDropbox_v2() {
+    var selects = document.getElementsByTagName('select');
+    var formatBoxes = 0;
+    for (var i = 0; i < selects.length; i++) {
+        if (selects[i].name.substring(0, 18) == "mediaFormatDropbox") {
+            formatBoxes = formatBoxes + 1;
+        }
+    }
+    var boxDiv = "<div class='styled-select' style='margin: 0 0 0 0'>";
+    var selectDiv = "<select name='mediaFormatDropbox" + (formatBoxes + 1) + "' id='formatSelect" + 
+            (formatBoxes + 1) + "' onchange='addAdditionalInfo(" + (formatBoxes + 1) + ");'>";
+    var loops = document.getElementById("formatSelect0").innerHTML;
+    var nextDiv = "</select></div>" + "<div id='additionalInfoDiv" + (formatBoxes+1) + 
+            "'></div><p></p><div id='mediaFormatDropboxDiv" + (formatBoxes + 1) +
+            "'></div> ";
+    var code = "format #" + (formatBoxes + 1) + boxDiv + selectDiv + loops + nextDiv;
+    document.getElementById("mediaFormatDropboxDiv" + formatBoxes).innerHTML = code;
+}
+
+
 
 
 

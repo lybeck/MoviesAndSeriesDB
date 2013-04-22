@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
 <script src="JavaScript/addMovieJS.js"></script>
+<script src="JavaScript/addMovieInfoJS.js"></script>
 
 <h3>Edit movie-info</h3>
 <form action="updateMovieInfo" method="post">
@@ -153,11 +154,20 @@
         <legend>Media info</legend>
         Add / remove Media format:
         <input type="button" class="button" value="+" id="plusButton"
-               onclick="addMediaFormatDropbox();">
+               onclick="addMediaFormatDropbox_v2();">
         <input type="button" class="button" value="-" id="minusButton"
                onclick="removeMediaFormatDropbox();">
 
         <p></p>
+        
+        <select id='formatSelect0' style="display: none;">
+            <c:if test='${formatList != null}'>
+                <c:forEach var='format' items='${formatList}'>
+                    <option>${format}</option>
+                </c:forEach>
+            </c:if>
+        </select>
+  
         
         <c:if test="${movie != null}">
             <% int indx2 = 1;%>
