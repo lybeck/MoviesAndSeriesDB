@@ -13,11 +13,13 @@ import javax.servlet.http.HttpSession;
 public class AttributeManager {
     
     private static String adminSessionKey = "adminSessionKey";
+    private static String episodeDropbox = "episodeDropbox";
     private static String errorMessage = "errorMessage";
     private static String formatList = "formatList";
     private static String genreList = "genreList";
     private static String movie = "movie";
     private static String movieList = "movieList";
+    private static String seasonDropbox = "seasonDropbox";
     private static String successMessage = "successMessage";
     private static String userList = "userList";
     private static String userSessionKey = "userSessionKey";
@@ -25,6 +27,10 @@ public class AttributeManager {
 
     public static boolean getAdminSessionKey(HttpSession session) {
         return (Boolean) session.getAttribute(adminSessionKey);
+    }
+    
+    public static List<Integer> getEpisodeDropbox(HttpSession session){
+        return (List<Integer>) session.getAttribute(episodeDropbox);
     }
 
     public static String getErrorMessage(HttpSession session) {
@@ -47,6 +53,10 @@ public class AttributeManager {
         return (List<Movie>) session.getAttribute(movieList);
     }
     
+    public static List<Integer> getSeasonDropbox(HttpSession session){
+        return (List<Integer>) session.getAttribute(seasonDropbox);
+    }
+    
     public static List<User> getUserList(HttpSession session) {
         return (List<User>) session.getAttribute(userList);
     }
@@ -63,6 +73,10 @@ public class AttributeManager {
     
     public static void setAdminSessionKey(HttpSession session, boolean isAdmin) {
         session.setAttribute(adminSessionKey, isAdmin);
+    }
+    
+    public static void setEpisodeDropbox(HttpSession session, List<Integer> episodes ){
+        session.setAttribute(episodeDropbox, episodes);
     }
 
     public static void setErrorMessage(HttpSession session, String message) {
@@ -85,6 +99,10 @@ public class AttributeManager {
         session.setAttribute(movieList, movies);
     }
     
+    public static void setSeasonDropbox(HttpSession session, List<Integer> episodes ){
+        session.setAttribute(seasonDropbox, episodes);
+    }
+    
     public static void setUserList(HttpSession session, List<User> users) {
         session.setAttribute(userList, users);
     }
@@ -101,6 +119,10 @@ public class AttributeManager {
     
     public static void setAdminSessionKey(HttpServletRequest request, boolean isAdmin) {
         request.setAttribute(adminSessionKey, isAdmin);
+    }
+    
+    public static void setEpisodeDropbox(HttpServletRequest request, List<Integer> episodes ){
+        request.setAttribute(episodeDropbox, episodes);
     }
 
     public static void setErrorMessage(HttpServletRequest request, String message) {
@@ -122,6 +144,11 @@ public class AttributeManager {
     public static void setMovieList(HttpServletRequest request, List<Movie> movies) {
         request.setAttribute(movieList, movies);
     }
+    
+    public static void setSeasonDropbox(HttpServletRequest request, List<Integer> episodes ){
+        request.setAttribute(seasonDropbox, episodes);
+    }
+    
     public static void setUserList(HttpServletRequest request, List<User> users) {
         request.setAttribute(userList, users);
     }
@@ -148,11 +175,13 @@ public class AttributeManager {
     
     public static void removeAll(HttpSession session){
         session.removeAttribute(adminSessionKey);
+        session.removeAttribute(episodeDropbox);
         session.removeAttribute(errorMessage);
         session.removeAttribute(formatList);
         session.removeAttribute(genreList);
         session.removeAttribute(movie);
         session.removeAttribute(movieList);
+        session.removeAttribute(seasonDropbox);
         session.removeAttribute(successMessage);
         session.removeAttribute(userList);
         session.removeAttribute(userSessionKey);
