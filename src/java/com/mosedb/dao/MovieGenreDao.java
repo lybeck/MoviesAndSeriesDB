@@ -34,14 +34,14 @@ public class MovieGenreDao extends AbstractDao {
         return success;
     }
 
-    public boolean removeMovieGenre(int movieid, String genrename) throws SQLException {
+    public void removeMovieGenre(int movieid, String genrename) throws SQLException {
         String sql = "delete from mosedb.moviegenre where movieid=? and genrename=?";
-        return executeUpdate(sql, movieid, genrename);
+        executeUpdate(sql, movieid, genrename);
     }
 
-    public boolean removeMovieGenres(int movieid) throws SQLException {
+    public void removeMovieGenres(int movieid) throws SQLException {
         String sql = "delete from mosedb.moviegenre where movieid=?";
-        return executeUpdate(sql, movieid);
+        executeUpdate(sql, movieid);
     }
 
     public List<String> getMovieGenres(int movieid) throws SQLException {
@@ -81,11 +81,7 @@ public class MovieGenreDao extends AbstractDao {
     }
 
     public boolean updateMovieGenres(int id, List<String> genres) throws SQLException {
-        boolean success = removeMovieGenres(id);
-        if (!success) {
-            return false;
-        }
-        success = addMovieGenres(id, genres);
-        return success;
+        removeMovieGenres(id);
+        return addMovieGenres(id, genres);
     }
 }

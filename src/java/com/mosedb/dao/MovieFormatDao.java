@@ -28,10 +28,10 @@ public class MovieFormatDao extends AbstractDao {
         return executeUpdate(sql, movieid, formatid);
     }
 
-    public boolean removeMovieFormats(int movieid) throws SQLException {
+    public void removeMovieFormats(int movieid) throws SQLException {
         String sql = "delete from mosedb.format f using mosedb.movieformat mf "
                 + "where mf.movieid=? and f.formatid=mf.formatid";
-        return executeUpdate(sql, movieid);
+        executeUpdate(sql, movieid);
     }
 
     public List<Integer> getFormatIds(int movieid) throws SQLException {

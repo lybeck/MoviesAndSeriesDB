@@ -7,24 +7,15 @@ package com.mosedb.servlets;
 import com.mosedb.business.GenreService;
 import com.mosedb.business.MovieService;
 import com.mosedb.models.Format;
-import com.mosedb.models.Format.MediaFormat;
 import com.mosedb.models.Movie;
 import com.mosedb.models.Movie.LangId;
 import com.mosedb.models.User;
 import com.mosedb.tools.AttributeManager;
-import com.mosedb.tools.LoginManager;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.EnumMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +31,7 @@ public class AddMovieServlet extends AbstractMovieInfoServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
-            
+
             List<String> genreList = new GenreService().getAllGenres();
             AttributeManager.setGenreList(session, genreList);
             List<String> formatList = Format.getAllMediaFormats();
@@ -87,6 +78,4 @@ public class AddMovieServlet extends AbstractMovieInfoServlet {
             redirectHome(request, response);
         }
     }
-    
-    
 }

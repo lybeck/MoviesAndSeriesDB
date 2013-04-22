@@ -30,13 +30,12 @@ public abstract class AbstractDao {
         PreparedStatement pst = connection.prepareStatement(sql);
         int i = 1;
         for (Object value : values) {
-            if (value.getClass() == Movie.LangId.class || value.getClass() == Format.MediaFormat.class) {
+            if (value != null && (value.getClass() == Movie.LangId.class || value.getClass() == Format.MediaFormat.class)) {
                 pst.setObject(i++, value.toString());
             } else {
                 pst.setObject(i++, value);
             }
         }
-//        System.out.println(pst);
         int result = pst.executeUpdate();
         return result != 0;
     }

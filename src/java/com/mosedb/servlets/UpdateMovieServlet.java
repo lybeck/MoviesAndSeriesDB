@@ -75,6 +75,7 @@ public class UpdateMovieServlet extends AbstractMovieInfoServlet {
                 return;
             }
             int id = AttributeManager.getMovie(session).getId();
+            movie.setId(id);
             boolean success = new MovieService().updateMovie(movie, id);
             if (!success) {
                 AttributeManager.setErrorMessage(request, "Movie update caused an unknown error..");

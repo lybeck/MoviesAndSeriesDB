@@ -325,7 +325,7 @@ public class MovieService extends AbstractService {
                 formatId = -1;
                 if (format.hasFileInfo()) {
                     if (format.hasResoInfo()) {
-                        formatId = formatDao.addFormatDigitalCopy(format.getFileType(), format.getResoX(), format.getResoX());
+                        formatId = formatDao.addFormatDigitalCopy(format.getFileType(), format.getResoX(), format.getResoY());
                     } else {
                         formatId = formatDao.addFormatDigitalCopy(format.getFileType());
                     }

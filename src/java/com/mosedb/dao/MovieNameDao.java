@@ -41,21 +41,18 @@ public class MovieNameDao extends AbstractDao {
     }
 
     public boolean updateMovieNames(int movieid, Map<LangId, String> names) throws SQLException {
-        boolean success = removeMovieNames(movieid);
-        if (!success) {
-            return false;
-        }
+        removeMovieNames(movieid);
         return addMovieNames(movieid, names);
     }
 
-    public boolean removeMovieNames(int movieid) throws SQLException {
+    public void removeMovieNames(int movieid) throws SQLException {
         String sql = "delete from mosedb.moviename where movieid=?";
-        return executeUpdate(sql, movieid);
+        executeUpdate(sql, movieid);
     }
 
-    public boolean removeMovieName(int movieid, Movie.LangId langid) throws SQLException {
+    public void removeMovieName(int movieid, Movie.LangId langid) throws SQLException {
         String sql = "delete from mosedb.moviename where movieid=? and langid=cast(? as mosedb.langid)";
-        return executeUpdate(sql, movieid, langid);
+        executeUpdate(sql, movieid, langid);
     }
 
     public String getMovieName(int movieid, Movie.LangId langid) throws SQLException {

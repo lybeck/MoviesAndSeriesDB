@@ -59,9 +59,9 @@ public class FormatDao extends AbstractDao {
         return id;
     }
 
-    public boolean removeFormat(int formatid) throws SQLException {
+    public void removeFormat(int formatid) throws SQLException {
         String sql = "delete from mosedb.format where formatid=?";
-        return executeUpdate(sql, formatid);
+        executeUpdate(sql, formatid);
     }
 
     public Format getFormat(int formatid) throws SQLException {

@@ -71,12 +71,11 @@ public class MovieDao extends AbstractDao {
      * other movie related tables are not removed first.
      *
      * @param movieid Id of the movie to be removed.
-     * @return True if the movie was successfully removed, otherwise false.
      * @throws SQLException
      */
-    public boolean removeMovie(int movieid) throws SQLException {
+    public void removeMovie(int movieid) throws SQLException {
         String sql = "delete from mosedb.movie where movieid=?";
-        return executeUpdate(sql, movieid);
+        executeUpdate(sql, movieid);
     }
 
     public boolean updateMovieSeen(int movieid, boolean seen) throws SQLException {
@@ -84,7 +83,7 @@ public class MovieDao extends AbstractDao {
         return executeUpdate(sql, seen, movieid);
     }
 
-    public boolean updateMovieYear(int movieid, int newyear) throws SQLException {
+    public boolean updateMovieYear(int movieid, Integer newyear) throws SQLException {
         String sql = "update mosedb.movie set (movieyear)=(?) where movieid=?";
         return executeUpdate(sql, newyear, movieid);
     }
