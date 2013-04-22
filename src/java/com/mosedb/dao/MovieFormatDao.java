@@ -83,7 +83,7 @@ public class MovieFormatDao extends AbstractDao {
                     format = new Format(mediaFormat, filetype, resox, resoy);
                 }
             } else {
-                format = new Format(Format.MediaFormat.dvd);
+                format = new Format(mediaFormat);
             }
             list.add(format);
         }
