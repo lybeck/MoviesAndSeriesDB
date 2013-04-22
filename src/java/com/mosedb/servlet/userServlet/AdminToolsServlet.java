@@ -1,7 +1,8 @@
-package com.mosedb.servlets;
+package com.mosedb.servlet.userServlet;
 
 import com.mosedb.business.UserService;
 import com.mosedb.models.User;
+import com.mosedb.servlet.MosedbServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
 import javax.servlet.ServletException;

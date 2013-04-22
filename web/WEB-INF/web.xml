@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -8,56 +7,52 @@
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.LoginServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.userServlet.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.LogoutServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.userServlet.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MosedbServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.MosedbServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.MosedbServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.SearchServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.SearchServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddMovieServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.AddMovieServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.movieServlet.AddMovieServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminToolsServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.AdminToolsServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.userServlet.AdminToolsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteUserServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.DeleteUserServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.userServlet.DeleteUserServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddUserServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.AddUserServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.userServlet.AddUserServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MovieInfoServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.MovieInfoServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.movieServlet.MovieInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateMovieServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.UpdateMovieServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.movieServlet.UpdateMovieServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddSeriesServlet</servlet-name>
-        <servlet-class>com.mosedb.servlets.AddSeriesServlet</servlet-class>
+        <servlet-class>com.mosedb.servlet.seriesServlet.AddSeriesServlet</servlet-class>
     </servlet>
-    
-    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
-    
-    
     <servlet-mapping>
         <servlet-name>MosedbServlet</servlet-name>
         <url-pattern>/home</url-pattern>

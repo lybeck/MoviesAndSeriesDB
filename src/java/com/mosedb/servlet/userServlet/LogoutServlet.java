@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mosedb.servlets;
+package com.mosedb.servlet.userServlet;
 
+import com.mosedb.servlet.MosedbServlet;
 import com.mosedb.tools.LoginManager;
 import java.io.IOException;
 import javax.servlet.ServletException;

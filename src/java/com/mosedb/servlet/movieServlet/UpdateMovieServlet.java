@@ -2,12 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mosedb.servlets;
+package com.mosedb.servlet.movieServlet;
 
 import com.mosedb.business.MovieService;
 import com.mosedb.models.Format;
 import com.mosedb.models.Movie;
 import com.mosedb.models.User;
+import com.mosedb.servlet.AbstractInfoServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
 import java.util.List;

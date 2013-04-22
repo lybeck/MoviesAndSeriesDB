@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mosedb.dao;
+package com.mosedb.dao.movieDao;
 
+import com.mosedb.dao.AbstractDao;
 import com.mosedb.models.Format;
 import com.mosedb.models.Format.MediaFormat;
 import java.sql.ResultSet;

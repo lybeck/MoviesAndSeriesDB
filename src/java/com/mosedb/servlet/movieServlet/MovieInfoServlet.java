@@ -1,9 +1,10 @@
-package com.mosedb.servlets;
+package com.mosedb.servlet.movieServlet;
 
 import com.mosedb.business.GenreService;
 import com.mosedb.business.MovieService;
 import com.mosedb.models.Format;
 import com.mosedb.models.Movie;
+import com.mosedb.servlet.MosedbServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
 import java.util.ArrayList;

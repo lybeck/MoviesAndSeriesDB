@@ -5,10 +5,10 @@
 package com.mosedb.business;
 
 import com.mosedb.dao.FormatDao;
-import com.mosedb.dao.MovieDao;
-import com.mosedb.dao.MovieFormatDao;
-import com.mosedb.dao.MovieGenreDao;
-import com.mosedb.dao.MovieNameDao;
+import com.mosedb.dao.movieDao.MovieDao;
+import com.mosedb.dao.movieDao.MovieFormatDao;
+import com.mosedb.dao.movieDao.MovieGenreDao;
+import com.mosedb.dao.movieDao.MovieNameDao;
 import com.mosedb.models.Format;
 import com.mosedb.models.Movie;
 import com.mosedb.models.User;

@@ -28,7 +28,7 @@ public class UserDao extends AbstractDao {
      * @return List of all users, null if connection failed.
      */
     public List<User> getAllUsers() throws SQLException {
-        String sql = "select username, firstname, lastname, admin from mosedb.users;";
+        String sql = "select username, firstname, lastname, admin from mosedb.users order by admin, username";
         ResultSet result = executeQuery(sql);
         List<User> list = new ArrayList<User>();
         String usr, fst, lst;
