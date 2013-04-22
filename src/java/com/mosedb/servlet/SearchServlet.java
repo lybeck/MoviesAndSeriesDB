@@ -5,7 +5,9 @@
 package com.mosedb.servlet;
 
 import com.mosedb.business.MovieService;
+import com.mosedb.business.SeriesService;
 import com.mosedb.models.Movie;
+import com.mosedb.models.Series;
 import com.mosedb.models.User;
 import com.mosedb.tools.AttributeManager;
 import com.mosedb.tools.LoginManager;
@@ -54,7 +56,6 @@ public class SearchServlet extends MosedbServlet {
 
             String searchField = request.getParameter(SEARCH_FIELD_NAME);
             String dropBox = request.getParameter(DROP_BOX_NAME);
-            List<Movie> movieList;
 
             String searchType = request.getParameter(MOVIE_OR_SERIES_SEARCH);
             String seenCheck = request.getParameter(SEEN_RADIO);
@@ -68,6 +69,8 @@ public class SearchServlet extends MosedbServlet {
 
 
             if (searchType.equals(MOVIE_SEARCH)) {
+                
+                List<Movie> movieList;
 
                 if (searchField == null || searchField.isEmpty() || searchField.equals(SEARCH_FIELD_DEFAULT)
                         || dropBox == null) {
@@ -89,6 +92,11 @@ public class SearchServlet extends MosedbServlet {
                 restorePage("search.jsp", request, response);
 
             } else { /* Series search */
+                
+                List<Series> seriesList;
+                
+                seriesList = new SeriesService().getSeries(user);
+                
                 restorePage("search.jsp", request, response);
             }
         } else {

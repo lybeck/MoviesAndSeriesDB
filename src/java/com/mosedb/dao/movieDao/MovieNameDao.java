@@ -5,8 +5,7 @@
 package com.mosedb.dao.movieDao;
 
 import com.mosedb.dao.AbstractDao;
-import com.mosedb.models.Movie;
-import com.mosedb.models.Movie.LangId;
+import com.mosedb.models.LangId;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.EnumMap;
@@ -25,7 +24,7 @@ public class MovieNameDao extends AbstractDao {
         super();
     }
 
-    public boolean addMovieName(int movieid, Movie.LangId langid, String moviename) throws SQLException {
+    public boolean addMovieName(int movieid, LangId langid, String moviename) throws SQLException {
         String sql = "insert into mosedb.moviename (movieid, langid, moviename) values (?,cast(? as mosedb.langid),?)";
         return executeUpdate(sql, movieid, langid, moviename);
     }
@@ -51,12 +50,12 @@ public class MovieNameDao extends AbstractDao {
         executeUpdate(sql, movieid);
     }
 
-    public void removeMovieName(int movieid, Movie.LangId langid) throws SQLException {
+    public void removeMovieName(int movieid, LangId langid) throws SQLException {
         String sql = "delete from mosedb.moviename where movieid=? and langid=cast(? as mosedb.langid)";
         executeUpdate(sql, movieid, langid);
     }
 
-    public String getMovieName(int movieid, Movie.LangId langid) throws SQLException {
+    public String getMovieName(int movieid, LangId langid) throws SQLException {
         String sql = "select moviename from mosedb.moviename where movieid=? and langid=cast(? as mosedb.langid)";
         ResultSet result = executeQuery(sql, movieid, langid);
         String name = null;
@@ -67,12 +66,12 @@ public class MovieNameDao extends AbstractDao {
         return name;
     }
 
-    public Map<Movie.LangId, String> getMovieNames(int movieid) throws SQLException {
+    public Map<LangId, String> getMovieNames(int movieid) throws SQLException {
         String sql = "select langid, moviename from mosedb.moviename where movieid=?";
         ResultSet result = executeQuery(sql, movieid);
-        Map<Movie.LangId, String> map = new EnumMap<Movie.LangId, String>(Movie.LangId.class);
+        Map<LangId, String> map = new EnumMap<LangId, String>(LangId.class);
         while (result.next()) {
-            Movie.LangId id = Movie.getLangId(result.getString("langid"));
+            LangId id = LangId.getLangId(result.getString("langid"));
             String name = result.getString("moviename");
             map.put(id, name);
         }

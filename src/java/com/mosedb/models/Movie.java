@@ -137,7 +137,7 @@ public class Movie implements Comparable<Movie> {
     }
 
     public void addName(String langId, String name) {
-        LangId lid = getLangId(langId);
+        LangId lid = LangId.getLangId(langId);
         names.put(lid, name);
     }
 
@@ -154,18 +154,6 @@ public class Movie implements Comparable<Movie> {
                 + "genres:\t" + genres + "\n"
                 + "formats:\t" + formats + "\n"
                 + "seen:\t" + seen;
-    }
-
-    public static LangId getLangId(String langId) {
-        LangId enumLangId = LangId.other;
-        if (langId.equalsIgnoreCase("eng")) {
-            enumLangId = LangId.eng;
-        } else if (langId.equalsIgnoreCase("fi")) {
-            enumLangId = LangId.fi;
-        } else if (langId.equalsIgnoreCase("swe")) {
-            enumLangId = LangId.swe;
-        }
-        return enumLangId;
     }
 
     @Override
@@ -229,10 +217,5 @@ public class Movie implements Comparable<Movie> {
             return nameEng.substring(4);
         }
         return nameEng;
-    }
-
-    public static enum LangId {
-
-        eng, fi, swe, other;
     }
 }

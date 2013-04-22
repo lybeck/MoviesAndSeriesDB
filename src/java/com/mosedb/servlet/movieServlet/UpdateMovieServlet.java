@@ -6,6 +6,7 @@ package com.mosedb.servlet.movieServlet;
 
 import com.mosedb.business.MovieService;
 import com.mosedb.models.Format;
+import com.mosedb.models.LangId;
 import com.mosedb.models.Movie;
 import com.mosedb.models.User;
 import com.mosedb.servlet.AbstractInfoServlet;
@@ -60,7 +61,7 @@ public class UpdateMovieServlet extends AbstractInfoServlet {
 
     private void updateMovie(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ServletException, IOException {
         if (isUserLoggedIn(request)) {
-            Map<Movie.LangId, String> names = getNameMap(request);
+            Map<LangId, String> names = getNameMap(request);
             if (names.isEmpty()) {
                 AttributeManager.setErrorMessage(request, "One name must be specified!");
                 restorePage("movieInfo.jsp", request, response);

@@ -10,6 +10,7 @@ import com.mosedb.dao.movieDao.MovieFormatDao;
 import com.mosedb.dao.movieDao.MovieGenreDao;
 import com.mosedb.dao.movieDao.MovieNameDao;
 import com.mosedb.models.Format;
+import com.mosedb.models.LangId;
 import com.mosedb.models.Movie;
 import com.mosedb.models.User;
 import java.sql.SQLException;
@@ -181,7 +182,7 @@ public class MovieService extends AbstractService {
     public boolean addMovie(User user, Movie movie) {
 
         int movieId = addToTableMovie(movie, user);
-        if (movieId < 0) {
+        if (movieId <= 0) {
             return false;
         }
         movie.setId(movieId);
@@ -236,19 +237,19 @@ public class MovieService extends AbstractService {
         try {
             name = movie.getNameEng();
             if (name != null) {
-                movieNameDao.addMovieName(movie.getId(), Movie.LangId.eng, name);
+                movieNameDao.addMovieName(movie.getId(), LangId.eng, name);
             }
             name = movie.getNameFi();
             if (name != null) {
-                movieNameDao.addMovieName(movie.getId(), Movie.LangId.fi, name);
+                movieNameDao.addMovieName(movie.getId(), LangId.fi, name);
             }
             name = movie.getNameSwe();
             if (name != null) {
-                movieNameDao.addMovieName(movie.getId(), Movie.LangId.swe, name);
+                movieNameDao.addMovieName(movie.getId(), LangId.swe, name);
             }
             name = movie.getNameOther();
             if (name != null) {
-                movieNameDao.addMovieName(movie.getId(), Movie.LangId.other, name);
+                movieNameDao.addMovieName(movie.getId(), LangId.other, name);
             }
         } catch (SQLException ex) {
             reportError("Failed to add movie to table mosedb.moviename.", ex);

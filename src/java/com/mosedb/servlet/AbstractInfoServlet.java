@@ -5,6 +5,7 @@
 package com.mosedb.servlet;
 
 import com.mosedb.models.Format;
+import com.mosedb.models.LangId;
 import com.mosedb.models.Movie;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,24 +33,24 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
     private static final String RESOLUTION_Y = "resoy";
     
 
-    protected Map<Movie.LangId, String> getNameMap(HttpServletRequest request) {
+    protected Map<LangId, String> getNameMap(HttpServletRequest request) {
         String engName = request.getParameter(ENG_NAME).trim();
         String fiName = request.getParameter(FI_NAME).trim();
         String sweName = request.getParameter(SWE_NAME).trim();
         String otherName = request.getParameter(OTHER_NAME).trim();
 
-        Map<Movie.LangId, String> names = new EnumMap<Movie.LangId, String>(Movie.LangId.class);
+        Map<LangId, String> names = new EnumMap<LangId, String>(LangId.class);
         if (!engName.isEmpty()) {
-            names.put(Movie.LangId.eng, engName);
+            names.put(LangId.eng, engName);
         }
         if (!fiName.isEmpty()) {
-            names.put(Movie.LangId.fi, fiName);
+            names.put(LangId.fi, fiName);
         }
         if (!sweName.isEmpty()) {
-            names.put(Movie.LangId.swe, sweName);
+            names.put(LangId.swe, sweName);
         }
         if (!otherName.isEmpty()) {
-            names.put(Movie.LangId.other, otherName);
+            names.put(LangId.other, otherName);
         }
         return names;
     }

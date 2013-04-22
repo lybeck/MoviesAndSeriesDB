@@ -8,6 +8,7 @@ import com.mosedb.business.GenreService;
 import com.mosedb.business.MovieService;
 import com.mosedb.business.SeriesService;
 import com.mosedb.models.Format;
+import com.mosedb.models.LangId;
 import com.mosedb.models.Movie;
 import com.mosedb.models.Series;
 import com.mosedb.models.User;
@@ -48,7 +49,7 @@ public class AddSeriesServlet extends AbstractInfoServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
-            Map<Movie.LangId, String> names = getNameMap(request);
+            Map<LangId, String> names = getNameMap(request);
             if (names.isEmpty()) {
                 AttributeManager.setErrorMessage(request, "One name must be specified!");
                 restorePage("addSeries.jsp", request, response);

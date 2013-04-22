@@ -6,6 +6,7 @@ package com.mosedb.dao;
 
 import com.mosedb.databaseconnection.ConnectionManager;
 import com.mosedb.models.Format;
+import com.mosedb.models.LangId;
 import com.mosedb.models.Movie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +31,7 @@ public abstract class AbstractDao {
         PreparedStatement pst = connection.prepareStatement(sql);
         int i = 1;
         for (Object value : values) {
-            if (value != null && (value.getClass() == Movie.LangId.class || value.getClass() == Format.MediaFormat.class)) {
+            if (value != null && (value.getClass() == LangId.class || value.getClass() == Format.MediaFormat.class)) {
                 pst.setObject(i++, value.toString());
             } else {
                 pst.setObject(i++, value);
@@ -44,7 +45,7 @@ public abstract class AbstractDao {
         PreparedStatement pst = connection.prepareStatement(sql);
         int i = 1;
         for (Object value : values) {
-            if (value.getClass() == Movie.LangId.class || value.getClass() == Format.MediaFormat.class) {
+            if (value != null && value.getClass() == LangId.class || value.getClass() == Format.MediaFormat.class) {
                 pst.setObject(i++, value.toString());
             } else {
                 pst.setObject(i++, value);

@@ -4,7 +4,7 @@
  */
 package com.mosedb.models;
 
-import com.mosedb.models.Movie.LangId;
+import com.mosedb.models.LangId;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public class Series {
 
     private int id;
     private String owner;
-    private Map<Movie.LangId, String> names;
+    private Map<LangId, String> names;
     private List<String> genres;
 
     public Series(Map<LangId, String> names, List<String> genres) {
@@ -47,12 +47,37 @@ public class Series {
         this.owner = owner;
     }
 
-    public Map<Movie.LangId, String> getNames() {
+    public Map<LangId, String> getNames() {
         return names;
     }
 
-    public void setNames(Map<Movie.LangId, String> names) {
+    public void setNames(Map<LangId, String> names) {
         this.names = names;
+    }
+
+    public String getName(LangId langId) {
+        return names.get(langId);
+    }
+
+    public String getNameEng() {
+        return getName(LangId.eng);
+    }
+
+    public String getNameFi() {
+        return getName(LangId.fi);
+    }
+
+    public String getNameSwe() {
+        return getName(LangId.swe);
+    }
+
+    public String getNameOther() {
+        return getName(LangId.other);
+    }
+
+    public void addName(String langId, String name) {
+        LangId lid = LangId.getLangId(langId);
+        names.put(lid, name);
     }
 
     public List<String> getGenres() {
