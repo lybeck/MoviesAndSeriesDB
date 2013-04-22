@@ -28,6 +28,7 @@ public class UpdateMovieServlet extends AbstractMovieInfoServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String clickedButton = request.getParameter("submit");
         if (clickedButton.equals(UPDATE_BUTTON)) {
             updateMovie(request, response);
@@ -37,6 +38,7 @@ public class UpdateMovieServlet extends AbstractMovieInfoServlet {
     }
 
     private void removeMovie(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
             Movie movie = AttributeManager.getMovie(session);

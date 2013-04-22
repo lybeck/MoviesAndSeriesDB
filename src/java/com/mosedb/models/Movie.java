@@ -174,8 +174,8 @@ public class Movie implements Comparable<Movie> {
         if (!owner.equals(otherString)) {
             return owner.compareTo(otherString);
         }
-        String thisString = getNameEng();
-        otherString = o.getNameEng();
+        String thisString = ignoreThe(getNameEng());
+        otherString = ignoreThe(o.getNameEng());
         if (thisString == null && otherString != null && !otherString.isEmpty()) {
             return 1;
         }
@@ -183,7 +183,7 @@ public class Movie implements Comparable<Movie> {
             return -1;
         }
         if (thisString != null && otherString != null && !thisString.equals(otherString)) {
-            return thisString.toLowerCase().compareTo(otherString.toLowerCase());
+            return thisString.compareToIgnoreCase(otherString);
         }
         thisString = getNameFi();
         otherString = o.getNameFi();
@@ -194,7 +194,7 @@ public class Movie implements Comparable<Movie> {
             return -1;
         }
         if (thisString != null && otherString != null && !thisString.equals(otherString)) {
-            return thisString.toLowerCase().compareTo(otherString.toLowerCase());
+            return thisString.compareToIgnoreCase(otherString);
         }
         thisString = getNameSwe();
         otherString = o.getNameSwe();
@@ -205,7 +205,7 @@ public class Movie implements Comparable<Movie> {
             return -1;
         }
         if (thisString != null && otherString != null && !thisString.equals(otherString)) {
-            return thisString.toLowerCase().compareTo(otherString.toLowerCase());
+            return thisString.compareToIgnoreCase(otherString);
         }
         thisString = getNameOther();
         otherString = o.getNameOther();
@@ -216,9 +216,19 @@ public class Movie implements Comparable<Movie> {
             return -1;
         }
         if (thisString != null && otherString != null && !thisString.equals(otherString)) {
-            return thisString.toLowerCase().compareTo(otherString.toLowerCase());
+            return thisString.compareToIgnoreCase(otherString);
         }
         return 0;
+    }
+
+    private String ignoreThe(String nameEng) {
+        if (nameEng == null) {
+            return null;
+        }
+        if (nameEng.toLowerCase().startsWith("the ")) {
+            return nameEng.substring(4);
+        }
+        return nameEng;
     }
 
     public static enum LangId {

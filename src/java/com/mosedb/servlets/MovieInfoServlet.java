@@ -22,6 +22,7 @@ public class MovieInfoServlet extends MosedbServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
             AttributeManager.removeMovie(session);

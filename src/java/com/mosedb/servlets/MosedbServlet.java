@@ -7,6 +7,7 @@ package com.mosedb.servlets;
 import com.mosedb.tools.AttributeManager;
 import com.mosedb.tools.LoginManager;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,10 +23,12 @@ public class MosedbServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         redirectHome(request, response);
     }
 
     protected void redirectHome(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             redirectToPage("search", request, response);
         } else {
@@ -47,7 +50,8 @@ public class MosedbServlet extends HttpServlet {
         }
     }
 
-    protected void setErrorMessage(String message, HttpServletRequest request) {
+    protected void setErrorMessage(String message, HttpServletRequest request) throws IOException {
+        request.setCharacterEncoding("UTF-8");
         request.setAttribute("errorMessage", message);
     }
 
