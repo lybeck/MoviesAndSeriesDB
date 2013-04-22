@@ -8,7 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
-<script src="JavaScript/searchJS.js"></script>
 
 <h3>Search content from database</h3>
 <form action="searchAction" method="post">
@@ -16,41 +15,34 @@
         <legend>Search from</legend>
         <p class="pLeft">
             Movies
-            <input type="radio" value="movie" id="customCB1" name="check1" checked/>
+            <input type="radio" value="movie" id="customCB1" name="movie_series_radio" checked/>
             <label class="customCheck" for="customCB1"></label>
         </p>
         <p class="pRight">
             Series
-            <input type="radio" value="series" id="customCB2" name="check1"/>
+            <input type="radio" value="series" id="customCB2" name="movie_series_radio"/>
             <label class="customCheck" for="customCB2"></label>
         </p>
     </fieldset>                
 
 
     <fieldset class="styledFS" style="line-height: 25px;">
+        
         <legend>Search</legend>
-        <input type="button" class="button" value="+" 
-               style="padding: 0px 3px; margin: 0;"
-               onclick="addSearchLine();">
-        &emsp;&emsp;&emsp;
-        <input type="button" class="button" value="-" 
-               style="padding: 0px 5px; margin: 0;"
-               onclick="removeSearchLine();">
-        <br>
-
-        <input type="text" value="Search #1" 
-               onclick="if (this.value == 'Search #1') {
+        <p></p>
+        <input type="text" value="Search" 
+               onclick="if (this.value == 'Search') {
                            this.value = ''
                        }
                        ;"
                onblur="if (this.value == '') {
-                           this.value = 'Search #1'
+                           this.value = 'Search'
                        }
                        ;"
-               class="styled-textfield" name="txt1"
+               class="styled-textfield" name="search_field"
                id="txt1" style="float: left; margin-left: 13%;"/>
         <div class="styled-select" style="float: right; margin-right: 7%">
-            <select name="select1">
+            <select name="drop_box">
                 <option>Name</option>
                 <option>Genre</option>
                 <option>Media format</option>
@@ -61,17 +53,17 @@
         <div id="txtDiv1"></div>
         <p class="pLeft" style="width: 27%; text-align: right;">
             seen
-            <input type="radio" value="seen" id="seenRadio1" name="seenRadio"/>
+            <input type="radio" value="seen" id="seenRadio1" name="seen_radio"/>
             <label class="customCheck" for="seenRadio1"></label>
         </p>    
 
         not seen
-        <input type="radio" value="notSeen" id="seenRadio2" name="seenRadio"/>
+        <input type="radio" value="not_seen" id="seenRadio2" name="seen_radio"/>
         <label class="customCheck" for="seenRadio2"></label>
 
         <p class="pRight" style="width: 35%; text-align: left;">
             both
-            <input type="radio" value="both" id="seenRadio3" name="seenRadio" checked/>
+            <input type="radio" value="both" id="seenRadio3" name="seen_radio" checked/>
             <label class="customCheck" for="seenRadio3"></label>
         </p>   
     </fieldset> 
@@ -97,7 +89,7 @@
                     <th>Swe</th>
                     <th>Other</th>
                     <th>Seen</th>
-                    <th>Edit</th>
+                    <th>View</th>
                 </tr>
             <% int indx = 1;%>
             <c:forEach var="movie" items="${movieList}">
@@ -142,7 +134,7 @@
                     </td>
                     <td>
                         <button type="submit" class="button small" value="${movie.id}" 
-                               name='Edit'>Edit</button>
+                               name='Edit'>View</button>
                     </td>
                 </tr>
                 <% indx = indx + 1;%>

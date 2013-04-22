@@ -48,6 +48,7 @@ public class UpdateMovieServlet extends AbstractMovieInfoServlet {
                     restorePage("movieInfo.jsp", request, response);
                     return;
                 }
+                AttributeManager.removeMovie(request.getSession(true));
             }
 
         }
@@ -79,9 +80,12 @@ public class UpdateMovieServlet extends AbstractMovieInfoServlet {
             boolean success = new MovieService().updateMovie(movie, id);
             if (!success) {
                 AttributeManager.setErrorMessage(request, "Movie update caused an unknown error..");
-                restorePage("movieInfo.jsp", request, response);
-                return;
+            } else {
+                AttributeManager.setSuccessMessage(request, "Movie-information successfully updated!");
+                AttributeManager.setMovie(request.getSession(true), new MovieService().getById(id));
             }
+            restorePage("movieInfo.jsp", request, response);
+            return;
         }
         redirectHome(request, response);
     }

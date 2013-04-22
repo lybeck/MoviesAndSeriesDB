@@ -15,6 +15,10 @@
     <c:if test="${movie == null}">
         <p id="errorMessage">Failed to retrieve movie-information from database!</p>
     </c:if>
+    
+    <c:if test="${successMessage != null}">
+        <p id="successMessage">${successMessage}</p>
+    </c:if>
         
     <fieldset class="styledFS" style='text-align: left; width: 40%; float:right;'>
         <legend>Movie info</legend>
