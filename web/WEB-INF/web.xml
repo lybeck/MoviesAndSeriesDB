@@ -42,6 +42,10 @@
         <servlet-name>MovieInfoServlet</servlet-name>
         <servlet-class>com.mosedb.servlets.MovieInfoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateMovieServlet</servlet-name>
+        <servlet-class>com.mosedb.servlets.UpdateMovieServlet</servlet-class>
+    </servlet>
     
     
     <context-param>
@@ -89,6 +93,10 @@
     <servlet-mapping>
         <servlet-name>MovieInfoServlet</servlet-name>
         <url-pattern>/movieInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateMovieServlet</servlet-name>
+        <url-pattern>/updateMovie</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>

@@ -229,6 +229,7 @@
            <c:if test="${movie == null}">disabled</c:if>>Update changes</button> 
     &emsp;
     <button type="submit" class="button" value="delete_movie" name="submit"
+            onclick="return confirm('This action will delete the movie permanently. Are you sure you want to proceed?')"
            <c:if test="${movie == null}">disabled</c:if>>Delete movie</button> 
 </form>
 

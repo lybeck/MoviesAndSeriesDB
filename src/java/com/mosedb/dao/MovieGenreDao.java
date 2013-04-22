@@ -79,4 +79,13 @@ public class MovieGenreDao extends AbstractDao {
         result.close();
         return set;
     }
+
+    public boolean updateMovieGenres(int id, List<String> genres) throws SQLException {
+        boolean success = removeMovieGenres(id);
+        if (!success) {
+            return false;
+        }
+        success = addMovieGenres(id, genres);
+        return success;
+    }
 }

@@ -28,13 +28,9 @@ public class MovieFormatDao extends AbstractDao {
         return executeUpdate(sql, movieid, formatid);
     }
 
-    public boolean removeMovieFormat(int movieid, int formatid) throws SQLException {
-        String sql = "delete from mosedb.movieformat where movieid=? and formatid=?";
-        return executeUpdate(sql, movieid, formatid);
-    }
-
-    public boolean removeMovieFormat(int movieid) throws SQLException {
-        String sql = "delete from mosedb.movieformat where movieid=?";
+    public boolean removeMovieFormats(int movieid) throws SQLException {
+        String sql = "delete from mosedb.format f using mosedb.movieformat mf "
+                + "where mf.movieid=? and f.formatid=mf.formatid";
         return executeUpdate(sql, movieid);
     }
 
@@ -88,11 +84,5 @@ public class MovieFormatDao extends AbstractDao {
             list.add(format);
         }
         return list;
-    }
-
-    public static void main(String[] args) throws SQLException {
-        MovieFormatDao movieFormatDao = new MovieFormatDao();
-        System.out.println(movieFormatDao.getFormats(4));
-        movieFormatDao.closeConnection();
     }
 }

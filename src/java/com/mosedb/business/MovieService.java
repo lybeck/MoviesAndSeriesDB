@@ -271,7 +271,7 @@ public class MovieService extends AbstractService {
             return;
         }
         try {
-            movieNameDao.removeMovieName(movieId);
+            movieNameDao.removeMovieNames(movieId);
         } catch (SQLException ex) {
             reportError("Failed to remove movienames from table mosedb.moviename.", ex);
         }
@@ -364,8 +364,9 @@ public class MovieService extends AbstractService {
         try {
             Movie movie = movieDao.getMovieById(id);
             movieDao.closeConnection();
-            if(movie == null)
+            if (movie == null) {
                 return null;
+            }
             movie.setNames(movieNameDao.getMovieNames(id));
             movieNameDao.closeConnection();
             movie.setGenres(movieGenreDao.getMovieGenres(id));
@@ -377,5 +378,97 @@ public class MovieService extends AbstractService {
             reportError("Error while retrieving movie by id.", ex);
             return null;
         }
+    }
+
+    public boolean removeMovie(int id) {
+        MovieDao movieDao;
+        try {
+            movieDao = new MovieDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return false;
+        }
+        try {
+            movieDao.removeMovie(id);
+            movieDao.closeConnection();
+        } catch (SQLException ex) {
+            reportError("Error while trying to remove movie from database!", ex);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateMovie(Movie movie, int id) {
+        MovieDao movieDao;
+        MovieNameDao movieNameDao;
+        MovieGenreDao movieGenreDao;
+        try {
+            movieDao = new MovieDao();
+            movieNameDao = new MovieNameDao();
+            movieGenreDao = new MovieGenreDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return false;
+        }
+
+        try {
+            boolean success;
+
+            success = movieDao.updateMovieSeen(id, movie.isSeen());
+            success = movieDao.updateMovieYear(id, movie.getMovieYear()) && success;
+            movieDao.closeConnection();
+            if (!success) {
+                System.err.println("Seen or year update failed!");
+                return false;
+            }
+
+            success = movieNameDao.updateMovieNames(id, movie.getNames());
+            movieNameDao.closeConnection();
+            if (!success) {
+                System.err.println("Name update failed!");
+                return false;
+            }
+
+            success = movieGenreDao.updateMovieGenres(id, movie.getGenres());
+            movieGenreDao.closeConnection();
+            if (!success) {
+                System.err.println("Genre update failed!");
+                return false;
+            }
+
+            success = updateMovieFormats(id, movie);
+            if (!success) {
+                System.err.println("Format update failed!");
+                return false;
+            }
+        } catch (SQLException ex) {
+            reportError("Error trying to update movie!", ex);
+        }
+
+        return true;
+    }
+
+    private boolean updateMovieFormats(int id, Movie movie) {
+        removeMovieFormats(id);
+        movie.setId(id);
+        addToTablesFormatInfo(movie);
+        return true;
+    }
+
+    private boolean removeMovieFormats(int id) {
+        MovieFormatDao movieFormatDao;
+        try {
+            movieFormatDao = new MovieFormatDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return false;
+        }
+        try {
+            movieFormatDao.removeMovieFormats(id);
+        } catch (SQLException ex) {
+            reportError("Error while removing movieformats from database!", ex);
+            return false;
+        }
+        return true;
     }
 }

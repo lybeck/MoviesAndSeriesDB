@@ -23,8 +23,6 @@ public class MovieInfoServlet extends MosedbServlet{
      @Override
      protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (isUserLoggedIn(request)) {
-            HttpSession session=request.getSession(true);
-            AttributeManager.removeMovie(session);
             redirectToPage("movieInfo.jsp", request, response);
         } else {
             redirectHome(request, response);

@@ -5,6 +5,7 @@
 package com.mosedb.dao;
 
 import com.mosedb.models.Movie;
+import com.mosedb.models.Movie.LangId;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.EnumMap;
@@ -28,12 +29,26 @@ public class MovieNameDao extends AbstractDao {
         return executeUpdate(sql, movieid, langid, moviename);
     }
 
-    public boolean updateMovieName(int movieid, Movie.LangId langid, String moviename) throws SQLException {
-        String sql = "update mosedb.moviename set (moviename)=(?) where movieid=? and langid=cast(? as mosedb.langid)";
-        return executeUpdate(sql, moviename, movieid, langid);
+    private boolean addMovieNames(int movieid, Map<LangId, String> names) throws SQLException {
+        boolean success;
+        for (LangId langId : names.keySet()) {
+            success = addMovieName(movieid, langId, names.get(langId));
+            if (!success) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public boolean removeMovieName(int movieid) throws SQLException {
+    public boolean updateMovieNames(int movieid, Map<LangId, String> names) throws SQLException {
+        boolean success = removeMovieNames(movieid);
+        if (!success) {
+            return false;
+        }
+        return addMovieNames(movieid, names);
+    }
+
+    public boolean removeMovieNames(int movieid) throws SQLException {
         String sql = "delete from mosedb.moviename where movieid=?";
         return executeUpdate(sql, movieid);
     }
