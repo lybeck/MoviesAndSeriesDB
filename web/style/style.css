@@ -227,6 +227,8 @@ input[type=radio]:checked + .customCheck:after {
 .button:disabled {
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e9eaf8), color-stop(1, #e9eaf8) );
     background:-moz-linear-gradient( center top, #e9eaf8 5%, #e9eaf8 100% );
+    border-color: gray;
+    color: gray;
     cursor: default;
 }
 

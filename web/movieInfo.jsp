@@ -162,10 +162,6 @@
         <c:if test="${movie != null}">
             <% int indx2 = 1;%>
             <c:forEach var='selectedFormat' items='${movie.formats}'>
-                <% if (indx2 != 1) {%>
-                <div id='mediaFormatDropboxDiv<%out.print(indx2-1);%>'>
-                <%} else {%>
-                <%}%>
                 format #<%out.print(indx2);%>
                 <div class='styled-select' style='margin: 0 0 0 0'>
                     <select name='mediaFormatDropbox<%out.print(indx2);%>' id='formatSelect<%out.print(indx2);%>'
@@ -210,12 +206,12 @@
                 </c:if>
                 </div>
                 <p></p>
-                <% if (indx2 != 1) {%>
-                </div>
-                <%} else {%>
-                <%}%>
-                <% indx2++;%>
+                <div id='mediaFormatDropboxDiv<%out.print(indx2);%>'>
+                <%indx2++;%>
             </c:forEach>
+            <%for(int i = 0; i<(indx2-1) ; i++){%>
+            </div>
+            <%}%>
         </c:if>
     </fieldset>
 
