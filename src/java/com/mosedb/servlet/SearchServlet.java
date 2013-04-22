@@ -97,6 +97,10 @@ public class SearchServlet extends MosedbServlet {
                 
                 seriesList = new SeriesService().getSeries(user);
                 
+                System.out.println(seriesList);
+                
+                AttributeManager.setSeriesList(request, seriesList);
+                
                 restorePage("search.jsp", request, response);
             }
         } else {

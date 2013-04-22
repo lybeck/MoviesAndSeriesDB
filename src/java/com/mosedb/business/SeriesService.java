@@ -53,6 +53,24 @@ public class SeriesService extends AbstractService {
         return series;
     }
 
+    private void addNames(List<Series> seriesList) {
+        SeriesNameDao seriesNameDao;
+        try {
+            seriesNameDao = new SeriesNameDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return;
+        }
+        for (Series series : seriesList) {
+            try {
+                series.setNames(seriesNameDao.getSeriesNames(series.getId()));
+            } catch (SQLException ex) {
+                reportError("Error while trying to retirieve names for series with id: " + series.getId(), ex);
+            }
+        }
+        seriesNameDao.closeConnection();
+    }
+
     public boolean addSeries(User user, Series series) {
         int id = addToTableSeries(user);
         if (id <= 0) {
@@ -140,9 +158,5 @@ public class SeriesService extends AbstractService {
         } catch (SQLException ex) {
             reportError("Error trying to delete series from database!", ex);
         }
-    }
-
-    private void addNames(List<Series> series) {
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

@@ -1,6 +1,7 @@
 package com.mosedb.tools;
 
 import com.mosedb.models.Movie;
+import com.mosedb.models.Series;
 import com.mosedb.models.User;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ public class AttributeManager {
     private static String movie = "movie";
     private static String movieList = "movieList";
     private static String seasonDropbox = "seasonDropbox";
+    private static String seriesList = "seriesList";
     private static String successMessage = "successMessage";
     private static String userList = "userList";
     private static String userSessionKey = "userSessionKey";
@@ -147,6 +149,10 @@ public class AttributeManager {
     
     public static void setSeasonDropbox(HttpServletRequest request, List<Integer> episodes ){
         request.setAttribute(seasonDropbox, episodes);
+    }
+
+    public static void setSeriesList(HttpServletRequest request, List<Series> series) {
+        request.setAttribute(seriesList, series);
     }
     
     public static void setUserList(HttpServletRequest request, List<User> users) {

@@ -161,7 +161,7 @@
                     <th>View</th>
                 </tr>
             <% int indx2 = 1;%>
-            <c:forEach var="movie" items="${movieList}">
+            <c:forEach var="series" items="${seriesList}">
                 <% if (indx2 % 2 == 1) {%>
                 <tr>
                     <%} else {%>
@@ -193,7 +193,7 @@
                         </c:if>
                     </td>
                     <td>
-                        <button type="submit" class="button small" value="${movie.id}" 
+                        <button type="submit" class="button small" value="${series.id}" 
                                name='Edit'>View</button>
                     </td>
                 </tr>

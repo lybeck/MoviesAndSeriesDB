@@ -5,6 +5,8 @@
 package com.mosedb.models;
 
 import com.mosedb.models.LangId;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,13 @@ public class Series {
         this.names = names;
         this.owner = owner;
         this.genres = genres;
+    }
+
+    public Series(int id, String owner) {
+        this.id = id;
+        this.names = new EnumMap<LangId, String>(LangId.class);
+        this.owner = owner;
+        this.genres = new ArrayList<String>();
     }
 
     public int getId() {
@@ -86,5 +95,13 @@ public class Series {
 
     public void setGenres(List<String> genres) {
         this.genres = genres;
+    }
+
+    @Override
+    public String toString() {
+        return "seriesid:\t" + id + "\n"
+                + "names:\t" + names + "\n"
+                + "owner:\t" + owner + "\n"
+                + "genres:\t" + genres + "\n";
     }
 }
