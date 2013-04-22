@@ -143,6 +143,66 @@
         </c:choose>
         </table>       
     </c:if>
+    <c:if test="${seriesList != null}">
+        <c:choose>
+            <c:when test="${empty seriesList}">                          
+            <p>No hits!</p>
+        </c:when>
+        <c:otherwise>
+            <table class="customTable">
+                <tr>
+                    <c:if test="${adminSessionKey != null && adminSessionKey}">
+                        <th>Owner</th>
+                        </c:if>
+                    <th>Eng</th>
+                    <th>Fin</th>
+                    <th>Swe</th>
+                    <th>Other</th>
+                    <th>View</th>
+                </tr>
+            <% int indx2 = 1;%>
+            <c:forEach var="movie" items="${movieList}">
+                <% if (indx2 % 2 == 1) {%>
+                <tr>
+                    <%} else {%>
+                <tr class="red">
+                    <%}%>
+                    <c:if test="${adminSessionKey != null && adminSessionKey}">
+                        <td>
+                            ${series.owner}
+                        </td>
+                    </c:if>
+                    <td>
+                        <c:if test="${series.nameEng != null}" >
+                            ${series.nameEng} 
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${series.nameFi != null}" >
+                            ${series.nameFi} 
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${series.nameSwe != null}" >
+                            ${series.nameSwe} 
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${series.nameOther != null}" >
+                            ${series.nameOther} 
+                        </c:if>
+                    </td>
+                    <td>
+                        <button type="submit" class="button small" value="${movie.id}" 
+                               name='Edit'>View</button>
+                    </td>
+                </tr>
+                <% indx2 = indx2 + 1;%>
+            </c:forEach>
+        </c:otherwise>
+        </c:choose>
+        </table>       
+    </c:if>
 </form>
 
 <%@include file="bottom.jspf" %>
