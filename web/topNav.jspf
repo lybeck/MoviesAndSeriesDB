@@ -15,7 +15,7 @@
             <ul id='navbar'>
                 <li class='navbarLeft'><a href='search'>SEARCH</a></li>
                 <li class='navbarLeft'><a href='addMovie'>ADD MOVIE</a></li>
-                <li class='navbarLeft'><a href='#'>ADD SERIES</a></li>
+                <li class='navbarLeft'><a href='addSeries'>ADD SERIES</a></li>
                 <c:if test="${adminSessionKey != null && adminSessionKey}">
                     <li class='navbarLeft'><a href='adminTools'>ADMIN TOOLS</a></li>
                 </c:if>

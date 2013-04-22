@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author llybeck
  */
-public class UpdateMovieServlet extends AbstractMovieInfoServlet {
+public class UpdateMovieServlet extends AbstractInfoServlet {
 
     private static final String UPDATE_BUTTON = "update_changes";
     private static final String DELETE_BUTTON = "delete_movie";

@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author roopekoira
  */
-public class AddMovieServlet extends AbstractMovieInfoServlet {
+public class AddMovieServlet extends AbstractInfoServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

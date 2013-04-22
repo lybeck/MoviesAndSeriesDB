@@ -28,7 +28,6 @@ public class MosedbServlet extends HttpServlet {
     }
 
     protected void redirectHome(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             redirectToPage("search", request, response);
         } else {
@@ -51,7 +50,6 @@ public class MosedbServlet extends HttpServlet {
     }
 
     protected void setErrorMessage(String message, HttpServletRequest request) throws IOException {
-        request.setCharacterEncoding("UTF-8");
         request.setAttribute("errorMessage", message);
     }
 
