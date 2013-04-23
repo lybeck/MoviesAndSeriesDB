@@ -37,7 +37,7 @@ public class MovieService extends AbstractService {
         try {
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return null;
         }
         List<Movie> movies;
@@ -69,7 +69,7 @@ public class MovieService extends AbstractService {
         try {
             movieNameDao = new MovieNameDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return;
         }
         for (Movie movie : movies) {
@@ -90,7 +90,7 @@ public class MovieService extends AbstractService {
         try {
             movieNameDao = new MovieNameDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return null;
         }
         List<Movie> movieList;
@@ -115,7 +115,7 @@ public class MovieService extends AbstractService {
         try {
             movieGenreDao = new MovieGenreDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return null;
         }
         Set<Integer> movieIds;
@@ -136,7 +136,7 @@ public class MovieService extends AbstractService {
         try {
             movieFormatDao = new MovieFormatDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return null;
         }
         Set<Integer> movieIds;
@@ -157,7 +157,7 @@ public class MovieService extends AbstractService {
         try {
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return null;
         }
         List<Movie> movies;
@@ -205,7 +205,7 @@ public class MovieService extends AbstractService {
         try {
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return -1;
         }
         int id = -1;
@@ -230,7 +230,7 @@ public class MovieService extends AbstractService {
         try {
             movieNameDao = new MovieNameDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return false;
         }
         String name;
@@ -268,7 +268,7 @@ public class MovieService extends AbstractService {
             movieNameDao = new MovieNameDao();
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return;
         }
         try {
@@ -294,7 +294,7 @@ public class MovieService extends AbstractService {
         try {
             movieGenreDao = new MovieGenreDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return;
         }
         try {
@@ -316,7 +316,7 @@ public class MovieService extends AbstractService {
             formatDao = new FormatDao();
             movieFormatDao = new MovieFormatDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return;
         }
 
@@ -359,7 +359,7 @@ public class MovieService extends AbstractService {
             movieGenreDao = new MovieGenreDao();
             movieFormatDao = new MovieFormatDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return null;
         }
         try {
@@ -386,7 +386,7 @@ public class MovieService extends AbstractService {
         try {
             movieDao = new MovieDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return false;
         }
         try {
@@ -408,7 +408,7 @@ public class MovieService extends AbstractService {
             movieNameDao = new MovieNameDao();
             movieGenreDao = new MovieGenreDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return false;
         }
 
@@ -461,7 +461,7 @@ public class MovieService extends AbstractService {
         try {
             movieFormatDao = new MovieFormatDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return false;
         }
         try {

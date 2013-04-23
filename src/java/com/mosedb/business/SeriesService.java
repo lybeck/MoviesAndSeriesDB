@@ -29,7 +29,7 @@ public class SeriesService extends AbstractService {
         try {
             seriesDao = new SeriesDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return null;
         }
         List<Series> series;
@@ -64,7 +64,7 @@ public class SeriesService extends AbstractService {
         try {
             seriesNameDao = new SeriesNameDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return null;
         }
         List<Series> seriesList;
@@ -84,12 +84,36 @@ public class SeriesService extends AbstractService {
         return seriesList;
     }
 
+    public List<Series> getByGenre(User user, String search) {
+        SeriesGenreDao seriesGenreDao;
+        try {
+            seriesGenreDao = new SeriesGenreDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return null;
+        }
+        List<Series> seriesList;
+        try {
+            seriesList = seriesGenreDao.getSeriesByGenre(search, user);
+        } catch (SQLException ex) {
+            reportError("Error while retrieving movies by genre from database!", ex);
+            return null;
+        }
+        seriesGenreDao.closeConnection();
+        addNames(seriesList);
+        return seriesList;
+    }
+
+    public List<Series> getByMediaFormat(User user, String searchField) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
     private void addNames(List<Series> seriesList) {
         SeriesNameDao seriesNameDao;
         try {
             seriesNameDao = new SeriesNameDao();
         } catch (SQLException ex) {
-            reportError("Error while connecting to database!", ex);
+            reportConnectionError(ex);
             return;
         }
         for (Series series : seriesList) {
@@ -123,7 +147,7 @@ public class SeriesService extends AbstractService {
         try {
             seriesDao = new SeriesDao();
         } catch (SQLException ex) {
-            reportError("Error connecting to database!", ex);
+            reportConnectionError(ex);
             return -1;
         }
         try {
@@ -141,7 +165,7 @@ public class SeriesService extends AbstractService {
         try {
             seriesNameDao = new SeriesNameDao();
         } catch (SQLException ex) {
-            reportError("Error connecting to database!", ex);
+            reportConnectionError(ex);
             return false;
         }
         try {
@@ -159,7 +183,7 @@ public class SeriesService extends AbstractService {
         try {
             seriesGenreDao = new SeriesGenreDao();
         } catch (SQLException ex) {
-            reportError("Error connnecting to database!", ex);
+            reportConnectionError(ex);
             return false;
         }
         try {
@@ -180,7 +204,7 @@ public class SeriesService extends AbstractService {
         try {
             seriesDao = new SeriesDao();
         } catch (SQLException ex) {
-            reportError("Error connecting to database!", ex);
+            reportConnectionError(ex);
             return;
         }
         try {

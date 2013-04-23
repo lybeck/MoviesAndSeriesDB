@@ -71,22 +71,9 @@ public class SearchServlet extends MosedbServlet {
                 List<Movie> movieList = getMovieList(searchField, dropBox, user, seenParameter);
                 AttributeManager.setMovieList(request, movieList);
                 restorePage("search.jsp", request, response);
-            } else { /* Series search */
-
-                SeriesService seriesService = new SeriesService();
-                List<Series> seriesList = new ArrayList<Series>();
-
-                if (searchField == null || searchField.isEmpty() || searchField.equals(SEARCH_FIELD_DEFAULT)
-                        || dropBox == null) {
-                    seriesList = new SeriesService().getSeries(user);
-                } else {
-                    if (dropBox.equals(NAME_SEARCH)) {
-                        seriesList = seriesService.getByName(user, searchField);
-                    }
-                }
-
+            } else {
+                List<Series> seriesList = getSeriesList(searchField, dropBox, user);
                 AttributeManager.setSeriesList(request, seriesList);
-
                 restorePage("search.jsp", request, response);
             }
         } else {
@@ -114,5 +101,26 @@ public class SearchServlet extends MosedbServlet {
             }
         }
         return movieList;
+    }
+
+    private List<Series> getSeriesList(String searchField, String dropBox, User user) {
+        /* Series search */
+        SeriesService seriesService = new SeriesService();
+        List<Series> seriesList = new ArrayList<Series>();
+        if (searchField == null || searchField.isEmpty() || searchField.equals(SEARCH_FIELD_DEFAULT)
+                || dropBox == null) {
+            seriesList = new SeriesService().getSeries(user);
+        } else {
+            if (dropBox.equals(NAME_SEARCH)) {
+                seriesList = seriesService.getByName(user, searchField);
+            } else if (dropBox.equals(GENRE_SEARCH)) {
+                seriesList = seriesService.getByGenre(user, searchField);
+            } else if (dropBox.equals(MEDIAFORMAT_SEARCH)) {
+                seriesList = seriesService.getByMediaFormat(user, searchField);
+            } else {
+                seriesList = seriesService.getSeries(user);
+            }
+        }
+        return seriesList;
     }
 }

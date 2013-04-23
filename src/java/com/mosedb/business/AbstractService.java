@@ -9,6 +9,12 @@ package com.mosedb.business;
  * @author llybeck
  */
 public abstract class AbstractService {
+    
+    protected void reportConnectionError(Exception ex) {
+        System.err.println("Error while connecting to database!");
+        System.err.println("Error:");
+        System.err.println(ex);
+    }
 
     protected void reportError(String message, Exception ex) {
         System.err.println(message);
