@@ -10,7 +10,10 @@ import com.mosedb.dao.seriesDao.SeriesNameDao;
 import com.mosedb.models.Series;
 import com.mosedb.models.User;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,9 +51,37 @@ public class SeriesService extends AbstractService {
 
         seriesDao.closeConnection();
 
-//        Collections.sort(series);
+        Collections.sort(series);
 
         return series;
+    }
+
+    public List<Series> getByName(User user, String search) {
+        search = search.trim();
+        search = search.replaceAll("\\s+", " ");
+        List<String> searchList = Arrays.asList(search.split(" "));
+        SeriesNameDao seriesNameDao;
+        try {
+            seriesNameDao = new SeriesNameDao();
+        } catch (SQLException ex) {
+            reportError("Error while connecting to database!", ex);
+            return null;
+        }
+        List<Series> seriesList;
+        try {
+            if (searchList.size() == 1) {
+                seriesList = seriesNameDao.getSeriesByName(search, user);
+            } else {
+                seriesList = seriesNameDao.getSeriesByName(searchList, user);
+            }
+        } catch (SQLException ex) {
+            reportError("Error while trying to get movieids by name from movienamedao.", ex);
+            return null;
+        }
+
+        seriesNameDao.closeConnection();
+
+        return seriesList;
     }
 
     private void addNames(List<Series> seriesList) {

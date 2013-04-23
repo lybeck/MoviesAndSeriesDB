@@ -51,6 +51,7 @@ public abstract class AbstractDao {
                 pst.setObject(i++, value);
             }
         }
+        System.out.println(pst);
         ResultSet result = pst.executeQuery();
         return result;
     }

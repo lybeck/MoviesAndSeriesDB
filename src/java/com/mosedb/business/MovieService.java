@@ -93,12 +93,12 @@ public class MovieService extends AbstractService {
             reportError("Error while connecting to database!", ex);
             return null;
         }
-        Set<Integer> movieIds;
+        List<Movie> movieList;
         try {
             if (searchList.size() == 1) {
-                movieIds = movieNameDao.getMovieIdsByName(search);
+                movieList = movieNameDao.getMoviesByName(search, user);
             } else {
-                movieIds = movieNameDao.getMovieIdsByName(searchList);
+                movieList = movieNameDao.getMoviesByName(searchList, user);
             }
         } catch (SQLException ex) {
             reportError("Error while trying to get movieids by name from movienamedao.", ex);
@@ -107,7 +107,7 @@ public class MovieService extends AbstractService {
 
         movieNameDao.closeConnection();
 
-        return getMoviesByIds(user, movieIds, seen);
+        return movieList;
     }
 
     public List<Movie> getByGenre(User user, String genre, Boolean seen) {

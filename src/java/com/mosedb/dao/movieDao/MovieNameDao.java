@@ -6,8 +6,11 @@ package com.mosedb.dao.movieDao;
 
 import com.mosedb.dao.AbstractDao;
 import com.mosedb.models.LangId;
+import com.mosedb.models.Movie;
+import com.mosedb.models.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
@@ -79,42 +82,53 @@ public class MovieNameDao extends AbstractDao {
         return map;
     }
 
-    public Set<Integer> getMovieIdsByName(String name) throws SQLException {
-        String sql = "select movieid from mosedb.moviename "
-                + "where lower(moviename) like lower('%" + name + "%')";
-        ResultSet result = executeQuery(sql);
-        Set<Integer> set = new HashSet<Integer>();
+    public List<Movie> getMoviesByName(String search, User user) throws SQLException {
+        String sql = "select distinct m.movieid, m.owner, m.seen from mosedb.movie m, mosedb.moviename mn "
+                + "where m.movieid=mn.movieid and lower(mn.moviename) like lower(?)";
+        ResultSet result;
+        if (user.isAdmin()) {
+            result = executeQuery(sql, "%" + search + "%");
+        } else {
+            sql += " and m.owner=?";
+            result = executeQuery(sql, "%" + search + "%", user.getUsername());
+        }
+
+        List<Movie> movieList = new ArrayList<Movie>();
         while (result.next()) {
             int id = result.getInt("movieid");
-            if (!set.contains(id)) {
-                set.add(id);
-            }
+            String owner = result.getString("owner");
+            boolean seen = result.getBoolean("seen");
+            Movie movie = new Movie(id, owner, seen);
+            movie.setNames(getMovieNames(id));
+            movieList.add(movie);
         }
-        result.close();
-        return set;
+        return movieList;
     }
 
-    public Set<Integer> getMovieIdsByName(List<String> list) throws SQLException {
-        if (list.isEmpty()) {
-            return null;
+    public List<Movie> getMoviesByName(List<String> searchList, User user) throws SQLException {
+        String sql = "select distinct m.movieid, m.owner, m.seen from mosedb.movie m, mosedb.moviename mn "
+                + "where m.movieid=mn.movieid and lower(mn.moviename) like lower(?)";
+        for (int i = 1; i < searchList.size(); i++) {
+            sql += " and lower(mn.moviename) like lower(?)";
         }
-        if (list.size() == 1) {
-            return getMovieIdsByName(list.get(0));
+        List<String> searchTerms = new ArrayList<String>();
+        for (String string : searchList) {
+            searchTerms.add("%" + string + "%");
         }
-        String sql = "select movieid from mosedb.moviename "
-                + "where lower(moviename) like lower('%" + list.get(0) + "%')";
-        for (int i = 1; i < list.size(); i++) {
-            sql += " and lower(moviename) like lower('%" + list.get(i) + "%')";
+        if (!user.isAdmin()) {
+            sql += " and m.owner=?";
+            searchTerms.add(user.getUsername());
         }
-        ResultSet result = executeQuery(sql);
-        Set<Integer> set = new HashSet<Integer>();
+        ResultSet result = executeQuery(sql, searchTerms.toArray());
+        List<Movie> movieList = new ArrayList<Movie>();
         while (result.next()) {
             int id = result.getInt("movieid");
-            if (!set.contains(id)) {
-                set.add(id);
-            }
+            String owner = result.getString("owner");
+            boolean seen = result.getBoolean("seen");
+            Movie movie = new Movie(id, owner, seen);
+            movie.setNames(getMovieNames(id));
+            movieList.add(movie);
         }
-        result.close();
-        return set;
+        return movieList;
     }
 }

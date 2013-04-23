@@ -51,7 +51,6 @@ public class SearchServlet extends MosedbServlet {
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
             User user = AttributeManager.getUserSessionKey(session);
-            MovieService movieService = new MovieService();
 
 
             String searchField = request.getParameter(SEARCH_FIELD_NAME);
@@ -69,38 +68,25 @@ public class SearchServlet extends MosedbServlet {
 
 
             if (searchType.equals(MOVIE_SEARCH)) {
-                
-                List<Movie> movieList;
+                List<Movie> movieList = getMovieList(searchField, dropBox, user, seenParameter);
+                AttributeManager.setMovieList(request, movieList);
+                restorePage("search.jsp", request, response);
+            } else { /* Series search */
+
+                SeriesService seriesService = new SeriesService();
+                List<Series> seriesList = new ArrayList<Series>();
 
                 if (searchField == null || searchField.isEmpty() || searchField.equals(SEARCH_FIELD_DEFAULT)
                         || dropBox == null) {
-                    movieList = movieService.getMovies(user, seenParameter);
+                    seriesList = new SeriesService().getSeries(user);
                 } else {
                     if (dropBox.equals(NAME_SEARCH)) {
-                        movieList = movieService.getByName(user, searchField, seenParameter);
-                    } else if (dropBox.equals(GENRE_SEARCH)) {
-                        movieList = movieService.getByGenre(user, searchField, seenParameter);
-                    } else if (dropBox.equals(MEDIAFORMAT_SEARCH)) {
-                        movieList = movieService.getByMediaFormat(user, searchField, seenParameter);
-                    } else {
-                        movieList = movieService.getMovies(user, seenParameter);
+                        seriesList = seriesService.getByName(user, searchField);
                     }
                 }
 
-                AttributeManager.setMovieList(request, movieList);
-
-                restorePage("search.jsp", request, response);
-
-            } else { /* Series search */
-                
-                List<Series> seriesList;
-                
-                seriesList = new SeriesService().getSeries(user);
-                
-                System.out.println(seriesList);
-                
                 AttributeManager.setSeriesList(request, seriesList);
-                
+
                 restorePage("search.jsp", request, response);
             }
         } else {
@@ -108,5 +94,25 @@ public class SearchServlet extends MosedbServlet {
         }
 
 
+    }
+
+    private List<Movie> getMovieList(String searchField, String dropBox, User user, Boolean seenParameter) {
+        MovieService movieService = new MovieService();
+        List<Movie> movieList;
+        if (searchField == null || searchField.isEmpty() || searchField.equals(SEARCH_FIELD_DEFAULT)
+                || dropBox == null) {
+            movieList = movieService.getMovies(user, seenParameter);
+        } else {
+            if (dropBox.equals(NAME_SEARCH)) {
+                movieList = movieService.getByName(user, searchField, seenParameter);
+            } else if (dropBox.equals(GENRE_SEARCH)) {
+                movieList = movieService.getByGenre(user, searchField, seenParameter);
+            } else if (dropBox.equals(MEDIAFORMAT_SEARCH)) {
+                movieList = movieService.getByMediaFormat(user, searchField, seenParameter);
+            } else {
+                movieList = movieService.getMovies(user, seenParameter);
+            }
+        }
+        return movieList;
     }
 }
