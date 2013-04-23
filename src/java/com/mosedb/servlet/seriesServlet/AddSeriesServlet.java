@@ -29,7 +29,10 @@ import javax.servlet.http.HttpSession;
  * @author llybeck
  */
 public class AddSeriesServlet extends AbstractInfoServlet {
-
+    
+    private static final int MAX_EPISODE_COUNT=50;
+    private static final int MAX_SEASON_COUNT=50;
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -65,9 +68,27 @@ public class AddSeriesServlet extends AbstractInfoServlet {
                 restorePage("addSeries.jsp", request, response);
                 return;
             }
+            AttributeManager.setEpisodeDropbox(request, getEpisodeDropboxValues());
+            AttributeManager.setSeasonDropbox(request, getSeasonDropboxValues());
             redirectToPage("seriesInfo.jsp", request, response);
         } else {
             redirectHome(request, response);
         }
+    }
+    
+    private List<Integer> getEpisodeDropboxValues(){
+        List<Integer> epVals=new ArrayList<Integer>();
+        for (int i = 0; i < MAX_EPISODE_COUNT+1; i++) {
+            epVals.add(i);
+        }
+        return epVals;
+    }
+    
+    private List<Integer> getSeasonDropboxValues(){
+        List<Integer> seasonVals=new ArrayList<Integer>();
+        for (int i = 0; i < MAX_SEASON_COUNT+1; i++) {
+            seasonVals.add(i);
+        }
+        return seasonVals;
     }
 }

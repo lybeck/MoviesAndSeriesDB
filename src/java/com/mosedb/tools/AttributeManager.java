@@ -14,13 +14,13 @@ import javax.servlet.http.HttpSession;
 public class AttributeManager {
     
     private static String adminSessionKey = "adminSessionKey";
-    private static String episodeDropbox = "episodeDropbox";
+    private static String episodeDropboxValues = "episodeDropboxValues";
     private static String errorMessage = "errorMessage";
     private static String formatList = "formatList";
     private static String genreList = "genreList";
     private static String movie = "movie";
     private static String movieList = "movieList";
-    private static String seasonDropbox = "seasonDropbox";
+    private static String seasonDropboxValues = "seasonDropboxValues";
     private static String seriesList = "seriesList";
     private static String successMessage = "successMessage";
     private static String userList = "userList";
@@ -32,7 +32,7 @@ public class AttributeManager {
     }
     
     public static List<Integer> getEpisodeDropbox(HttpSession session){
-        return (List<Integer>) session.getAttribute(episodeDropbox);
+        return (List<Integer>) session.getAttribute(episodeDropboxValues);
     }
 
     public static String getErrorMessage(HttpSession session) {
@@ -56,7 +56,7 @@ public class AttributeManager {
     }
     
     public static List<Integer> getSeasonDropbox(HttpSession session){
-        return (List<Integer>) session.getAttribute(seasonDropbox);
+        return (List<Integer>) session.getAttribute(seasonDropboxValues);
     }
     
     public static List<User> getUserList(HttpSession session) {
@@ -78,7 +78,7 @@ public class AttributeManager {
     }
     
     public static void setEpisodeDropbox(HttpSession session, List<Integer> episodes ){
-        session.setAttribute(episodeDropbox, episodes);
+        session.setAttribute(episodeDropboxValues, episodes);
     }
 
     public static void setErrorMessage(HttpSession session, String message) {
@@ -102,7 +102,7 @@ public class AttributeManager {
     }
     
     public static void setSeasonDropbox(HttpSession session, List<Integer> episodes ){
-        session.setAttribute(seasonDropbox, episodes);
+        session.setAttribute(seasonDropboxValues, episodes);
     }
     
     public static void setUserList(HttpSession session, List<User> users) {
@@ -124,7 +124,7 @@ public class AttributeManager {
     }
     
     public static void setEpisodeDropbox(HttpServletRequest request, List<Integer> episodes ){
-        request.setAttribute(episodeDropbox, episodes);
+        request.setAttribute(episodeDropboxValues, episodes);
     }
 
     public static void setErrorMessage(HttpServletRequest request, String message) {
@@ -148,7 +148,7 @@ public class AttributeManager {
     }
     
     public static void setSeasonDropbox(HttpServletRequest request, List<Integer> episodes ){
-        request.setAttribute(seasonDropbox, episodes);
+        request.setAttribute(seasonDropboxValues, episodes);
     }
 
     public static void setSeriesList(HttpServletRequest request, List<Series> series) {
@@ -181,13 +181,13 @@ public class AttributeManager {
     
     public static void removeAll(HttpSession session){
         session.removeAttribute(adminSessionKey);
-        session.removeAttribute(episodeDropbox);
+        session.removeAttribute(episodeDropboxValues);
         session.removeAttribute(errorMessage);
         session.removeAttribute(formatList);
         session.removeAttribute(genreList);
         session.removeAttribute(movie);
         session.removeAttribute(movieList);
-        session.removeAttribute(seasonDropbox);
+        session.removeAttribute(seasonDropboxValues);
         session.removeAttribute(successMessage);
         session.removeAttribute(userList);
         session.removeAttribute(userSessionKey);

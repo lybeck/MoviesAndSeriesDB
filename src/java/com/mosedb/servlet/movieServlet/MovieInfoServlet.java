@@ -4,6 +4,7 @@ import com.mosedb.business.GenreService;
 import com.mosedb.business.MovieService;
 import com.mosedb.models.Format;
 import com.mosedb.models.Movie;
+import com.mosedb.servlet.AbstractInfoServlet;
 import com.mosedb.servlet.MosedbServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Easysimulation
  */
-public class MovieInfoServlet extends MosedbServlet {
+public class MovieInfoServlet extends AbstractInfoServlet{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,12 +33,7 @@ public class MovieInfoServlet extends MosedbServlet {
             AttributeManager.setGenreList(session, genreList);
             List<String> formatList = Format.getAllMediaFormats();
             AttributeManager.setFormatList(session, formatList);
-            List<String> yearList = new ArrayList<String>();
-            yearList.add("");
-            int thisYear = new Date().getYear() + 1900;
-            for (int y = thisYear; y >= 1900; --y) {
-                yearList.add(y + "");
-            }
+            List<String> yearList = getYearList();
             AttributeManager.setYearList(session, yearList);
 
             String id = request.getParameter("Edit");

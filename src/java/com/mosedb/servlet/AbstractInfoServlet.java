@@ -9,6 +9,7 @@ import com.mosedb.models.LangId;
 import com.mosedb.models.Movie;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -122,5 +123,15 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
 
     protected boolean isSeen(HttpServletRequest request) {
         return request.getParameter(SEEN_CHECKBOX) != null;
+    }
+
+    protected List<String> getYearList() {
+        List<String> yearList = new ArrayList<String>();
+        yearList.add("");
+        int thisYear = new Date().getYear() + 1900;
+        for (int y = thisYear; y >= 1900; --y) {
+            yearList.add(y + "");
+        }
+        return yearList;
     }
 }
