@@ -4,16 +4,17 @@
  */
 package com.mosedb.business;
 
+import com.mosedb.dao.seriesDao.EpisodeDao;
 import com.mosedb.dao.seriesDao.SeriesDao;
 import com.mosedb.dao.seriesDao.SeriesGenreDao;
 import com.mosedb.dao.seriesDao.SeriesNameDao;
+import com.mosedb.models.Episode;
 import com.mosedb.models.Series;
 import com.mosedb.models.User;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -106,6 +107,41 @@ public class SeriesService extends AbstractService {
 
     public List<Series> getByMediaFormat(User user, String searchField) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private void addName(Series series) {
+        SeriesNameDao seriesNameDao;
+        try {
+            seriesNameDao = new SeriesNameDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return;
+        }
+        try {
+            series.setNames(seriesNameDao.getSeriesNames(series.getId()));
+        } catch (SQLException ex) {
+            reportError("Error while trying to retirieve names for series with id: " + series.getId(), ex);
+        }
+        seriesNameDao.closeConnection();
+    }
+
+    private void addGenres(Series series) {
+        SeriesGenreDao seriesGenreDao;
+        try {
+            seriesGenreDao = new SeriesGenreDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return;
+        }
+        try {
+            series.setGenres(seriesGenreDao.getGenresById(series.getId()));
+        } catch (SQLException ex) {
+            reportError("Error retrieving series genres from database!", ex);
+        }
+    }
+
+    private void addEpisodes(Series series) {
+        series.setEpisodes(getAllEpisodes(series.getId()));
     }
 
     private void addNames(List<Series> seriesList) {
@@ -213,5 +249,48 @@ public class SeriesService extends AbstractService {
         } catch (SQLException ex) {
             reportError("Error trying to delete series from database!", ex);
         }
+    }
+
+    public List<Episode> getAllEpisodes(int seriesid) {
+        EpisodeDao episodeDao;
+        try {
+            episodeDao = new EpisodeDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return null;
+        }
+        List<Episode> episodeList;
+        try {
+            episodeList = episodeDao.getAllEpisodes(seriesid);
+        } catch (SQLException ex) {
+            reportError("Error retrieving episodes for series!", ex);
+            return null;
+        }
+        episodeDao.closeConnection();
+        return episodeList;
+    }
+
+    public Series getById(int id) {
+        SeriesDao seriesDao;
+        try {
+            seriesDao = new SeriesDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return null;
+        }
+        Series series;
+        try {
+            series = seriesDao.getById(id);
+        } catch (SQLException ex) {
+            reportError("Error retrieving series from database!", ex);
+            return null;
+        }
+        if (series == null) {
+            return null;
+        }
+        addName(series);
+        addGenres(series);
+        addEpisodes(series);
+        return series;
     }
 }

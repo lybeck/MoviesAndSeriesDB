@@ -16,16 +16,27 @@ import java.util.Map;
  */
 public class Series extends AbstractMediaEntity {
 
+    private List<Episode> episodes;
+
     public Series(Map<LangId, String> names, List<String> genres) {
-        super(names, genres);
+        this(0, names, null, genres);
+    }
+
+    public Series(int id, String owner) {
+        this(id, null, owner, null);
     }
 
     public Series(int id, Map<LangId, String> names, String owner, List<String> genres) {
         super(id, names, owner, genres);
+        episodes = new ArrayList<Episode>();
     }
 
-    public Series(int id, String owner) {
-        super(id, owner);
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
     }
 
     @Override

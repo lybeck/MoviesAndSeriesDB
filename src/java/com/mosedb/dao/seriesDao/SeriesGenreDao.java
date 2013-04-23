@@ -47,12 +47,23 @@ public class SeriesGenreDao extends AbstractDao {
         } else {
             sql += " and s.owner=?";
             result = executeQuery(sql, search, user.getUsername());
-        }List<Series> seriesList = new ArrayList<Series>();
+        }
+        List<Series> seriesList = new ArrayList<Series>();
         while (result.next()) {
             int id = result.getInt("seriesid");
             String owner = result.getString("owner");
             seriesList.add(new Series(id, owner));
         }
         return seriesList;
+    }
+
+    public List<String> getGenresById(int id) throws SQLException {
+        String sql = "select genrename from mosedb.seriesgenre where seriesid=?";
+        ResultSet result = executeQuery(sql, id);
+        List<String> genres = new ArrayList<String>();
+        while (result.next()) {
+            genres.add(result.getString("genrename"));
+        }
+        return genres;
     }
 }

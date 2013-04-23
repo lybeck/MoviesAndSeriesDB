@@ -62,4 +62,13 @@ public class SeriesDao extends AbstractDao {
         String sql = "delete from mosedb.series where seriesid=?";
         executeUpdate(sql, id);
     }
+
+    public Series getById(int id) throws SQLException {
+        String sql = "select owner from mosedb.series where seriesid=?";
+        ResultSet result = executeQuery(sql, id);
+        if (!result.next()) {
+            return null;
+        }
+        return new Series(id, result.getString("owner"));
+    }
 }
