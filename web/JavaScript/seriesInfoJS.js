@@ -33,16 +33,18 @@ function removeGenreDropbox() {
 }
 
 function addSeasonFS() {
-    var fieldsets = document.getElementsByTagName('fieldset');
+    var sFDivs = document.getElementsByTagName('div');
     var seasonfields = 0;
-    for (var i = 0; i < fieldsets.length; i++) {
-        if (fieldsets[i].name.substring(0, 12) == "seasonfields") {
+    for (var i = 0; i < sFDivs.length; i++) {
+        if (sFDivs[i].id.substring(0, 15) == "seasonfieldsDiv") {
             seasonfields++;
         }
     }
     seasonfields++;
+    
+    var sFieldsDiv = "<div id=seasonfieldsDiv" + seasonfields + ">";
     var fieldset = "<fieldset class='styledFS' name='seasonfields" + seasonfields +
-            "' style='width: 45%; margin: 0 auto;'><legend>New season</legend>";
+            "' style='width: 60%; margin: 0 auto; text-align:left'><legend>New season</legend>";
     var selectClose = "</select></div>";
     var seasonTxt = "Season #";
     var boxDiv = "<div class='styled-select' style='margin: 0 0 0 0; width:35%;'>";
@@ -58,20 +60,23 @@ function addSeasonFS() {
     var yearLoops = document.getElementById("yearSelect0").innerHTML;
 
     var rightDiv = selectClose + "<div style='margin: 0 0 0 0; width:100%; text-align: right;'>";
-    var deleteButton = "<button onclick='removeSeasonFS(" + seasonfields + ");'" + 
-            "class='button small'>Delete</button></div>"; 
+    var deleteButton = "<button onclick='removeSeasonFS(" + seasonfields + ");'" +
+            "class='button small'>Delete</button></div>";
 
-    var close = "</fieldset><p id='asdasd'></p></div><div id=seasonfieldsDiv" + (seasonfields + 1) + ">";
+    var close = "</fieldset></div><p></p>";
 
-    var code = fieldset + seasonTxt + boxDiv + seasonSelect + seasonLoops +
+    var code = sFieldsDiv + fieldset + seasonTxt + boxDiv + seasonSelect + seasonLoops +
             episodeTxt + boxDiv + episodeSelect + episodeLoops +
-            yearTxt + boxDiv + yearSelect + yearLoops + 
+            yearTxt + boxDiv + yearSelect + yearLoops +
             rightDiv + deleteButton + close;
-    
-    document.getElementById("seasonfieldsDiv" + seasonfields).innerHTML = code;
+
+    var currentDivs = document.getElementById("seasonfieldsHolder").innerHTML;
+    document.getElementById("seasonfieldsHolder").innerHTML = currentDivs+code;
+    document.getElementById("number_of_season_divs").value=seasonfields;
+
 }
 
-function removeSeasonFS(divNumber){
-    var divNum=parseInt(divNumber);
-    document.getElementById("seasonfieldsDiv" + divNum).innerHTML='';
+function removeSeasonFS(divNumber) {
+    var divNum = parseInt(divNumber);
+    document.getElementById("seasonfieldsDiv" + divNum).innerHTML = '';
 }

@@ -21,8 +21,34 @@
                         <option>${genre}</option>
                     </c:forEach>
                 </c:if>
-            </select>
-            <div id='genreDropboxDiv1'></div>
+            </select> 
+            <c:if test="${series != null}">
+                <% int indx = 1;%>
+                <div id='genreDropboxDiv<%out.print(indx);%>'>
+                <c:forEach var='selectedGenre' items='${series.genres}'>
+                    Genre #<%out.print(indx);%>
+                    <div class='styled-select' style='margin: 0 0 0 0'>
+                        <select name='genreDropbox<%out.print(indx);%>' id='genreSelect<%out.print(indx);%>'>
+                                <c:forEach var='genre' items='${genreList}'>
+                                    <c:choose>
+                                        <c:when test="${selectedGenre == genre}">
+                                            <option selected="true">${genre}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option>${genre}</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                        </select>
+                    </div>
+                    <p></p>
+                    <% indx++;%>
+                    <div id='genreDropboxDiv<%out.print(indx);%>'>
+                </c:forEach>
+            <%for(int i = 0; i<indx ; i++){%>
+            </div>
+            <%}%>
+            </c:if>
             
             
     </fieldset>
@@ -35,30 +61,59 @@
         <c:if test="${successMessage != null}">
             <p id="successMessage">${successMessage}</p>
         </c:if>
-        &emsp; Eng
         <br>
-        <input type="text" class="styled-textfield" id="namefields"
-               name="engName"/>
+        <c:choose>
+            <c:when test="${series.nameEng != null}">
+                <input type="text" class="styled-textfield" id="namefields"
+                       value="${series.nameEng}" name="engName"/>
+            </c:when>
+            <c:otherwise>
+                <input type="text" class="styled-textfield" id="namefields"
+                       name="engName"/>
+            </c:otherwise>
+        </c:choose>
         <p></p>
         &emsp; Fin
         <br>
-        <input type="text" class="styled-textfield" id="namefields"
-               name="fiName"/>
+        <c:choose>
+            <c:when test="${series.nameFi != null}">
+                <input type="text" class="styled-textfield" id="namefields"
+                       value="${series.nameFi}" name="fiName"/>
+            </c:when>
+            <c:otherwise>
+                <input type="text" class="styled-textfield" id="namefields"
+                       name="fiName"/>
+            </c:otherwise>
+        </c:choose>
         <p></p>
         &emsp; Swe
         <br>
-        <input type="text" class="styled-textfield" id="namefields"
-               name="sweName"/>
+        <c:choose>
+            <c:when test="${series.nameSwe != null}">
+                <input type="text" class="styled-textfield" id="namefields"
+                       value="${series.nameSwe}" name="sweName"/>
+            </c:when>
+            <c:otherwise>
+                <input type="text" class="styled-textfield" id="namefields"
+                       name="sweName"/>
+            </c:otherwise>
+        </c:choose>
         <p></p>
         &emsp; Other
         <br>
-        <input type="text" class="styled-textfield" id="namefields"
-               name="otherName"/>
+        <c:choose>
+            <c:when test="${series.nameOther != null}">
+                <input type="text" class="styled-textfield" id="namefields"
+                       value="${series.nameOther}" name="otherName"/>
+            </c:when>
+            <c:otherwise>
+                <input type="text" class="styled-textfield" id="namefields"
+                       name="otherName"/>
+            </c:otherwise>
+        </c:choose>
     </fieldset>
-    
-    <fieldset class="styledFS" style="width: 75%; margin: 0 auto;">
-        <legend>Seasons</legend>
         
+    <div style="width: 100%; overflow: hidden;">
         <select id='seasonSelect0' style='display: none;'>
             <option></option>
                 <c:if test='${seasonDropboxValues != null}'>
@@ -82,14 +137,16 @@
                 </c:forEach>
             </c:if>
         </select>
+        <input name='number_of_season_divs' id='number_of_season_divs' 
+               style="display: none;" value="0">
         
          Add season:
         <input type="button" class="button" value="+" id="plusButton"
                onclick="addSeasonFS();">
         <p></p>
         
-        <div id="seasonfieldsDiv1"></div>
-    </fieldset>
+        <div id="seasonfieldsHolder"></div>
+        </div>
     
     <button type="submit" class="button" name="update_series" value="update_series" >
         Update Series</button>

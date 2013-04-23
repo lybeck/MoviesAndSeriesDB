@@ -70,6 +70,7 @@ public class AddSeriesServlet extends AbstractInfoServlet {
             }
             AttributeManager.setEpisodeDropbox(request, getEpisodeDropboxValues());
             AttributeManager.setSeasonDropbox(request, getSeasonDropboxValues());
+            AttributeManager.setSeries(request.getSession(true), series);
             redirectToPage("seriesInfo.jsp", request, response);
         } else {
             redirectHome(request, response);

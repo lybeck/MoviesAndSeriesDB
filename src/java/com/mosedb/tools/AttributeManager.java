@@ -21,6 +21,7 @@ public class AttributeManager {
     private static String movie = "movie";
     private static String movieList = "movieList";
     private static String seasonDropboxValues = "seasonDropboxValues";
+    private static String series= "series";
     private static String seriesList = "seriesList";
     private static String successMessage = "successMessage";
     private static String userList = "userList";
@@ -57,6 +58,10 @@ public class AttributeManager {
     
     public static List<Integer> getSeasonDropbox(HttpSession session){
         return (List<Integer>) session.getAttribute(seasonDropboxValues);
+    }
+    
+    public static Series getSeries(HttpSession session){
+        return (Series) session.getAttribute(series);
     }
     
     public static List<User> getUserList(HttpSession session) {
@@ -105,6 +110,10 @@ public class AttributeManager {
         session.setAttribute(seasonDropboxValues, episodes);
     }
     
+    public static void setSeries(HttpSession session, Series serie){
+        session.setAttribute(series, serie);
+    }
+    
     public static void setUserList(HttpSession session, List<User> users) {
         session.setAttribute(userList, users);
     }
@@ -149,6 +158,10 @@ public class AttributeManager {
     
     public static void setSeasonDropbox(HttpServletRequest request, List<Integer> episodes ){
         request.setAttribute(seasonDropboxValues, episodes);
+    }
+    
+    public static void setSeries(HttpServletRequest request, Series serie){
+        request.setAttribute(series, serie);
     }
 
     public static void setSeriesList(HttpServletRequest request, List<Series> series) {
