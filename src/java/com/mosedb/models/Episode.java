@@ -6,7 +6,7 @@ package com.mosedb.models;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public class Episode implements Comparable<Episode> {
 

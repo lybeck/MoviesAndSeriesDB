@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public class LogoutServlet extends MosedbServlet {
 

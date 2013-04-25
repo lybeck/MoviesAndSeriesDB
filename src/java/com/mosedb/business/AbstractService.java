@@ -6,7 +6,7 @@ package com.mosedb.business;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public abstract class AbstractService {
     

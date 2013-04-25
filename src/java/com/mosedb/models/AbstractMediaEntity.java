@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public abstract class AbstractMediaEntity implements Comparable<AbstractMediaEntity> {
 

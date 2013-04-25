@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Easysimulation
+ * @author Roope
  */
 public class MovieInfoServlet extends AbstractInfoServlet{
 

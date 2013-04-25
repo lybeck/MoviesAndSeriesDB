@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public class MovieGenreDao extends AbstractDao {
 

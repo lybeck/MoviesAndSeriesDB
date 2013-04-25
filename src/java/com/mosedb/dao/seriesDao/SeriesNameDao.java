@@ -19,7 +19,7 @@ import java.util.Set;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public class SeriesNameDao extends AbstractDao {
 

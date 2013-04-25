@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public class GenreService extends AbstractService {
 

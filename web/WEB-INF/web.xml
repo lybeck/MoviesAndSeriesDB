@@ -46,6 +46,10 @@
         <servlet-class>com.mosedb.servlet.movieServlet.UpdateMovieServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UpdateSeriesServlet</servlet-name>
+        <servlet-class>com.mosedb.servlet.seriesServlet.UpdateSeriesServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SeriesInfoServlet</servlet-name>
         <servlet-class>com.mosedb.servlet.seriesServlet.SeriesInfoServlet</servlet-class>
     </servlet>
@@ -100,6 +104,10 @@
     <servlet-mapping>
         <servlet-name>UpdateMovieServlet</servlet-name>
         <url-pattern>/updateMovie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateSeriesServlet</servlet-name>
+        <url-pattern>/updateSeries</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SeriesInfoServlet</servlet-name>

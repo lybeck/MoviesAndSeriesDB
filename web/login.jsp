@@ -1,7 +1,7 @@
 <%-- 
     Document   : login
     Created on : Mar 24, 2013, 12:49:46 PM
-    Author     : Easysimulation
+    Author     : Roope
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

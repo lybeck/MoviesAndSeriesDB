@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public class EpisodeDao extends AbstractDao {
 

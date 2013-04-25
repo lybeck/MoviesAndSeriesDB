@@ -16,7 +16,7 @@ import java.util.Set;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public class MovieFormatDao extends AbstractDao {
 

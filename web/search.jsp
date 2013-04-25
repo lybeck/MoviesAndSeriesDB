@@ -1,7 +1,7 @@
 <%-- 
     Document   : searchpage
     Created on : Mar 26, 2013, 10:57:36 AM
-    Author     : Easysimulation
+    Author     : Roope
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

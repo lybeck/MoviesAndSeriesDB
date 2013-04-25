@@ -1,7 +1,7 @@
 <%-- 
     Document   : movieInfo
     Created on : Apr 16, 2013, 3:58:21 PM
-    Author     : Easysimulation
+    Author     : Roope
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public class Movie extends AbstractMediaEntity {
 

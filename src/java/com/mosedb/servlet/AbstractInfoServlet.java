@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- * @author llybeck
+ * @author Lasse
  */
 public abstract class AbstractInfoServlet extends MosedbServlet {
 

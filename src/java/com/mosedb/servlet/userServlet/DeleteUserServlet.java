@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Easysimulation
+ * @author Roope
  */
 public class DeleteUserServlet extends MosedbServlet {
     
