@@ -14,7 +14,6 @@
                    onclick="removeGenreDropbox();">
 
             <p></p>
-
             <select id='genreSelect0' name='hidden' style="display: none;">
                 <c:if test='${genreList != null}'>
                     <c:forEach var='genre' items='${genreList}'>
@@ -111,8 +110,69 @@
                        name="otherName"/>
             </c:otherwise>
         </c:choose>
-    </fieldset>
-        
+    </fieldset>   
+    
+    <c:if test="${series != null && !empty series.episodes}">
+        <table class="customTable">
+            <tr>
+                <th>Season</th>
+                <th>Episode</th>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Seen</th>
+            </tr>
+            <% int indx2 = 1;%>
+            <c:forEach var="ep" items="${series.episodes}">
+                <% if (indx2 % 2 == 1) {%>
+                    <tr>
+                <%} else {%>
+                    <tr class="red">
+                <%}%>
+                
+                <td>${ep.seasonNumber}</td>
+                <td>${ep.episodeNumber}</td>
+                <td>
+                    <c:if test="${ep.episodeName != null}">
+                        <input class="styled-textfield small" value="${ep.episodeName}"
+                               name="${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}">
+                    </c:if>
+                </td>
+                <td>
+                    <c:if test="${ep.episodeYear != null}">
+                        <div class="styled-select tableBox">
+                            <select name='yearDropbox'>
+                                <c:if test='${yearList != null}'>
+                                    <c:forEach var='year' items='${yearList}'>
+                                        <c:choose>
+                                            <c:when test="${ep.episodeYear == year}">
+                                                <option selected="true">${year}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option>${year}</option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </c:if>
+                            </select>
+                        </div>
+                    </c:if>
+                </td>
+                <td class="padded">
+                    <input type="checkbox" value="${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}" 
+                           id="${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
+                           name="episode_seen_checkbox"
+                    <c:if test="${ep.seen}">
+                        checked
+                    </c:if>
+                    >
+                    <label class="customCheck" 
+                           for="${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"></label>
+                </td>
+                <%indx2++;%>
+            </c:forEach>
+        </table>
+    </c:if>
+    
     <div style="width: 100%; overflow: hidden;">
         <select id='seasonSelect0' style='display: none;'>
             <option></option>

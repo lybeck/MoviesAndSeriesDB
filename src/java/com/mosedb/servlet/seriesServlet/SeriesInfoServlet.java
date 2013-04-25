@@ -43,7 +43,7 @@ public class SeriesInfoServlet extends AbstractInfoServlet{
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
-            AttributeManager.removeMovie(session);
+            AttributeManager.removeSeries(session);
 
             List<String> genreList = new GenreService().getAllGenres();
             AttributeManager.setGenreList(session, genreList);
@@ -60,7 +60,6 @@ public class SeriesInfoServlet extends AbstractInfoServlet{
                 Series series = seriesService.getById(Integer.parseInt(id));
                 AttributeManager.setSeries(session, series);
             }
-
             redirectToPage("seriesInfo.jsp", request, response);
         } else {
             redirectHome(request, response);

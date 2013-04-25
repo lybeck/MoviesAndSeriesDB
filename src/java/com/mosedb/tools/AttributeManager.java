@@ -211,4 +211,8 @@ public class AttributeManager {
         session.removeAttribute(movie);
     }
 
+    public static void removeSeries(HttpSession session) {
+        session.removeAttribute(series);
+    }
+
 }
