@@ -237,6 +237,11 @@ input[type=radio]:checked + .customCheck:after {
     margin: 0;
 }
 
+.button.small.delete{
+    float: right;
+    margin: 0 5% 0 0;
+}
+
 .button:hover {
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #48494f), color-stop(1, #e6e4eb) );
     background:-moz-linear-gradient( center top, #48494f 5%, #e6e4eb 100% );
