@@ -180,7 +180,7 @@
             </c:forEach>
         </table>
     </c:if>
-    <button type="submit" class="button small delete" name="delete_selected_button">
+    <button type="submit" class="button small delete" name="submit" value="delete_selected_button">
     Delete</button>
     
     <div style="width: 100%; overflow: hidden;">
@@ -218,8 +218,10 @@
         </div>
         <div id="seasonfieldsHolder"></div>
     </div>
-    <button type="submit" class="button" name="update_series" value="update_series" >
+    <button type="submit" class="button" name="submit" value="update_series" >
         Update Series</button>
+    <button type="submit" class="button" name="submit" value="delete_series" >
+        Delete series</button>
 </form>
 
 <%@include file="bottom.jspf" %>
