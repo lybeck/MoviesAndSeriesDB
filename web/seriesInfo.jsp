@@ -120,6 +120,7 @@
                 <th>Title</th>
                 <th>Year</th>
                 <th>Seen</th>
+                <th>Delete</th>
             </tr>
             <% int indx2 = 1;%>
             <c:forEach var="ep" items="${series.episodes}">
@@ -158,20 +159,29 @@
                     </c:if>
                 </td>
                 <td class="padded">
-                    <input type="checkbox" value="${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}" 
-                           id="${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
+                    <input type="checkbox" value="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}" 
+                           id="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
                            name="episode_seen_checkbox"
                     <c:if test="${ep.seen}">
                         checked
                     </c:if>
                     >
                     <label class="customCheck" 
-                           for="${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"></label>
+                           for="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"></label>
+                </td>
+                <td class="padded">
+                    <input type="checkbox" value="delete_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}" 
+                           id="delete_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
+                           name="episode_seen_checkbox">
+                    <label class="customCheck" 
+                           for="delete_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"></label>
                 </td>
                 <%indx2++;%>
             </c:forEach>
         </table>
     </c:if>
+    <button type="submit" class="button small delete" name="submit" value="delete_selected_button">
+    Delete</button>
     
     <div style="width: 100%; overflow: hidden;">
         <select id='seasonSelect0' style='display: none;'>
@@ -200,16 +210,18 @@
         <input name='number_of_season_divs' id='number_of_season_divs' 
                style="display: none;" value="0">
         
-         Add season:
-        <input type="button" class="button" value="+" id="plusButton"
-               onclick="addSeasonFS();">
-        <p></p>
-        
-        <div id="seasonfieldsHolder"></div>
+        <div id="plusButtonHolder">
+            Add season:
+           <input type='button' class='button' value='+' id='plusButton'
+                  onclick='addSeasonFS();'>
+           <p></p>
         </div>
-    
-    <button type="submit" class="button" name="update_series" value="update_series" >
+        <div id="seasonfieldsHolder"></div>
+    </div>
+    <button type="submit" class="button" name="submit" value="update_series" >
         Update Series</button>
+    <button type="submit" class="button" name="submit" value="delete_series" >
+        Delete series</button>
 </form>
 
 <%@include file="bottom.jspf" %>

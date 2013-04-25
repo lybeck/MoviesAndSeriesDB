@@ -33,34 +33,25 @@ function removeGenreDropbox() {
 }
 
 function addSeasonFS() {
-    var sFDivs = document.getElementsByTagName('div');
-    var seasonfields = 0;
-    for (var i = 0; i < sFDivs.length; i++) {
-        if (sFDivs[i].id.substring(0, 15) == "seasonfieldsDiv") {
-            seasonfields++;
-        }
-    }
-    seasonfields++;
-    
-    var sFieldsDiv = "<div id=seasonfieldsDiv" + seasonfields + ">";
-    var fieldset = "<fieldset class='styledFS' name='seasonfields" + seasonfields +
-            "' style='width: 60%; margin: 0 auto; text-align:left'><legend>New season</legend>";
+    var sFieldsDiv = "<div id=seasonfieldsDiv>";
+    var fieldset = "<fieldset class='styledFS' name='seasonfields'" +
+            "style='width: 60%; margin: 0 auto; text-align:left'><legend>New season</legend>";
     var selectClose = "</select></div>";
     var seasonTxt = "Season #";
     var boxDiv = "<div class='styled-select' style='margin: 0 0 0 0; width:35%;'>";
-    var seasonSelect = "<select id='seasonSelect" + seasonfields + "'>";
+    var seasonSelect = "<select id='seasonSelect'>";
     var seasonLoops = document.getElementById("seasonSelect0").innerHTML;
 
     var episodeTxt = "</select></div><p></p> Number of episodes:";
-    var episodeSelect = "<select name='episodeSelect" + seasonfields + "'>";
+    var episodeSelect = "<select name='episodeSelect'>";
     var episodeLoops = document.getElementById("episodeSelect0").innerHTML;
 
     var yearTxt = "</select></div><p></p> Year:";
-    var yearSelect = "<select name='yearSelect" + seasonfields + "'>";
+    var yearSelect = "<select name='yearSelect'>";
     var yearLoops = document.getElementById("yearSelect0").innerHTML;
 
     var rightDiv = selectClose + "<div style='margin: 0 0 0 0; width:100%; text-align: right;'>";
-    var deleteButton = "<button onclick='removeSeasonFS(" + seasonfields + ");'" +
+    var deleteButton = "<button onclick='removeSeasonFS();'" +
             "class='button small'>Delete</button></div>";
 
     var close = "</fieldset></div><p></p>";
@@ -70,13 +61,18 @@ function addSeasonFS() {
             yearTxt + boxDiv + yearSelect + yearLoops +
             rightDiv + deleteButton + close;
 
-    var currentDivs = document.getElementById("seasonfieldsHolder").innerHTML;
-    document.getElementById("seasonfieldsHolder").innerHTML = currentDivs+code;
-    document.getElementById("number_of_season_divs").value=seasonfields;
+    document.getElementById("seasonfieldsHolder").innerHTML = code;
+    document.getElementById("plusButtonHolder").innerHTML = '';
 
 }
 
-function removeSeasonFS(divNumber) {
-    var divNum = parseInt(divNumber);
-    document.getElementById("seasonfieldsDiv" + divNum).innerHTML = '';
+function removeSeasonFS() {
+    document.getElementById("seasonfieldsHolder").innerHTML = '';
+
+    var plusBCode = "Add season:" +
+            "<input type='button' class='button' value='+' id='plusButton'" +
+            "onclick='addSeasonFS();'>"
+            "<p></p>";
+
+    document.getElementById("plusButtonHolder").innerHTML = plusBCode;
 }
