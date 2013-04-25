@@ -4,8 +4,15 @@
  */
 package com.mosedb.servlet.seriesServlet;
 
+import com.mosedb.business.SeriesService;
+import com.mosedb.models.LangId;
+import com.mosedb.models.Series;
+import com.mosedb.models.User;
 import com.mosedb.servlet.AbstractInfoServlet;
+import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +26,29 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
+        if (isUserLoggedIn(request)) {
+
+            SeriesService seriesService = new SeriesService();
+            Series series = AttributeManager.getSeries(request.getSession(true));
+
+            Map<LangId, String> names = getNameMap(request);
+            if (names.isEmpty()) {
+                AttributeManager.setErrorMessage(request, "One name must be specified!");
+            } else {
+                boolean success = seriesService.updateNames(series, names);
+                if (success) {
+                    series.setNames(names);
+                }
+            }
+
+            List<String> genreList = getGenres(request);
+
+//            seriesService.updateGenres(series, genreList);
+
+            AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
+            redirectToPage("seriesInfo.jsp", request, response);
+        } else {
+            redirectHome(request, response);
+        }
     }
-    
 }

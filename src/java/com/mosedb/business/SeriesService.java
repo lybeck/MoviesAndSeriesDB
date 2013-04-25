@@ -9,12 +9,14 @@ import com.mosedb.dao.seriesDao.SeriesDao;
 import com.mosedb.dao.seriesDao.SeriesGenreDao;
 import com.mosedb.dao.seriesDao.SeriesNameDao;
 import com.mosedb.models.Episode;
+import com.mosedb.models.LangId;
 import com.mosedb.models.Series;
 import com.mosedb.models.User;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +43,7 @@ public class SeriesService extends AbstractService {
                 series = seriesDao.getSeries(user.getUsername());
             }
         } catch (SQLException ex) {
-            reportError("Error while retrieving movies by username.", ex);
+            reportError("Error while retrieving seriess by username.", ex);
             return null;
         }
 
@@ -76,7 +78,7 @@ public class SeriesService extends AbstractService {
                 seriesList = seriesNameDao.getSeriesByName(searchList, user);
             }
         } catch (SQLException ex) {
-            reportError("Error while trying to get movieids by name from movienamedao.", ex);
+            reportError("Error while trying to get seriesids by name from seriesnamedao.", ex);
             return null;
         }
 
@@ -97,7 +99,7 @@ public class SeriesService extends AbstractService {
         try {
             seriesList = seriesGenreDao.getSeriesByGenre(search, user);
         } catch (SQLException ex) {
-            reportError("Error while retrieving movies by genre from database!", ex);
+            reportError("Error while retrieving seriess by genre from database!", ex);
             return null;
         }
         seriesGenreDao.closeConnection();
@@ -292,5 +294,30 @@ public class SeriesService extends AbstractService {
         addGenres(series);
         addEpisodes(series);
         return series;
+    }
+
+    public boolean updateNames(Series series, Map<LangId, String> names) {
+        SeriesNameDao seriesNameDao;
+        try {
+            seriesNameDao = new SeriesNameDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
+            seriesNameDao.removeNames(series.getId());
+            boolean success = seriesNameDao.addNames(series.getId(), names);
+            if (!success) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            reportError("Error while updating series names to database!", ex);
+            return false;
+        }
+        return true;
+    }
+
+    public void updateGenres(Series series, List<String> genreList) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

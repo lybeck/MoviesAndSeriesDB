@@ -103,4 +103,9 @@ public class SeriesNameDao extends AbstractDao {
         }
         return seriesList;
     }
+
+    public void removeNames(int id) throws SQLException {
+        String sql = "delete from mosedb.seriesname where seriesid=?";
+        executeUpdate(sql, id);
+    }
 }
