@@ -353,6 +353,13 @@ footer{
     text-shadow: none;
 }
 
+#seasonFieldSeenDiv{
+    text-align: right; 
+    width:10%; 
+    position: relative; 
+    top:40px;
+}
+
 #errorMessage{
     position: relative;
     color: red;

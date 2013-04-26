@@ -111,6 +111,7 @@
             </c:otherwise>
         </c:choose>
     </fieldset>   
+    <br>
     
     <c:if test="${series != null && !empty series.episodes}">
         <table class="customTable">
@@ -180,8 +181,11 @@
             </c:forEach>
         </table>
     </c:if>
-    <button type="submit" class="button small delete" name="submit" value="delete_selected_button">
-    Delete</button>
+    
+    <c:if test="${series != null && !empty series.episodes}">
+        <button type="submit" class="button small delete" name="submit" value="delete_selected_button">
+        Delete</button>
+    </c:if>
     
     <div style="width: 100%; overflow: hidden;">
         <select id='seasonSelect0' style='display: none;'>
@@ -218,6 +222,7 @@
         </div>
         <div id="seasonfieldsHolder"></div>
     </div>
+    <br>
     <button type="submit" class="button" name="submit" value="update_series" >
         Update Series</button>
     <button type="submit" class="button" name="submit" value="delete_series" >

@@ -36,6 +36,12 @@ function addSeasonFS() {
     var sFieldsDiv = "<div id=seasonfieldsDiv>";
     var fieldset = "<fieldset class='styledFS' name='seasonfields'" +
             "style='width: 60%; margin: 0 auto; text-align:left'><legend>New season</legend>";
+
+    var seenCheckbox = "<div id='seasonFieldSeenDiv'>" +
+            "Seen: <input type='checkbox' value='new_season_seen_checkbox' name='new_season_seen_checkbox' " +
+            "id='new_season_seen_checkbox'><label class='customCheck' " +
+            "for='new_season_seen_checkbox' style='float: right;'></label></div>";
+
     var selectClose = "</select></div>";
     var seasonTxt = "Season #";
     var boxDiv = "<div class='styled-select' style='margin: 0 0 0 0; width:35%;'>";
@@ -56,7 +62,8 @@ function addSeasonFS() {
 
     var close = "</fieldset></div><p></p>";
 
-    var code = sFieldsDiv + fieldset + seasonTxt + boxDiv + seasonSelect + seasonLoops +
+    var code = sFieldsDiv + fieldset + seenCheckbox + seasonTxt +
+            boxDiv + seasonSelect + seasonLoops +
             episodeTxt + boxDiv + episodeSelect + episodeLoops +
             yearTxt + boxDiv + yearSelect + yearLoops +
             rightDiv + deleteButton + close;
@@ -72,7 +79,7 @@ function removeSeasonFS() {
     var plusBCode = "Add season:" +
             "<input type='button' class='button' value='+' id='plusButton'" +
             "onclick='addSeasonFS();'>"
-            "<p></p>";
+    "<p></p>";
 
     document.getElementById("plusButtonHolder").innerHTML = plusBCode;
 }
