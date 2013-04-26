@@ -9,6 +9,7 @@ import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,27 +19,12 @@ import javax.servlet.http.HttpSession;
  *
  * @author Roope
  */
-public class SeriesInfoServlet extends AbstractInfoServlet{
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        if (isUserLoggedIn(request)) {
-            HttpSession session = request.getSession(true);
+public class SeriesInfoServlet extends AbstractInfoServlet {
 
-            List<String> genreList = new GenreService().getAllGenres();
-            AttributeManager.setGenreList(session, genreList);
-            AttributeManager.setEpisodeDropbox(session, getEpisodeDropboxValues());
-            AttributeManager.setSeasonDropbox(session, getSeasonDropboxValues());
-            AttributeManager.setYearList(session, getYearList());
-            
-            redirectToPage("seriesInfo.jsp", request, response);
-        } else {
-            redirectHome(request, response);
-        }
-    }
-    
-        @Override
+    private static final int MAX_EPISODES_PER_SEASON = 50;
+    private static final int MAX_SEASON_NUMBER = 35;
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
@@ -50,8 +36,6 @@ public class SeriesInfoServlet extends AbstractInfoServlet{
             List<String> formatList = Format.getAllMediaFormats();
             AttributeManager.setFormatList(session, formatList);
             AttributeManager.setGenreList(session, genreList);
-            AttributeManager.setEpisodeDropbox(session, getEpisodeDropboxValues());
-            AttributeManager.setSeasonDropbox(session, getSeasonDropboxValues());
             AttributeManager.setYearList(session, getYearList());
 
             String id = request.getParameter("Edit");
@@ -59,27 +43,33 @@ public class SeriesInfoServlet extends AbstractInfoServlet{
                 SeriesService seriesService = new SeriesService();
                 Series series = seriesService.getById(Integer.parseInt(id));
                 AttributeManager.setSeries(session, series);
+                AttributeManager.setEpisodeDropbox(session, getEpisodeDropboxValues());
+                AttributeManager.setSeasonDropbox(session, getSeasonDropboxValues(series));
+                redirectToPage("seriesInfo.jsp", request, response);
+                return;
             }
-            redirectToPage("seriesInfo.jsp", request, response);
-        } else {
-            redirectHome(request, response);
         }
+        redirectHome(request, response);
     }
-    
-    private List<Integer> getEpisodeDropboxValues(){
-        List<Integer> epVals=new ArrayList<Integer>();
-        for (int i = 1; i < 51; i++) {
+
+    private List<Integer> getEpisodeDropboxValues() {
+        List<Integer> epVals = new ArrayList<Integer>();
+        for (int i = 1; i <= MAX_EPISODES_PER_SEASON; i++) {
             epVals.add(i);
         }
         return epVals;
     }
-    
-    private List<Integer> getSeasonDropboxValues(){
-        List<Integer> seasonVals=new ArrayList<Integer>();
-        for (int i = 1; i < 51; i++) {
-            seasonVals.add(i);
+
+    private List<String> getSeasonDropboxValues(Series series) {
+        Set<Integer> seasonNumbers = series.getSeasonNumbers();
+        List<String> seasonVals = new ArrayList<String>();
+        for (int i = 1; i < MAX_SEASON_NUMBER; i++) {
+            if (!seasonNumbers.contains(i)) {
+                seasonVals.add(i + "");
+            } else {
+                seasonVals.add("-- " + i + " -- (already exists)");
+            }
         }
         return seasonVals;
     }
-    
 }
