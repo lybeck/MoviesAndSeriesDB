@@ -5,6 +5,7 @@
 package com.mosedb.servlet.seriesServlet;
 
 import com.mosedb.business.SeriesService;
+import com.mosedb.models.Episode;
 import com.mosedb.models.LangId;
 import com.mosedb.models.Series;
 import com.mosedb.servlet.AbstractInfoServlet;
@@ -29,6 +30,7 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     private static final String NEW_SEASON_EPISODE_NUMBER_DROPBOX = "new_season_episode_select";
     private static final String NEW_SEASON_YEAR_DROPBOX = "new_season_year_select";
     private static final String NEW_SEASON_SEEN_CHECKBOX = "new_season_seen_checkbox";
+    private static final String EPISODE_NAME_INPUT = "episode_name_";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,32 +57,53 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         SeriesService seriesService = new SeriesService();
         Series series = AttributeManager.getSeries(request.getSession(true));
 
+        boolean success;
+        boolean totalSuccess = true;
+
+        /*
+         * update names
+         */
         Map<LangId, String> names = getNameMap(request);
         if (names.isEmpty()) {
-            AttributeManager.setErrorMessage(request, "One name must be specified!");
-            restorePage("seriesInfo.jsp", request, response);
-            return;
+            totalSuccess = false;
         } else {
-            boolean success = seriesService.updateNames(series, names);
+            success = seriesService.updateNames(series, names);
             if (success) {
                 series.setNames(names);
+            } else {
+                totalSuccess = false;
             }
         }
 
+        /*
+         * update genres
+         */
         List<String> genreList = getGenres(request);
-
-        boolean success = seriesService.updateGenres(series, genreList);
+        success = seriesService.updateGenres(series, genreList);
         if (success) {
             series.setGenres(genreList);
         } else {
-            AttributeManager.setErrorMessage(request, "Failed to update series genres!");
-            restorePage("seriesInfo.jsp", request, response);
-            return;
+            totalSuccess = false;
         }
 
-        addNewSeason(request, series);
+        /*
+         * update episode info
+         */
+        updateEpisodes(request, series);
 
-        AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
+        /*
+         * add season
+         */
+        success = addNewSeason(request, series);
+        if (!success) {
+            totalSuccess = false;
+        }
+
+        if (totalSuccess) {
+            AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
+        } else {
+            AttributeManager.setErrorMessage(request, "Failed to update series information!");
+        }
         restorePage("seriesInfo.jsp", request, response);
     }
 
@@ -123,6 +146,29 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         }
         series.setEpisodes(seriesService.getAllEpisodes(series.getId()));
         AttributeManager.setSeasonDropbox(request.getSession(true), getSeasonDropboxValues(series));
+        return true;
+    }
+
+    private boolean updateEpisodes(HttpServletRequest request, Series series) {
+        boolean success = true;
+        for (Episode episode : series.getEpisodes()) {
+            success = updateEpisode(request, episode) && success;
+        }
+        return success;
+    }
+
+    private boolean updateEpisode(HttpServletRequest request, Episode episode) {
+        boolean changes = false;
+        String episodeTag = episode.getSeriesId() + "_" + episode.getSeasonNumber() + "_" + episode.getEpisodeNumber();
+        String newName = request.getParameter(EPISODE_NAME_INPUT + episodeTag);
+        if (!newName.equals(episode.getEpisodeName())) {
+            episode.setEpisodeName(newName);
+            changes = true;
+        }
+
+        if (changes) {
+            return new SeriesService().updateEpisode(episode);
+        }
         return true;
     }
 }

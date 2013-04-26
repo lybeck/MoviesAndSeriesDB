@@ -44,6 +44,13 @@ public class EpisodeDao extends AbstractDao {
     public boolean addEpisode(int seriesid, int seasonnumber, int episodenumber, boolean seen, Integer year) throws SQLException {
         String sql = "insert into mosedb.episode (seriesid,seasonnumber,episodenumber,episodeyear,seen) "
                 + "values (?,?,?,?,?)";
-        return executeUpdate(sql, seriesid,seasonnumber,episodenumber,year,seen);
+        return executeUpdate(sql, seriesid, seasonnumber, episodenumber, year, seen);
+    }
+
+    public boolean updateEpisode(Episode episode) throws SQLException {
+        String sql = "update mosedb.episode set (episodename,episodeyear,seen)=(?,?,?) "
+                + "where seriesid=? and seasonnumber=? and episodenumber=?";
+        return executeUpdate(sql, episode.getEpisodeName(), episode.getEpisodeYear(), episode.isSeen(),
+                episode.getSeriesId(), episode.getSeasonNumber(), episode.getEpisodeNumber());
     }
 }

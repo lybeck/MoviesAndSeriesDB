@@ -364,6 +364,25 @@ public class SeriesService extends AbstractService {
             reportError("Error while adding episodes to database!", ex);
             return false;
         }
+        episodeDao.closeConnection();
+        return true;
+    }
+
+    public boolean updateEpisode(Episode episode) {
+        EpisodeDao episodeDao;
+        try {
+            episodeDao = new EpisodeDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
+            episodeDao.updateEpisode(episode);
+            episodeDao.closeConnection();
+        } catch (SQLException ex) {
+            reportError("Error trying to update episode info!", ex);
+            return false;
+        }
         return true;
     }
 }
