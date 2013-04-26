@@ -91,7 +91,7 @@ public class MovieNameDao extends AbstractDao {
         } else if (seenParam == null) {
             sql += " and m.owner=?";
             result = executeQuery(sql, "%" + search + "%", user.getUsername());
-        } else if (!user.isAdmin()) {
+        } else if (user.isAdmin()) {
             sql += " and m.seen=?";
             result = executeQuery(sql, "%" + search + "%", seenParam);
         } else {
