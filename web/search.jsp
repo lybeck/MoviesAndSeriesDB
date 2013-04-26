@@ -161,6 +161,7 @@
                         <th>Fin</th>
                         <th>Swe</th>
                         <th>Other</th>
+                        <th>Seen</th>
                         <th>View</th>
                     </tr>
                     <% int indx2 = 1;%>
@@ -194,6 +195,16 @@
                                 <c:if test="${series.nameOther != null}" >
                                     ${series.nameOther} 
                                 </c:if>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${series.seen}" >
+                                        yes
+                                    </c:when>
+                                    <c:otherwise>
+                                        no 
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                             <td>
                                 <button type="submit" class="button small" value="${series.id}" 

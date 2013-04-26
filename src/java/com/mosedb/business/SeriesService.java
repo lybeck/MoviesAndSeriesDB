@@ -46,8 +46,9 @@ public class SeriesService extends AbstractService {
             reportError("Error while retrieving seriess by username.", ex);
             return null;
         }
-
+        
         addNames(series);
+        addEpisodes(series);
         long end = System.currentTimeMillis();
         double time = (end - start) * 1.0 / 1000;
         System.out.println("Search for series took " + time + " seconds.");
@@ -77,6 +78,7 @@ public class SeriesService extends AbstractService {
             } else {
                 seriesList = seriesNameDao.getSeriesByName(searchList, user);
             }
+            addEpisodes(seriesList);
         } catch (SQLException ex) {
             reportError("Error while trying to get seriesids by name from seriesnamedao.", ex);
             return null;
@@ -104,6 +106,7 @@ public class SeriesService extends AbstractService {
         }
         seriesGenreDao.closeConnection();
         addNames(seriesList);
+        addEpisodes(seriesList);
         return seriesList;
     }
 
@@ -144,6 +147,12 @@ public class SeriesService extends AbstractService {
 
     private void addEpisodes(Series series) {
         series.setEpisodes(getAllEpisodes(series.getId()));
+    }
+    
+    private void addEpisodes(List<Series> series) {
+        for (Series singleSeries : series) {
+            addEpisodes(singleSeries);
+        }
     }
 
     private void addNames(List<Series> seriesList) {
@@ -385,4 +394,5 @@ public class SeriesService extends AbstractService {
         }
         return true;
     }
+
 }
