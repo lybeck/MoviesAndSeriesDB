@@ -21,9 +21,6 @@ import javax.servlet.http.HttpSession;
  */
 public class SeriesInfoServlet extends AbstractInfoServlet {
 
-    private static final int MAX_EPISODES_PER_SEASON = 50;
-    private static final int MAX_SEASON_NUMBER = 35;
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -50,26 +47,5 @@ public class SeriesInfoServlet extends AbstractInfoServlet {
             }
         }
         redirectHome(request, response);
-    }
-
-    private List<Integer> getEpisodeDropboxValues() {
-        List<Integer> epVals = new ArrayList<Integer>();
-        for (int i = 1; i <= MAX_EPISODES_PER_SEASON; i++) {
-            epVals.add(i);
-        }
-        return epVals;
-    }
-
-    private List<String> getSeasonDropboxValues(Series series) {
-        Set<Integer> seasonNumbers = series.getSeasonNumbers();
-        List<String> seasonVals = new ArrayList<String>();
-        for (int i = 1; i < MAX_SEASON_NUMBER; i++) {
-            if (!seasonNumbers.contains(i)) {
-                seasonVals.add(i + "");
-            } else {
-                seasonVals.add("-- " + i + " -- (already exists)");
-            }
-        }
-        return seasonVals;
     }
 }

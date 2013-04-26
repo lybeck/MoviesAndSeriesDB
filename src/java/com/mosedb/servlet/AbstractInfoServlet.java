@@ -7,12 +7,14 @@ package com.mosedb.servlet;
 import com.mosedb.models.Format;
 import com.mosedb.models.LangId;
 import com.mosedb.models.Movie;
+import com.mosedb.models.Series;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -20,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Lasse
  */
 public abstract class AbstractInfoServlet extends MosedbServlet {
+
+    private static final int MAX_EPISODES_PER_SEASON = 300;
+    private static final int MAX_SEASON_NUMBER = 35;
 
     private static final String ENG_NAME = "engName";
     private static final String FI_NAME = "fiName";
@@ -133,5 +138,28 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
             yearList.add(y + "");
         }
         return yearList;
+    }
+
+    protected List<String> getEpisodeDropboxValues() {
+        List<String> epVals = new ArrayList<String>();
+        epVals.add("");
+        for (int i = 1; i <= MAX_EPISODES_PER_SEASON; i++) {
+            epVals.add(i + "");
+        }
+        return epVals;
+    }
+
+    protected List<String> getSeasonDropboxValues(Series series) {
+        Set<Integer> seasonNumbers = series.getSeasonNumbers();
+        List<String> seasonVals = new ArrayList<String>();
+        seasonVals.add("");
+        for (int i = 1; i < MAX_SEASON_NUMBER; i++) {
+            if (!seasonNumbers.contains(i)) {
+                seasonVals.add(i + "");
+            } else {
+                seasonVals.add("-- " + i + " -- (already exists)");
+            }
+        }
+        return seasonVals;
     }
 }

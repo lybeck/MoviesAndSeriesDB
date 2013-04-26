@@ -122,6 +122,7 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
             return false;
         }
         series.setEpisodes(seriesService.getAllEpisodes(series.getId()));
+        AttributeManager.setSeasonDropbox(request.getSession(true), getSeasonDropboxValues(series));
         return true;
     }
 }
