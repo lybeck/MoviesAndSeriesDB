@@ -45,15 +45,15 @@ function addSeasonFS() {
     var selectClose = "</select></div>";
     var seasonTxt = "Season #";
     var boxDiv = "<div class='styled-select' style='margin: 0 0 0 0; width:35%;'>";
-    var seasonSelect = "<select id='seasonSelect'>";
+    var seasonSelect = "<select name='new_season_select'>";
     var seasonLoops = document.getElementById("seasonSelect0").innerHTML;
 
     var episodeTxt = "</select></div><p></p> Number of episodes:";
-    var episodeSelect = "<select name='episodeSelect'>";
+    var episodeSelect = "<select name='new_season_episode_select'>";
     var episodeLoops = document.getElementById("episodeSelect0").innerHTML;
 
     var yearTxt = "</select></div><p></p> Year:";
-    var yearSelect = "<select name='yearSelect'>";
+    var yearSelect = "<select name='new_season_year_select'>";
     var yearLoops = document.getElementById("yearSelect0").innerHTML;
 
     var rightDiv = selectClose + "<div style='margin: 0 0 0 0; width:100%; text-align: right;'>";
