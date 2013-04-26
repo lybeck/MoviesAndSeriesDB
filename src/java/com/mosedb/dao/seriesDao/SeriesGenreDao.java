@@ -66,4 +66,14 @@ public class SeriesGenreDao extends AbstractDao {
         }
         return genres;
     }
+
+    public boolean updateGenres(int id, List<String> genreList) throws SQLException {
+        removeGenres(id);
+        return addGenres(id, genreList);
+    }
+
+    private void removeGenres(int id) throws SQLException {
+        String sql = "delete from mosedb.seriesgenre where seriesid=?";
+        executeUpdate(sql, id);
+    }
 }

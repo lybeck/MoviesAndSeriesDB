@@ -264,11 +264,11 @@ public class SeriesService extends AbstractService {
         List<Episode> episodeList;
         try {
             episodeList = episodeDao.getAllEpisodes(seriesid);
+            episodeDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error retrieving episodes for series!", ex);
             return null;
         }
-        episodeDao.closeConnection();
         return episodeList;
     }
 
@@ -283,6 +283,7 @@ public class SeriesService extends AbstractService {
         Series series;
         try {
             series = seriesDao.getById(id);
+            seriesDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error retrieving series from database!", ex);
             return null;
@@ -307,6 +308,7 @@ public class SeriesService extends AbstractService {
         try {
             seriesNameDao.removeNames(series.getId());
             boolean success = seriesNameDao.addNames(series.getId(), names);
+            seriesNameDao.closeConnection();
             if (!success) {
                 return false;
             }
@@ -317,7 +319,24 @@ public class SeriesService extends AbstractService {
         return true;
     }
 
-    public void updateGenres(Series series, List<String> genreList) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public boolean updateGenres(Series series, List<String> genreList) {
+        SeriesGenreDao seriesGenreDao;
+        try {
+            seriesGenreDao = new SeriesGenreDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
+            boolean success = seriesGenreDao.updateGenres(series.getId(), genreList);
+            seriesGenreDao.closeConnection();
+            if (!success) {
+                return false;
+            }
+        } catch (SQLException ex) {
+            reportError("Error while updating series genres!", ex);
+            return false;
+        }
+        return true;
     }
 }

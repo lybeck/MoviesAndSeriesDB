@@ -43,7 +43,12 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
 
             List<String> genreList = getGenres(request);
 
-//            seriesService.updateGenres(series, genreList);
+            boolean success = seriesService.updateGenres(series, genreList);
+            if (success) {
+                series.setGenres(genreList);
+            } else {
+                AttributeManager.setErrorMessage(request, "Failed to update series genres!");
+            }
 
             AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
             redirectToPage("seriesInfo.jsp", request, response);
