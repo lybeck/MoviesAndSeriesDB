@@ -77,8 +77,8 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
             restorePage("seriesInfo.jsp", request, response);
             return;
         }
-        
-        addNewSeason(request);
+
+        addNewSeason(request, series);
 
         AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
         restorePage("seriesInfo.jsp", request, response);
@@ -92,7 +92,36 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void addNewSeason(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private boolean addNewSeason(HttpServletRequest request, Series series) {
+        String seasonNrString = request.getParameter(NEW_SEASON_NUMBER_DROPBOX);
+        if (seasonNrString == null) {
+            return true;
+        }
+        int seasonNumber = Integer.parseInt(seasonNrString);
+        int nrOfEpisodes = Integer.parseInt(request.getParameter(NEW_SEASON_EPISODE_NUMBER_DROPBOX));
+        String yearString = request.getParameter(NEW_SEASON_YEAR_DROPBOX);
+        Integer year = null;
+        if (!yearString.isEmpty()) {
+            year = Integer.parseInt(yearString);
+        }
+        boolean seen;
+        if (request.getParameter(NEW_SEASON_SEEN_CHECKBOX) != null) {
+            seen = true;
+        } else {
+            seen = false;
+        }
+
+        boolean success;
+        SeriesService seriesService = new SeriesService();
+        if (year != null) {
+            success = seriesService.addNewSeason(series.getId(), seasonNumber, nrOfEpisodes, seen, year);
+        } else {
+            success = seriesService.addNewSeason(series.getId(), seasonNumber, nrOfEpisodes, seen);
+        }
+        if (!success) {
+            return false;
+        }
+        series.setEpisodes(seriesService.getAllEpisodes(series.getId()));
+        return true;
     }
 }

@@ -339,4 +339,31 @@ public class SeriesService extends AbstractService {
         }
         return true;
     }
+
+    public boolean addNewSeason(int seriesid, int seasonNumber, int nrOfEpisodes, boolean seen) {
+        return addNewSeason(seriesid, seasonNumber, nrOfEpisodes, seen, null);
+    }
+
+    public boolean addNewSeason(int seriesid, int seasonNumber, int nrOfEpisodes, boolean seen, Integer year) {
+        EpisodeDao episodeDao;
+        try {
+            episodeDao = new EpisodeDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
+            boolean success;
+            for (int i = 1; i <= nrOfEpisodes; i++) {
+                success = episodeDao.addEpisode(seriesid, seasonNumber, i, seen, year);
+                if (!success) {
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            reportError("Error while adding episodes to database!", ex);
+            return false;
+        }
+        return true;
+    }
 }

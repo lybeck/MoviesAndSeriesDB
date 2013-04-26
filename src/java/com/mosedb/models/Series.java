@@ -6,6 +6,7 @@ package com.mosedb.models;
 
 import com.mosedb.models.LangId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
@@ -34,11 +35,21 @@ public class Series extends AbstractMediaEntity {
     }
 
     public List<Episode> getEpisodes() {
+        Collections.sort(episodes);
         return episodes;
     }
 
     public void setEpisodes(List<Episode> episodes) {
         this.episodes = episodes;
+    }
+
+    public boolean isSeen() {
+        for (Episode episode : episodes) {
+            if (!episode.isSeen()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
