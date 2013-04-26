@@ -1,7 +1,6 @@
 
 DROP TABLE IF EXISTS mosedb.episodeformat CASCADE;
 DROP TABLE IF EXISTS mosedb.episode CASCADE;
-DROP TABLE IF EXISTS mosedb.season CASCADE;
 DROP TABLE IF EXISTS mosedb.seriesgenre CASCADE;
 DROP TABLE IF EXISTS mosedb.seriesname CASCADE;
 DROP TABLE IF EXISTS mosedb.series CASCADE;
@@ -33,14 +32,6 @@ CREATE TABLE mosedb.seriesgenre (
     FOREIGN KEY (genrename) REFERENCES mosedb.genre
 );
 
--- season
-CREATE TABLE mosedb.season (
-    seriesid int NOT NULL,
-    seasonnumber int NOT NULL,
-    PRIMARY KEY (seriesid, seasonnumber),
-    FOREIGN KEY (seriesid) REFERENCES mosedb.series ON DELETE CASCADE
-);
-
 -- episode
 CREATE TABLE mosedb.episode (
     seriesid int NOT NULL,
@@ -50,7 +41,7 @@ CREATE TABLE mosedb.episode (
     episodeyear int,
     seen boolean DEFAULT true  NOT NULL,
     PRIMARY KEY (seriesid, seasonnumber, episodenumber),
-    FOREIGN KEY (seriesid,seasonnumber) REFERENCES mosedb.season ON DELETE CASCADE
+    FOREIGN KEY (seriesid) REFERENCES mosedb.series ON DELETE CASCADE
 );
 
 -- episodeformat
@@ -141,10 +132,6 @@ INSERT INTO mosedb.seriesgenre (seriesid, genrename) VALUES (15, 'Musical');
 INSERT INTO mosedb.seriesgenre (seriesid, genrename) VALUES (16, 'Crime');
 INSERT INTO mosedb.seriesgenre (seriesid, genrename) VALUES (16, 'Drama');
 INSERT INTO mosedb.seriesgenre (seriesid, genrename) VALUES (16, 'Mystery');
-
-INSERT INTO mosedb.season (seriesid, seasonnumber) VALUES (12, 1);
-INSERT INTO mosedb.season (seriesid, seasonnumber) VALUES (12, 2);
-INSERT INTO mosedb.season (seriesid, seasonnumber) VALUES (12, 3);
 
 INSERT INTO mosedb.episode (seriesid, seasonnumber, episodenumber, episodename, episodeyear, seen) VALUES (12, 1, 1, 'Winter Is Coming', 2011, true);
 INSERT INTO mosedb.episode (seriesid, seasonnumber, episodenumber, episodename, episodeyear, seen) VALUES (12, 1, 2, 'The Kingsroad', 2011, true);

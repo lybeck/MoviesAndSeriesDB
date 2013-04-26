@@ -7,7 +7,6 @@
 
 DROP TABLE IF EXISTS mosedb.episodeformat cascade;
 DROP TABLE IF EXISTS mosedb.episode cascade;
-DROP TABLE IF EXISTS mosedb.season cascade;
 DROP TABLE IF EXISTS mosedb.seriesgenre cascade;
 DROP TABLE IF EXISTS mosedb.seriesname cascade;
 DROP TABLE IF EXISTS mosedb.series cascade;
@@ -143,14 +142,6 @@ CREATE TABLE mosedb.seriesgenre (
     FOREIGN KEY (genrename) REFERENCES mosedb.genre
 );
 
--- season
-CREATE TABLE mosedb.season (
-    seriesid int NOT NULL,
-    seasonnumber int NOT NULL,
-    PRIMARY KEY (seriesid, seasonnumber),
-    FOREIGN KEY (seriesid) REFERENCES mosedb.series ON DELETE CASCADE
-);
-
 -- episode
 CREATE TABLE mosedb.episode (
     seriesid int NOT NULL,
@@ -160,7 +151,7 @@ CREATE TABLE mosedb.episode (
     episodeyear int,
     seen boolean DEFAULT true  NOT NULL,
     PRIMARY KEY (seriesid, seasonnumber, episodenumber),
-    FOREIGN KEY (seriesid,seasonnumber) REFERENCES mosedb.season ON DELETE CASCADE
+    FOREIGN KEY (seriesid) REFERENCES mosedb.series ON DELETE CASCADE
 );
 
 -- episodeformat
