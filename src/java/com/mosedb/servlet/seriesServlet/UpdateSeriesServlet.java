@@ -31,6 +31,8 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     private static final String NEW_SEASON_YEAR_DROPBOX = "new_season_year_select";
     private static final String NEW_SEASON_SEEN_CHECKBOX = "new_season_seen_checkbox";
     private static final String EPISODE_NAME_INPUT = "episode_name_";
+    private static final String EPISODE_YEAR_SELECT = "episode_year_";
+    private static final String EPISODE_SEEN_CHECKBOX = "episode_seen_";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -160,9 +162,27 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     private boolean updateEpisode(HttpServletRequest request, Episode episode) {
         boolean changes = false;
         String episodeTag = episode.getSeriesId() + "_" + episode.getSeasonNumber() + "_" + episode.getEpisodeNumber();
+
         String newName = request.getParameter(EPISODE_NAME_INPUT + episodeTag);
         if (!newName.equals(episode.getEpisodeName())) {
             episode.setEpisodeName(newName);
+            changes = true;
+        }
+
+        String newYearString = request.getParameter(EPISODE_YEAR_SELECT + episodeTag);
+        Integer newYear = null;
+        if (!newYearString.isEmpty()) {
+            newYear = Integer.parseInt(newYearString);
+        }
+        if (newYear != episode.getEpisodeYear()) {
+            episode.setEpisodeYear(newYear);
+            changes = true;
+        }
+
+        boolean newSeen = request.getParameter(EPISODE_SEEN_CHECKBOX + episodeTag) != null;
+        System.out.println("");
+        if (newSeen ^ episode.isSeen()) {
+            episode.setSeen(newSeen);
             changes = true;
         }
 

@@ -151,7 +151,7 @@
                 </td>
                 <td>
                     <div class="styled-select tableBox">
-                        <select name='year_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}'>
+                        <select name='episode_year_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}'>
                             <c:if test='${yearList != null}'>
                                 <c:forEach var='year' items='${yearList}'>
                                     <c:choose>
@@ -168,9 +168,8 @@
                     </div>
                 </td>
                 <td class="padded">
-                    <input type="checkbox" value="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}" 
-                           id="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
-                           name="episode_seen_checkbox"
+                    <input type="checkbox" id="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
+                           name="episode_seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
                     <c:if test="${ep.seen}">
                         checked
                     </c:if>
