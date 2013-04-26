@@ -138,30 +138,34 @@
                 <td>${ep.seasonNumber}</td>
                 <td>${ep.episodeNumber}</td>
                 <td>
-                    <c:if test="${ep.episodeName != null}">
-                        <input class="styled-textfield small" value="${ep.episodeName}"
-                               name="${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}">
-                    </c:if>
+                        <input class="styled-textfield small" 
+                                <c:choose>
+                                    <c:when test="${ep.episodeName != null}">
+                                        value="${ep.episodeName}"
+                                    </c:when>
+                                    <c:otherwise>
+                                        value=""
+                                    </c:otherwise>
+                                </c:choose>
+                               name="episode_name_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}">
                 </td>
                 <td>
-                    <c:if test="${ep.episodeYear != null}">
-                        <div class="styled-select tableBox">
-                            <select name='yearDropbox'>
-                                <c:if test='${yearList != null}'>
-                                    <c:forEach var='year' items='${yearList}'>
-                                        <c:choose>
-                                            <c:when test="${ep.episodeYear == year}">
-                                                <option selected="true">${year}</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option>${year}</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>
-                                </c:if>
-                            </select>
-                        </div>
-                    </c:if>
+                    <div class="styled-select tableBox">
+                        <select name='year_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}'>
+                            <c:if test='${yearList != null}'>
+                                <c:forEach var='year' items='${yearList}'>
+                                    <c:choose>
+                                        <c:when test="${ep.episodeYear == year}">
+                                            <option selected="true">${year}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option>${year}</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:if>
+                        </select>
+                    </div>
                 </td>
                 <td class="padded">
                     <input type="checkbox" value="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}" 
@@ -225,7 +229,7 @@
         <div id="seasonfieldsHolder"></div>
     </div>
     <br>
-    <button type="submit" class="button" name="submit" value="update_series" 
+    <button type="submit" class="button" name="submit" value="update_series" id="update_series"
             <c:if test="${series == null}">
             disabled
             </c:if>
