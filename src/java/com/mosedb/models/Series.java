@@ -7,8 +7,10 @@ package com.mosedb.models;
 import com.mosedb.models.LangId;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -45,5 +47,15 @@ public class Series extends AbstractMediaEntity {
                 + "names:\t" + getNames() + "\n"
                 + "owner:\t" + getOwner() + "\n"
                 + "genres:\t" + getGenres() + "\n";
+    }
+
+    public Set<Integer> getSeasonNumbers() {
+        Set<Integer> seasons = new HashSet<Integer>();
+        for (Episode episode : episodes) {
+            if (!seasons.contains(episode.getSeasonNumber())) {
+                seasons.add(episode.getSeasonNumber());
+            }
+        }
+        return seasons;
     }
 }

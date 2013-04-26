@@ -106,8 +106,8 @@ public class AttributeManager {
         session.setAttribute(movieList, movies);
     }
     
-    public static void setSeasonDropbox(HttpSession session, List<Integer> episodes ){
-        session.setAttribute(seasonDropboxValues, episodes);
+    public static void setSeasonDropbox(HttpSession session, List<String> seasons){
+        session.setAttribute(seasonDropboxValues, seasons);
     }
     
     public static void setSeries(HttpSession session, Series serie){
