@@ -96,9 +96,9 @@ public class MovieService extends AbstractService {
         List<Movie> movieList;
         try {
             if (searchList.size() == 1) {
-                movieList = movieNameDao.getMoviesByName(search, user);
+                movieList = movieNameDao.getMoviesByName(search, user, seen);
             } else {
-                movieList = movieNameDao.getMoviesByName(searchList, user);
+                movieList = movieNameDao.getMoviesByName(searchList, user, seen);
             }
         } catch (SQLException ex) {
             reportError("Error while trying to get movieids by name from movienamedao.", ex);

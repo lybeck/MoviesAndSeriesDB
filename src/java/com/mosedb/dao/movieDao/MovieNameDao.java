@@ -82,15 +82,21 @@ public class MovieNameDao extends AbstractDao {
         return map;
     }
 
-    public List<Movie> getMoviesByName(String search, User user) throws SQLException {
+    public List<Movie> getMoviesByName(String search, User user, Boolean seenParam) throws SQLException {
         String sql = "select distinct m.movieid, m.owner, m.seen from mosedb.movie m, mosedb.moviename mn "
                 + "where m.movieid=mn.movieid and lower(mn.moviename) like lower(?)";
         ResultSet result;
-        if (user.isAdmin()) {
+        if (user.isAdmin() && seenParam == null) {
             result = executeQuery(sql, "%" + search + "%");
-        } else {
+        } else if (seenParam == null) {
             sql += " and m.owner=?";
             result = executeQuery(sql, "%" + search + "%", user.getUsername());
+        } else if (!user.isAdmin()) {
+            sql += " and m.seen=?";
+            result = executeQuery(sql, "%" + search + "%", seenParam);
+        } else {
+            sql += " and m.owner=? and m.seen=?";
+            result = executeQuery(sql, "%" + search + "%", user.getUsername(), seenParam);
         }
 
         List<Movie> movieList = new ArrayList<Movie>();
@@ -105,19 +111,23 @@ public class MovieNameDao extends AbstractDao {
         return movieList;
     }
 
-    public List<Movie> getMoviesByName(List<String> searchList, User user) throws SQLException {
+    public List<Movie> getMoviesByName(List<String> searchList, User user, Boolean seenParam) throws SQLException {
         String sql = "select distinct m.movieid, m.owner, m.seen from mosedb.movie m, mosedb.moviename mn "
                 + "where m.movieid=mn.movieid and lower(mn.moviename) like lower(?)";
         for (int i = 1; i < searchList.size(); i++) {
             sql += " and lower(mn.moviename) like lower(?)";
         }
-        List<String> searchTerms = new ArrayList<String>();
+        List<Object> searchTerms = new ArrayList<Object>();
         for (String string : searchList) {
             searchTerms.add("%" + string + "%");
         }
         if (!user.isAdmin()) {
             sql += " and m.owner=?";
             searchTerms.add(user.getUsername());
+        }
+        if (seenParam != null) {
+            sql += " and m.seen=?";
+            searchTerms.add(seenParam + "");
         }
         ResultSet result = executeQuery(sql, searchTerms.toArray());
         List<Movie> movieList = new ArrayList<Movie>();
