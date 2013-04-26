@@ -193,7 +193,6 @@
     
     <div style="width: 100%; overflow: hidden;">
         <select id='seasonSelect0' style='display: none;'>
-            <option></option>
                 <c:if test='${seasonDropboxValues != null}'>
                     <c:forEach var='seNum' items='${seasonDropboxValues}'>
                         <option>${seNum}</option>
@@ -201,7 +200,6 @@
                 </c:if>
         </select>
         <select id='episodeSelect0' style='display: none;'>
-            <option></option>
                 <c:if test='${episodeDropboxValues != null}'>
                     <c:forEach var='epNum' items='${episodeDropboxValues}'>
                         <option>${epNum}</option>

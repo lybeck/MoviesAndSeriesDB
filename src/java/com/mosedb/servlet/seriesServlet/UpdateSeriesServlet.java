@@ -7,7 +7,6 @@ package com.mosedb.servlet.seriesServlet;
 import com.mosedb.business.SeriesService;
 import com.mosedb.models.LangId;
 import com.mosedb.models.Series;
-import com.mosedb.models.User;
 import com.mosedb.servlet.AbstractInfoServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
@@ -17,18 +16,37 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  *
  * @author Lasse
  */
 public class UpdateSeriesServlet extends AbstractInfoServlet {
+    
+    private static final String UPDATE_BUTTON = "update_series";
+    private static final String DELETE_BUTTON = "delete_series";
+    private static final String DELETE_SELECTED = "delete_selected_button";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
+            String clickedButton = request.getParameter("submit");
+            if (clickedButton.equals(UPDATE_BUTTON)) {
+                updateSeries(request, response);
+            } else if (clickedButton.equals(DELETE_BUTTON)) {
+                removeSeries(request, response);
+            } else if (clickedButton.equals(DELETE_SELECTED)) {
+                removeSelectedSeries(request, response);
+            }
             
-            AttributeManager.removeErrorMessage(request);
+        } else {
+            redirectHome(request, response);
+        }
+    }
+
+    private void updateSeries(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        AttributeManager.removeErrorMessage(request);
             AttributeManager.removeSuccessMessage(request);
             
             SeriesService seriesService = new SeriesService();
@@ -57,8 +75,14 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
 
             AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
             restorePage("seriesInfo.jsp", request, response);
-        } else {
-            redirectHome(request, response);
         }
+
+    private void removeSeries(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void removeSelectedSeries(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
+   
