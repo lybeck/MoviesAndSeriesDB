@@ -5,6 +5,16 @@
 
 <h3>Series-info</h3>
 <form action="updateSeries" method="post">
+    <c:if test="${errorMessage != null}">
+            <p id="errorMessage">${errorMessage}</p>
+        </c:if>
+        <c:if test="${successMessage != null}">
+            <p id="successMessage">${successMessage}</p>
+        </c:if>
+        <c:if test="${series == null}">
+            <p id="errorMessage">Failed to load series from database!</p>
+        </c:if>
+            
     <fieldset class="styledFS" style='text-align: left; width: 40%; float:right;'>
         <legend>Genre</legend>
             Add / remove genre:
@@ -53,13 +63,7 @@
     </fieldset>
     
     <fieldset class="styledFS" id="leftFields">
-        <legend>Names</legend>
-        <c:if test="${errorMessage != null}">
-            <p id="errorMessage">${errorMessage}</p>
-        </c:if>
-        <c:if test="${successMessage != null}">
-            <p id="successMessage">${successMessage}</p>
-        </c:if>
+        <legend>Names</legend
         <br>
         <c:choose>
             <c:when test="${series.nameEng != null}">
@@ -223,9 +227,17 @@
         <div id="seasonfieldsHolder"></div>
     </div>
     <br>
-    <button type="submit" class="button" name="submit" value="update_series" >
+    <button type="submit" class="button" name="submit" value="update_series" 
+            <c:if test="${series == null}">
+            disabled
+            </c:if>
+            >
         Update Series</button>
-    <button type="submit" class="button" name="submit" value="delete_series" >
+    <button type="submit" class="button" name="submit" value="delete_series" 
+        <c:if test="${series == null}">
+            disabled
+        </c:if>
+            >
         Delete series</button>
 </form>
 

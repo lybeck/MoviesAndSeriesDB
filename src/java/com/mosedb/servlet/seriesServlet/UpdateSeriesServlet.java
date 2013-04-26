@@ -27,13 +27,18 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
-
+            
+            AttributeManager.removeErrorMessage(request);
+            AttributeManager.removeSuccessMessage(request);
+            
             SeriesService seriesService = new SeriesService();
             Series series = AttributeManager.getSeries(request.getSession(true));
 
             Map<LangId, String> names = getNameMap(request);
             if (names.isEmpty()) {
                 AttributeManager.setErrorMessage(request, "One name must be specified!");
+                restorePage("seriesInfo.jsp", request, response);
+                return;
             } else {
                 boolean success = seriesService.updateNames(series, names);
                 if (success) {
@@ -51,7 +56,7 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
             }
 
             AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
-            redirectToPage("seriesInfo.jsp", request, response);
+            restorePage("seriesInfo.jsp", request, response);
         } else {
             redirectHome(request, response);
         }
