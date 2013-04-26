@@ -11,6 +11,7 @@ import com.mosedb.models.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
@@ -83,32 +84,7 @@ public class MovieNameDao extends AbstractDao {
     }
 
     public List<Movie> getMoviesByName(String search, User user, Boolean seenParam) throws SQLException {
-        String sql = "select distinct m.movieid, m.owner, m.seen from mosedb.movie m, mosedb.moviename mn "
-                + "where m.movieid=mn.movieid and lower(mn.moviename) like lower(?)";
-        ResultSet result;
-        if (user.isAdmin() && seenParam == null) {
-            result = executeQuery(sql, "%" + search + "%");
-        } else if (seenParam == null) {
-            sql += " and m.owner=?";
-            result = executeQuery(sql, "%" + search + "%", user.getUsername());
-        } else if (user.isAdmin()) {
-            sql += " and m.seen=?";
-            result = executeQuery(sql, "%" + search + "%", seenParam);
-        } else {
-            sql += " and m.owner=? and m.seen=?";
-            result = executeQuery(sql, "%" + search + "%", user.getUsername(), seenParam);
-        }
-
-        List<Movie> movieList = new ArrayList<Movie>();
-        while (result.next()) {
-            int id = result.getInt("movieid");
-            String owner = result.getString("owner");
-            boolean seen = result.getBoolean("seen");
-            Movie movie = new Movie(id, owner, seen);
-            movie.setNames(getMovieNames(id));
-            movieList.add(movie);
-        }
-        return movieList;
+        return getMoviesByName(Arrays.asList(search), user, seenParam);
     }
 
     public List<Movie> getMoviesByName(List<String> searchList, User user, Boolean seenParam) throws SQLException {
@@ -127,7 +103,7 @@ public class MovieNameDao extends AbstractDao {
         }
         if (seenParam != null) {
             sql += " and m.seen=?";
-            searchTerms.add(seenParam + "");
+            searchTerms.add(seenParam);
         }
         ResultSet result = executeQuery(sql, searchTerms.toArray());
         List<Movie> movieList = new ArrayList<Movie>();
