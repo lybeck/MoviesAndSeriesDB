@@ -35,7 +35,7 @@ public class LoginServlet extends MosedbServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession(true);
-        String username = request.getParameter("username");
+        String username = request.getParameter("username"); 
         String password = request.getParameter("password");
         try {
             User user = LoginManager.doLogin(session, username, password);
