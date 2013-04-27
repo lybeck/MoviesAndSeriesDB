@@ -45,7 +45,7 @@ public class AccountManagerServlet extends MosedbServlet {
                 restorePage("accountManager.jsp", request, response);
                 return;
             }
-            User updatedUser = getUserFromFields(request, user.isAdmin());
+            User updatedUser = getUserFromFields(request, user);
             if (updatedUser == null) {
                 restorePage("accountManager.jsp", request, response);
                 return;
@@ -68,16 +68,15 @@ public class AccountManagerServlet extends MosedbServlet {
         }
     }
 
-    private User getUserFromFields(HttpServletRequest request, boolean isAdmin) {
-        String newUsername = request.getParameter(USERNAME_FIELD).trim();
+    private User getUserFromFields(HttpServletRequest request, User user) {
         String newFirstName = request.getParameter(FIRST_NAME_FIELD).trim();
         String newLastName = request.getParameter(LAST_NAME_FIELD).trim();
 
 
-        if (newUsername.isEmpty() || newFirstName.isEmpty() || newLastName.isEmpty()) {
+        if (newFirstName.isEmpty() || newLastName.isEmpty()) {
             AttributeManager.setErrorMessage(request, "All fields must be filled!");
             return null;
         }
-        return new User(newUsername, newFirstName, newLastName, isAdmin);
+        return new User(user.getUsername(), newFirstName, newLastName, user.isAdmin());
     }
 }

@@ -74,7 +74,9 @@ public class UserDao extends AbstractDao {
     }
 
     public boolean updateUser(String username, User updatedUser, String newPassword) throws SQLException {
-        deleteUser(username);
-        return addUser(updatedUser, newPassword);
+        String sql = "update mosedb.users set (username,password,firstname,lastname,admin)=" + 
+                "(?,?,?,?,?) where username=?";
+        return executeUpdate(sql, updatedUser.getUsername(),newPassword,updatedUser.getFirstName(),
+                updatedUser.getLastName(),updatedUser.isAdmin(),username);
     }
 }
