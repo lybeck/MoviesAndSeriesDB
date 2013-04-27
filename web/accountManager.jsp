@@ -21,7 +21,7 @@
             <p id="successMessage">${successMessage}</p>
         </c:if> 
         Username  <br><input type="text" class="styled-textfield usernameFields" name='username' id='username'
-                             value="${userInSession.username}" disabled>
+                             value="${userInSession.username}" disabled> 
         <p></p>
         Password  <br><input type="password" class="styled-textfield usernameFields" name='password'
                                 onload="passwordsMatch();" oninput="passwordsMatch();" id='password'>
