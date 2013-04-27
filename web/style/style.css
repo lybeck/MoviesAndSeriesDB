@@ -38,7 +38,7 @@ h1,h2,h3,h4{
 
 #comBox{
     position: relative;
-    width: 900px;
+    width: 950px;
     margin: 0 auto;
     top: -85px;
     text-align: center;
@@ -85,10 +85,11 @@ h1,h2,h3,h4{
 
 .navbarLeft a:link,a:visited,.navbarRight a:link,a:visited{
     display: inline-block;
-    width: 120px;
+    width: 140px;
     height: 30px;
     background-color: #131219;
     color:#e9eaf8;
+    font-size: 13px;
 }
 
 .navbarLeft a:hover,a:active,.navbarRight a:hover,a:active{
@@ -174,6 +175,8 @@ input[type=radio]:checked + .customCheck:after {
 }
 
 .styled-textfield.small.narrow{ width: 50px;}
+
+.styled-textfield.usernameFields{width: 50%;}
 
 .styled-select{
     width: 200px;
@@ -329,10 +332,6 @@ input[type=radio]:checked + .customCheck:after {
 
 #leftFields{
     text-align: left;
-    width: 50%;
-}
-
-#usernameFields{
     width: 50%;
 }
 

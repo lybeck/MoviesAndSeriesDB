@@ -55,7 +55,7 @@ public class MosedbServlet extends HttpServlet {
 
     protected boolean isUserLoggedIn(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        return AttributeManager.getUserSessionKey(session) != null;
+        return AttributeManager.getUserInSession(session) != null;
     }
 
     private void redirectToLoginPage(HttpServletResponse response) throws IOException {

@@ -72,4 +72,9 @@ public class UserDao extends AbstractDao {
         String sql = "delete from mosedb.users where username=?";
         executeUpdate(sql, username);
     }
+
+    public boolean updateUser(String username, User updatedUser, String newPassword) throws SQLException {
+        deleteUser(username);
+        return addUser(updatedUser, newPassword);
+    }
 }

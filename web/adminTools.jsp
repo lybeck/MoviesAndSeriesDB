@@ -21,13 +21,13 @@
             <p id="successMessage">${successMessage}</p>
         </c:if>
         <legend>Add user</legend>
-        Username : <input type="text" class="styled-textfield" id='usernameFields' name='username'>
+        Username : <input type="text" class="styled-textfield usernameFields" name='username'>
         <p></p>
-        Password : <input type="password" class="styled-textfield" id='usernameFields' name='password'>
+        Password : <input type="password" class="styled-textfield usernameFields" name='password'>
         <p></p>
-        First name : <input type="text" class="styled-textfield" id='usernameFields' name='firstName'>
+        First name : <input type="text" class="styled-textfield usernameFields" name='firstName'>
         <p></p>
-        Last name : <input type="text" class="styled-textfield" id='usernameFields' name='lastName'>
+        Last name : <input type="text" class="styled-textfield usernameFields" name='lastName'>
         <p></p> 
         Admin  
         <input type="checkbox" name='adminBox' id="adminBox">
@@ -74,7 +74,7 @@
                             </c:choose>
                         </td>
                         <td class="padded">
-                            <c:if test="${user.username != userSessionKey.username}">
+                            <c:if test="${user.username != userInSession.username}">
                                 <input type="checkbox" name='deleteSelect' value="${user.username}" id="${user.username}">
                                 <label class="customCheck" for="${user.username}"></label>
                             </c:if>

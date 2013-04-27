@@ -8,8 +8,6 @@ import com.mosedb.dao.UserDao;
 import com.mosedb.models.User;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -60,6 +58,18 @@ public class UserService extends AbstractService {
             userDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error while trying to delete user.", ex);
+        }
+    }
+
+    public boolean updateUser(User user, User updatedUser, String newPassword) {
+        try {
+            UserDao userDao = new UserDao();
+            boolean success = userDao.updateUser(user.getUsername(), updatedUser, newPassword);
+            userDao.closeConnection();
+            return success;
+        } catch (SQLException ex) {
+            reportError("Error while trying to update user.", ex);
+            return false;
         }
     }
 }

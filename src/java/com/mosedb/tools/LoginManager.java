@@ -17,7 +17,7 @@ public class LoginManager {
     public static User doLogin(HttpSession session, String username, String password) throws Exception {
         UserService userService = new UserService();
         User user = userService.getUser(username, password);
-        AttributeManager.setUserSessionKey(session, user);
+        AttributeManager.setUserInSession(session, user);
 
         if (user == null || !user.isAdmin()) {  
             AttributeManager.setAdminSessionKey(session, false);

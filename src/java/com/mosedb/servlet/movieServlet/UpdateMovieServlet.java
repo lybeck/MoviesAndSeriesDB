@@ -73,7 +73,7 @@ public class UpdateMovieServlet extends AbstractInfoServlet {
             boolean seen = isSeen(request);
             Movie movie = new Movie(names, seen, movieYear, genreList, formatList);
             HttpSession session = request.getSession(true);
-            User user = AttributeManager.getUserSessionKey(session);
+            User user = AttributeManager.getUserInSession(session);
             if (user == null) {
                 redirectHome(request, response);
                 AttributeManager.removeMovie(session);

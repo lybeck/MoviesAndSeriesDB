@@ -45,12 +45,12 @@ function addSeasonFS() {
     var selectClose = "</select></div>";
     var seasonTxt = "Season #";
     var boxDiv = "<div class='styled-select' style='margin: 0 0 0 0; width:35%;'>";
-    var seasonSelect = "<select name='new_season_select' id='new_season_select' " + 
+    var seasonSelect = "<select name='new_season_select' id='new_season_select' " +
             "onchange='checkNewSeasonDropboxes();'>";
     var seasonLoops = document.getElementById("seasonSelect0").innerHTML;
 
     var episodeTxt = "</select></div><p></p> Number of episodes:";
-    var episodeSelect = "<select name='new_season_episode_select' id='new_season_episode_select' " + 
+    var episodeSelect = "<select name='new_season_episode_select' id='new_season_episode_select' " +
             "onchange='checkNewSeasonDropboxes()'>";
     var episodeLoops = document.getElementById("episodeSelect0").innerHTML;
 
@@ -85,11 +85,16 @@ function removeSeasonFS() {
             "<p></p>";
 
     document.getElementById("plusButtonHolder").innerHTML = plusBCode;
+    checkNewSeasonDropboxes();
 }
 
 function checkNewSeasonDropboxes() {
-    var episodeDropboxValue = document.getElementById('new_season_episode_select').value;
-    var seasonDropboxValue = document.getElementById('new_season_select').value;
+    try {
+        var episodeDropboxValue = document.getElementById('new_season_episode_select').value;
+        var seasonDropboxValue = document.getElementById('new_season_select').value;
+    } catch (error) {
+        document.getElementById("update_series").disabled = false;
+    }
 
     if (seasonDropboxValue.length === 0 || seasonDropboxValue.length > 5 ||
             episodeDropboxValue.length === 0) {

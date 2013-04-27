@@ -68,7 +68,7 @@ public class AddMovieServlet extends AbstractInfoServlet {
             boolean seen = isSeen(request);
 
             Movie movie = new Movie(names, seen, movieYear, genreList, formatList);
-            User user = AttributeManager.getUserSessionKey(request.getSession(true));
+            User user = AttributeManager.getUserInSession(request.getSession(true));
             boolean success = new MovieService().addMovie(user, movie);
             if (success) {
                 AttributeManager.setSuccessMessage(request, "Movie successfully added!");

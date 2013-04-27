@@ -50,7 +50,7 @@ public class SearchServlet extends MosedbServlet {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
             HttpSession session = request.getSession(true);
-            User user = AttributeManager.getUserSessionKey(session);
+            User user = AttributeManager.getUserInSession(session);
 
 
             String searchField = request.getParameter(SEARCH_FIELD_NAME);

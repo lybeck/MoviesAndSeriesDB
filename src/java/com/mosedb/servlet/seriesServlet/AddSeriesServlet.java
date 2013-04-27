@@ -61,7 +61,7 @@ public class AddSeriesServlet extends AbstractInfoServlet {
             List<String> genreList = getGenres(request);
 
             Series series = new Series(names, genreList);
-            User user = AttributeManager.getUserSessionKey(request.getSession(true));
+            User user = AttributeManager.getUserInSession(request.getSession(true));
             boolean success = new SeriesService().addSeries(user, series);
             if (!success) {
                 AttributeManager.setErrorMessage(request, "Series addition caused an unknown error..");

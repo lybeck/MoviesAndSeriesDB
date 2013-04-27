@@ -57,10 +57,16 @@
         <servlet-name>AddSeriesServlet</servlet-name>
         <servlet-class>com.mosedb.servlet.seriesServlet.AddSeriesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountManagerServlet</servlet-name>
+        <servlet-class>com.mosedb.servlet.userServlet.AccountManagerServlet</servlet-class>
+    </servlet>
+    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    
     <servlet-mapping>
         <servlet-name>MosedbServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -116,6 +122,10 @@
     <servlet-mapping>
         <servlet-name>AddSeriesServlet</servlet-name>
         <url-pattern>/addSeries</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagerServlet</servlet-name>
+        <url-pattern>/accountManager</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>

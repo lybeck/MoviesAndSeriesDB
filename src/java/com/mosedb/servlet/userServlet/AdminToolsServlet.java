@@ -19,7 +19,7 @@ public class AdminToolsServlet extends MosedbServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
-            User user = AttributeManager.getUserSessionKey(request.getSession(true));
+            User user = AttributeManager.getUserInSession(request.getSession(true));
             if (user.isAdmin()) {
                 UserService userservice = new UserService();
                 AttributeManager.setUserList(request, userservice.getAllUsers());

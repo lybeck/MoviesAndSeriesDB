@@ -25,7 +25,7 @@ public class AttributeManager {
     private static String seriesList = "seriesList";
     private static String successMessage = "successMessage";
     private static String userList = "userList";
-    private static String userSessionKey = "userSessionKey";
+    private static String userInSession = "userInSession";
     private static String yearList = "yearList";
 
     public static boolean getAdminSessionKey(HttpSession session) {
@@ -68,8 +68,8 @@ public class AttributeManager {
         return (List<User>) session.getAttribute(userList);
     }
 
-    public static User getUserSessionKey(HttpSession session) {
-        return (User) session.getAttribute(userSessionKey);
+    public static User getUserInSession(HttpSession session) {
+        return (User) session.getAttribute(userInSession);
     }
 
     public static List<String> getYearList(HttpSession session) {
@@ -117,8 +117,8 @@ public class AttributeManager {
         session.setAttribute(userList, users);
     }
 
-    public static void setUserSessionKey(HttpSession session, User user) {
-        session.setAttribute(userSessionKey, user);
+    public static void setUserInSession(HttpSession session, User user) {
+        session.setAttribute(userInSession, user);
     }
 
     public static void setYearList(HttpSession session, List<String> years) {
@@ -170,8 +170,8 @@ public class AttributeManager {
         request.setAttribute(userList, users);
     }
 
-    public static void setUserSessionKey(HttpServletRequest request, User user) {
-        request.setAttribute(userSessionKey, user);
+    public static void setUserInSession(HttpServletRequest request, User user) {
+        request.setAttribute(userInSession, user);
     }
 
     public static void setYearList(HttpServletRequest request, List<String> years) {
@@ -201,7 +201,7 @@ public class AttributeManager {
         session.removeAttribute(seasonDropboxValues);
         session.removeAttribute(successMessage);
         session.removeAttribute(userList);
-        session.removeAttribute(userSessionKey);
+        session.removeAttribute(userInSession);
         session.removeAttribute(yearList);
     }
 
