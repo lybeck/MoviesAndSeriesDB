@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractInfoServlet extends MosedbServlet {
 
-    private static final int MAX_EPISODES_PER_SEASON = 300;
-    private static final int MAX_SEASON_NUMBER = 35;
+    private static final int MAX_EPISODES_PER_SEASON = 60;
+    private static final int MAX_SEASON_NUMBER = 30;
     private static final String ENG_NAME = "engName";
     private static final String FI_NAME = "fiName";
     private static final String SWE_NAME = "sweName";

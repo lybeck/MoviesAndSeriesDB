@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -577,10 +579,10 @@ public class SeriesService extends AbstractService {
             return false;
         }
         episodeDao.closeConnection();
-        return addFormatInfoToDatabase(seriesid, seasonNumber, nrOfEpisodes, format);
+        return addNewSeasonFormatInfoToDatabase(seriesid, seasonNumber, nrOfEpisodes, format);
     }
 
-    private boolean addFormatInfoToDatabase(int seriesid, int seasonNumber, int nrOfEpisodes, Format format) {
+    private boolean addNewSeasonFormatInfoToDatabase(int seriesid, int seasonNumber, int nrOfEpisodes, Format format) {
         FormatDao formatDao;
         EpisodeFormatDao episodeFormatDao;
         try {
@@ -602,8 +604,39 @@ public class SeriesService extends AbstractService {
                 } else {
                     formatId = formatDao.addFormat(format.getMediaFormat());
                 }
-                episodeFormatDao.addSeriesFormat(seriesid, seasonNumber, i, formatId);
+                episodeFormatDao.addEpisodeFormat(seriesid, seasonNumber, i, formatId);
             }
+            formatDao.closeConnection();
+            episodeFormatDao.closeConnection();
+        } catch (SQLException ex) {
+            reportError("Error adding episode formats to database!", ex);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean addFormatInfoToDatabase(int seriesid, int seasonNumber, int episodeNumber, Format format) {
+        FormatDao formatDao;
+        EpisodeFormatDao episodeFormatDao;
+        try {
+            formatDao = new FormatDao();
+            episodeFormatDao = new EpisodeFormatDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
+            int formatId;
+            if (format.hasFileInfo()) {
+                if (format.hasResoInfo()) {
+                    formatId = formatDao.addFormatDigitalCopy(format.getFileType(), format.getResoX(), format.getResoY());
+                } else {
+                    formatId = formatDao.addFormatDigitalCopy(format.getFileType());
+                }
+            } else {
+                formatId = formatDao.addFormat(format.getMediaFormat());
+            }
+            episodeFormatDao.addEpisodeFormat(seriesid, seasonNumber, episodeNumber, formatId);
             formatDao.closeConnection();
             episodeFormatDao.closeConnection();
         } catch (SQLException ex) {
@@ -669,6 +702,7 @@ public class SeriesService extends AbstractService {
      * {@code false}.
      */
     public boolean removeSeason(int seriesid, int seasonnumber) {
+        removeSeasonFormats(seriesid, seasonnumber);
         SeriesDao seriesDao;
         try {
             seriesDao = new SeriesDao();
@@ -684,6 +718,22 @@ public class SeriesService extends AbstractService {
             return false;
         }
         return true;
+    }
+
+    private void removeSeasonFormats(int seriesid, int seasonnumber) {
+        EpisodeFormatDao episodeFormatDao;
+        try {
+            episodeFormatDao = new EpisodeFormatDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return;
+        }
+        try {
+            episodeFormatDao.removeFormats(seriesid, seasonnumber);
+            episodeFormatDao.closeConnection();
+        } catch (SQLException ex) {
+            reportError("Error removing episode fromats!", ex);
+        }
     }
 
     private void addFormats(List<Episode> episodeList) {
