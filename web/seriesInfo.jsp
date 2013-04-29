@@ -124,6 +124,7 @@
                 <th>Episode</th>
                 <th>Title</th>
                 <th>Year</th>
+                <th>Media Format</th>
                 <th>Seen</th>
             </tr>
             <% int indx2 = 1;%>
@@ -166,6 +167,22 @@
                             </select>
                         </div>
                     </td>
+                    <td>
+                        <div class="styled-select tableBox">
+                            <select name='media_format_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}'>
+                                <c:forEach var='format' items='${formatList}'>
+                                    <c:choose>
+                                        <c:when test="${ep.format == format}">
+                                            <option selected="true">${format}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option>${format}</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </td>
                     <td class="padded">
                         <input type="checkbox" id="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
                                name="episode_seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
@@ -200,6 +217,13 @@
             <c:if test='${yearList != null}'>
                 <c:forEach var='year' items='${yearList}'>
                     <option>${year}</option>
+                </c:forEach>
+            </c:if>
+        </select>            
+        <select id='formatSelect0' style='display: none'>
+            <c:if test='${formatList != null}'>
+                <c:forEach var='format' items='${formatList}'>
+                    <option>${format}</option>
                 </c:forEach>
             </c:if>
         </select>            

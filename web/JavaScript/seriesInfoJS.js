@@ -23,6 +23,10 @@ function addSeasonFS() {
     var yearTxt = "</select></div><p></p> Year:";
     var yearSelect = "<select name='new_season_year_select'>";
     var yearLoops = document.getElementById("yearSelect0").innerHTML;
+    
+    var formatTxt = "</select></div><p></p> Format:";
+    var formatSelect = "<select name='new_season_format_select' id='new_season_format_select'>";
+    var formatLoops = document.getElementById("formatSelect0").innerHTML;
 
     var rightDiv = selectClose + "<div style='margin: 0 0 0 0; width:100%; text-align: right;'>";
     var deleteButton = "<button onclick='removeSeasonFS();'" +
@@ -34,6 +38,7 @@ function addSeasonFS() {
             boxDiv + seasonSelect + seasonLoops +
             episodeTxt + boxDiv + episodeSelect + episodeLoops +
             yearTxt + boxDiv + yearSelect + yearLoops +
+            formatTxt + boxDiv + formatSelect + formatLoops +
             rightDiv + deleteButton + close;
 
     document.getElementById("seasonfieldsHolder").innerHTML = code;
