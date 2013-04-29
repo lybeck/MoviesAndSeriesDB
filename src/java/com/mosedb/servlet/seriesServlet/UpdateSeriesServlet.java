@@ -25,11 +25,11 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
 
     private static final String UPDATE_BUTTON = "update_series";
     private static final String DELETE_BUTTON = "delete_series";
-    private static final String DELETE_SELECTED = "delete_selected_button";
     private static final String NEW_SEASON_NUMBER_DROPBOX = "new_season_select";
     private static final String NEW_SEASON_EPISODE_NUMBER_DROPBOX = "new_season_episode_select";
     private static final String NEW_SEASON_YEAR_DROPBOX = "new_season_year_select";
     private static final String NEW_SEASON_SEEN_CHECKBOX = "new_season_seen_checkbox";
+    private static final String DELETE_SEASON_DROPBOX = "delete_season_select";
     private static final String EPISODE_NAME_INPUT = "episode_name_";
     private static final String EPISODE_YEAR_SELECT = "episode_year_";
     private static final String EPISODE_SEEN_CHECKBOX = "episode_seen_";
@@ -38,21 +38,26 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
+            boolean success = false;
             String clickedButton = request.getParameter("submit");
             if (clickedButton.equals(UPDATE_BUTTON)) {
-                updateSeries(request, response);
+                success = updateSeries(request);
             } else if (clickedButton.equals(DELETE_BUTTON)) {
-                removeSeries(request, response);
-            } else if (clickedButton.equals(DELETE_SELECTED)) {
-                removeSelectedEpisodes(request, response);
+                success = removeSeries(request);
             }
+            if (success) {
+                AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
+            } else {
+                AttributeManager.setErrorMessage(request, "Failed to update series information!");
+            }
+            restorePage("seriesInfo.jsp", request, response);
 
         } else {
             redirectHome(request, response);
         }
     }
 
-    private void updateSeries(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private boolean updateSeries(HttpServletRequest request) throws ServletException, IOException {
         AttributeManager.removeErrorMessage(request);
         AttributeManager.removeSuccessMessage(request);
 
@@ -101,20 +106,30 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
             totalSuccess = false;
         }
 
-        if (totalSuccess) {
-            AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
-        } else {
-            AttributeManager.setErrorMessage(request, "Failed to update series information!");
+        /*
+         * remove season, if selected
+         */
+        success = removeSeason(request);
+        if (!success) {
+            totalSuccess = false;
         }
-        restorePage("seriesInfo.jsp", request, response);
+
+        return totalSuccess;
     }
 
-    private void removeSeries(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private boolean removeSeries(HttpServletRequest request) {
+        int seriesid = AttributeManager.getSeries(request.getSession(true)).getId();
+        return new SeriesService().removeSeries(seriesid);
     }
 
-    private void removeSelectedEpisodes(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private boolean removeSeason(HttpServletRequest request) {
+        int seriesid = AttributeManager.getSeries(request.getSession(true)).getId();
+        String seasonString = request.getParameter(DELETE_SEASON_DROPBOX);
+        if (seasonString == null || seasonString.isEmpty()) {
+            return true;
+        }
+        int seasonNumber = Integer.parseInt(seasonString);
+        return new SeriesService().removeSeason(seriesid, seasonNumber);
     }
 
     private boolean addNewSeason(HttpServletRequest request, Series series) {

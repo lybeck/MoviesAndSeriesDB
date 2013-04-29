@@ -8,6 +8,8 @@ import com.mosedb.dao.UserDao;
 import com.mosedb.models.User;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,8 +18,14 @@ import java.util.List;
 public class UserService extends AbstractService {
 
     public List<User> getAllUsers() {
+        UserDao userDao;
         try {
-            UserDao userDao = new UserDao();
+            userDao = new UserDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return null;
+        }
+        try {
             List<User> allUsers = userDao.getAllUsers();
             userDao.closeConnection();
             return allUsers;
@@ -28,8 +36,14 @@ public class UserService extends AbstractService {
     }
 
     public User getUser(String username, String password) {
+        UserDao userDao;
         try {
-            UserDao userDao = new UserDao();
+            userDao = new UserDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return null;
+        }
+        try {
             User user = userDao.getUser(username, password);
             userDao.closeConnection();
             return user;
@@ -40,8 +54,14 @@ public class UserService extends AbstractService {
     }
 
     public boolean addUser(User user, String password) {
+        UserDao userDao;
         try {
-            UserDao userDao = new UserDao();
+            userDao = new UserDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
             boolean success = userDao.addUser(user, password);
             userDao.closeConnection();
             return success;
@@ -50,10 +70,16 @@ public class UserService extends AbstractService {
             return false;
         }
     }
-    
+
     public void deleteUser(String username) {
+        UserDao userDao;
         try {
-            UserDao userDao = new UserDao();
+            userDao = new UserDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return;
+        }
+        try {
             userDao.deleteUser(username);
             userDao.closeConnection();
         } catch (SQLException ex) {
@@ -62,8 +88,14 @@ public class UserService extends AbstractService {
     }
 
     public boolean updateUser(User user, User updatedUser, String newPassword) {
+        UserDao userDao;
         try {
-            UserDao userDao = new UserDao();
+            userDao = new UserDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
             boolean success = userDao.updateUser(user.getUsername(), updatedUser, newPassword);
             userDao.closeConnection();
             return success;
