@@ -300,6 +300,7 @@ public class MovieDao extends AbstractDao {
             movieYear = null;
         }
         boolean seen = result.getBoolean("seen");
+        result.close();
         return new Movie(movieid, owner, seen, movieYear);
     }
 }

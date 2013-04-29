@@ -130,6 +130,7 @@ public class SeriesNameDao extends AbstractDao {
             series.setNames(getSeriesNames(id));
             seriesList.add(series);
         }
+        result.close();
         return seriesList;
     }
 

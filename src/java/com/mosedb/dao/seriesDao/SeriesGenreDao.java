@@ -79,6 +79,7 @@ public class SeriesGenreDao extends AbstractDao {
             String owner = result.getString("owner");
             seriesList.add(new Series(id, owner));
         }
+        result.close();
         return seriesList;
     }
 
@@ -96,6 +97,7 @@ public class SeriesGenreDao extends AbstractDao {
         while (result.next()) {
             genres.add(result.getString("genrename"));
         }
+        result.close();
         return genres;
     }
 

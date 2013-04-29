@@ -174,6 +174,7 @@ public class MovieNameDao extends AbstractDao {
             movie.setNames(getMovieNames(id));
             movieList.add(movie);
         }
+        result.close();
         return movieList;
     }
 }

@@ -105,7 +105,9 @@ public class SeriesDao extends AbstractDao {
         if (!result.next()) {
             return null;
         }
-        return new Series(seriesid, result.getString("owner"));
+        String owner = result.getString("owner");
+        result.close();
+        return new Series(seriesid, owner);
     }
 
     /**

@@ -45,6 +45,7 @@ public class EpisodeDao extends AbstractDao {
                 episodeList.add(new Episode(seriesid, seasonnumber, episodenumber, name, seen));
             }
         }
+        result.close();
         return episodeList;
     }
 

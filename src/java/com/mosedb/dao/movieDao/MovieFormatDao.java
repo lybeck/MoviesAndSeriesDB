@@ -101,6 +101,7 @@ public class MovieFormatDao extends AbstractDao {
             }
             list.add(format);
         }
+        result.close();
         return list;
     }
 }

@@ -52,6 +52,7 @@ public class EpisodeFormatDao extends AbstractDao {
             return null;
         }
         MediaFormat mediaFormat = MediaFormat.valueOf(result.getString("mediaformat"));
+        result.close();
         return new Format(mediaFormat);
     }
 

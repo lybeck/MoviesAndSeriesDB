@@ -6,13 +6,12 @@ package com.mosedb.business;
 
 import com.mosedb.dao.FormatDao;
 import com.mosedb.dao.seriesDao.EpisodeDao;
-import com.mosedb.dao.seriesDao.SeriesDao;
 import com.mosedb.dao.seriesDao.EpisodeFormatDao;
+import com.mosedb.dao.seriesDao.SeriesDao;
 import com.mosedb.dao.seriesDao.SeriesGenreDao;
 import com.mosedb.dao.seriesDao.SeriesNameDao;
 import com.mosedb.models.Episode;
 import com.mosedb.models.Format;
-import com.mosedb.models.Format.MediaFormat;
 import com.mosedb.models.LangId;
 import com.mosedb.models.Series;
 import com.mosedb.models.User;
@@ -22,8 +21,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -234,6 +231,7 @@ public class SeriesService extends AbstractService {
         }
         try {
             series.setGenres(seriesGenreDao.getGenresById(series.getId()));
+            seriesGenreDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error retrieving series genres from database!", ex);
         }
@@ -656,6 +654,7 @@ public class SeriesService extends AbstractService {
         }
         try {
             episodeFormatDao.removeFormats(episode);
+            episodeFormatDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error updating episode format information!", ex);
         }
@@ -699,6 +698,7 @@ public class SeriesService extends AbstractService {
             for (Episode episode : episodeList) {
                 episode.setFormat(episodeFormatDao.getFormat(episode));
             }
+            episodeFormatDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error retrieving format info for episodes!", ex);
         }
