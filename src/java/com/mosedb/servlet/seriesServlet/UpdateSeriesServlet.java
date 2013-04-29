@@ -11,6 +11,7 @@ import com.mosedb.models.Series;
 import com.mosedb.servlet.AbstractInfoServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -47,11 +48,11 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
             }
             if (success) {
                 AttributeManager.setSuccessMessage(request, "Changes updated successfully!");
+                restorePage("seriesInfo.jsp", request, response);
             } else {
                 AttributeManager.setErrorMessage(request, "Failed to update series information!");
+                redirectHome(request, response);
             }
-            restorePage("seriesInfo.jsp", request, response);
-
         } else {
             redirectHome(request, response);
         }
@@ -123,13 +124,22 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     }
 
     private boolean removeSeason(HttpServletRequest request) {
-        int seriesid = AttributeManager.getSeries(request.getSession(true)).getId();
+        Series series = AttributeManager.getSeries(request.getSession(true));
+        int seriesid = series.getId();
         String seasonString = request.getParameter(DELETE_SEASON_DROPBOX);
         if (seasonString == null || seasonString.isEmpty()) {
             return true;
         }
         int seasonNumber = Integer.parseInt(seasonString);
-        return new SeriesService().removeSeason(seriesid, seasonNumber);
+        boolean success = new SeriesService().removeSeason(seriesid, seasonNumber);
+        List<Episode> newEpisodes = new ArrayList<Episode>();
+        for (Episode episode : newEpisodes) {
+            if (episode.getSeasonNumber() != seasonNumber) {
+                newEpisodes.add(episode);
+            }
+        }
+        series.setEpisodes(newEpisodes);
+        return success;
     }
 
     private boolean addNewSeason(HttpServletRequest request, Series series) {
