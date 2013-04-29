@@ -5,11 +5,8 @@ import com.mosedb.business.MovieService;
 import com.mosedb.models.Format;
 import com.mosedb.models.Movie;
 import com.mosedb.servlet.AbstractInfoServlet;
-import com.mosedb.servlet.MosedbServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Handles the connection between search.jsp and movieInfo.jsp.
  * @author Roope
  */
 public class MovieInfoServlet extends AbstractInfoServlet{

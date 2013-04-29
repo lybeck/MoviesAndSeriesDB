@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Handles the update-functionality in movieInfo.jsp.
  *
  * @author Lasse
  */
@@ -39,6 +40,14 @@ public class UpdateMovieServlet extends AbstractInfoServlet {
         }
     }
 
+    /**
+     * Removes the movie currently in session from the database and the session.
+     *
+     * @param request The request from which the current session is gotten.
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void removeMovie(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
@@ -59,6 +68,17 @@ public class UpdateMovieServlet extends AbstractInfoServlet {
         redirectHome(request, response);
     }
 
+    /**
+     * Updates the info of the movie currently in session according to the
+     * corresponding fields in movieInfo.jsp.
+     *
+     * @param request The request from which the current session and the info
+     * from the fields in movieInfo.jsp is gotten.
+     * @param response
+     * @throws NumberFormatException
+     * @throws ServletException
+     * @throws IOException
+     */
     private void updateMovie(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ServletException, IOException {
         if (isUserLoggedIn(request)) {
             Map<LangId, String> names = getNameMap(request);

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mosedb.servlet.movieServlet;
 
 import com.mosedb.business.GenreService;
@@ -23,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author roopekoira
+ * Handles the movie-adding functionality in addMovie.jsp.
+ * @author Roope
  */
 public class AddMovieServlet extends AbstractInfoServlet {
 

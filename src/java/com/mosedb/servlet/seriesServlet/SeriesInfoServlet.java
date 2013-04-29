@@ -14,11 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Handles the connection between search.jsp and seriesInfo.jsp.
  *
  * @author Roope
  */
 public class SeriesInfoServlet extends AbstractInfoServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");

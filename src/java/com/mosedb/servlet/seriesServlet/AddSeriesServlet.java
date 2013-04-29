@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mosedb.servlet.seriesServlet;
 
 import com.mosedb.business.GenreService;
@@ -20,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Handles all the series-adding functionality in addSeries.jsp.
  * @author Lasse
  */
 public class AddSeriesServlet extends AbstractInfoServlet {
