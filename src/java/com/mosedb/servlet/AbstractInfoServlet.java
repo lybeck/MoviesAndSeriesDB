@@ -6,7 +6,6 @@ package com.mosedb.servlet;
 
 import com.mosedb.models.Format;
 import com.mosedb.models.LangId;
-import com.mosedb.models.Movie;
 import com.mosedb.models.Series;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +24,6 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
 
     private static final int MAX_EPISODES_PER_SEASON = 300;
     private static final int MAX_SEASON_NUMBER = 35;
-
     private static final String ENG_NAME = "engName";
     private static final String FI_NAME = "fiName";
     private static final String SWE_NAME = "sweName";
@@ -37,8 +35,13 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
     private static final String FILE_TYPE = "fileType";
     private static final String RESOLUTION_X = "resox";
     private static final String RESOLUTION_Y = "resoy";
-    
 
+    /**
+     * Retrieves the names from the input fields from the {@code request}.
+     *
+     * @param request
+     * @return A map containing the input names.
+     */
     protected Map<LangId, String> getNameMap(HttpServletRequest request) {
         String engName = request.getParameter(ENG_NAME).trim();
         String fiName = request.getParameter(FI_NAME).trim();
@@ -61,7 +64,13 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
         return names;
     }
 
-    protected Integer getYear(HttpServletRequest request) throws NumberFormatException {
+    /**
+     * Retrieves the year from the input field from the {@code request}.
+     *
+     * @param request
+     * @return The year from the request, or {@code null} if no number is found.
+     */
+    protected Integer getYear(HttpServletRequest request) {
         String year = request.getParameter(YEAR);
         Integer movieYear = null;
         if (!year.isEmpty()) {
@@ -70,6 +79,12 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
         return movieYear;
     }
 
+    /**
+     * Retrieves the genre info from the {@code request}.
+     *
+     * @param request
+     * @return A list containing the genres.
+     */
     protected List<String> getGenres(HttpServletRequest request) {
         List<String> genreList = new ArrayList<String>();
         int i = 1;
@@ -87,6 +102,12 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
         return genreList;
     }
 
+    /**
+     * Retrieves all the format info from the {@code request}.
+     *
+     * @param request
+     * @return A list of formats.
+     */
     protected List<Format> getFormats(HttpServletRequest request) {
         List<Format> formatList = new ArrayList<Format>();
         int i = 1;
@@ -106,6 +127,13 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
         return formatList;
     }
 
+    /**
+     * Retrieves the digital copy format information from the {@code request}.
+     *
+     * @param request
+     * @param i The number of the format in the request.
+     * @return A (digital) format with the information from the {@code request}.
+     */
     protected Format getDigitalFormat(HttpServletRequest request, int i) {
         String fileType = request.getParameter(FILE_TYPE + i).trim();
         if (fileType.isEmpty()) {
@@ -126,10 +154,21 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
         }
     }
 
+    /**
+     * Retrieves the seen checkbox's status from the {@code request}.
+     *
+     * @param request
+     * @return {@code true} if the checkbox is checked, {@code false} otherwise.
+     */
     protected boolean isSeen(HttpServletRequest request) {
         return request.getParameter(SEEN_CHECKBOX) != null;
     }
 
+    /**
+     * Generates a list of years for dropdown menus on the web page.
+     *
+     * @return List of years.
+     */
     protected List<String> getYearList() {
         List<String> yearList = new ArrayList<String>();
         yearList.add("");
@@ -140,6 +179,11 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
         return yearList;
     }
 
+    /**
+     * Generates a list of possible episode amounts for a new season.
+     *
+     * @return A list of possible episode amounts.
+     */
     protected List<String> getEpisodeDropboxValues() {
         List<String> epVals = new ArrayList<String>();
         epVals.add("");
@@ -149,6 +193,12 @@ public abstract class AbstractInfoServlet extends MosedbServlet {
         return epVals;
     }
 
+    /**
+     * Generates a list of possible season numbers for a new season.
+     *
+     * @param series Series to which a new season is to be added to.
+     * @return A list of possible new season numbers.
+     */
     protected List<String> getSeasonDropboxValues(Series series) {
         Set<Integer> seasonNumbers = series.getSeasonNumbers();
         List<String> seasonVals = new ArrayList<String>();

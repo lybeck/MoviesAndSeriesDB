@@ -101,7 +101,7 @@ public class SeriesNameDao extends AbstractDao {
      * Searches series with a name corresponding to <b>all</b> the search terms.
      * The search is <b>not</b> case sensitive.
      *
-     * @param search Name to be queried.
+     * @param searchList Names to be queried.
      * @param user User whose series are queried. If the user is admin all
      * users' series are queried.
      * @return A list of series.

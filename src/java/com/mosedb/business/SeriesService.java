@@ -121,7 +121,7 @@ public class SeriesService extends AbstractService {
      * @param user User, whose series are retrieved. If user is admin
      * ({@link User#isAdmin()} returns {@code true}) all users series are
      * retrieved.
-     * @param genre Search term, which is compared to series genres.
+     * @param search Search term, which is compared to series genres.
      * @param seen Retrieves only series with the same value on {@code seen}. If
      * parameter is {@code null} it is ignored.
      * @return A list of series, or {@code null} if the database query fails.
@@ -165,7 +165,7 @@ public class SeriesService extends AbstractService {
      * parameter is {@code null} it is ignored.
      * @return A list of series, or {@code null} if the database query fails.
      */
-    public List<Series> getByMediaFormat(User user, String searchField, Boolean seen) {
+    public List<Series> getByMediaFormat(User user, String mediaformat, Boolean seen) {
         return getSeries(user, seen);
     }
 
@@ -604,7 +604,7 @@ public class SeriesService extends AbstractService {
      *
      * @param seriesid Id of the series.
      * @param seasonnumber Number of the season to be deleted.
-     * @return{@code true} if information was successfully added, otherwise
+     * @return {@code true} if information was successfully added, otherwise
      * {@code false}.
      */
     public boolean removeSeason(int seriesid, int seasonnumber) {

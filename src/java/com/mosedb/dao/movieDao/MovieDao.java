@@ -7,7 +7,6 @@ package com.mosedb.dao.movieDao;
 import com.mosedb.dao.AbstractDao;
 import com.mosedb.models.Movie;
 import com.mosedb.models.User;
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

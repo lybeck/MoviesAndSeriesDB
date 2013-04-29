@@ -138,7 +138,7 @@ public class MovieNameDao extends AbstractDao {
      * Retrieves all the movies with a name corresponding to <b>all</b> the
      * search terms. The search is <b>not</b> case sensitive.
      *
-     * @param search The name to be searched for.
+     * @param searchList The names to be searched for.
      * @param user The user whose movies are queried. If the user is an admin
      * all users' movies are queried.
      * @param seenParam If not {@code null}, movies with the same {@code seen}

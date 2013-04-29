@@ -80,6 +80,16 @@ public class SearchServlet extends MosedbServlet {
 
     }
 
+    /**
+     * Retrieves a list of movies corresponding to the search values.
+     *
+     * @param searchField Value in the search field.
+     * @param dropBox Value in the dropbox, deciding what kind of search was
+     * done.
+     * @param user The user who performs the search.
+     * @param seenParameter Value from the seen checkbox.
+     * @return A list of movies, or {@code null} if the database query failed.
+     */
     private List<Movie> getMovieList(String searchField, String dropBox, User user, Boolean seenParameter) {
         MovieService movieService = new MovieService();
         List<Movie> movieList;
@@ -100,6 +110,16 @@ public class SearchServlet extends MosedbServlet {
         return movieList;
     }
 
+    /**
+     * Retrieves a list of series corresponding to the search values.
+     *
+     * @param searchField Value in the search field.
+     * @param dropBox Value in the dropbox, deciding what kind of search was
+     * done.
+     * @param user The user who performs the search.
+     * @param seenParameter Value from the seen checkbox.
+     * @return A list of movies, or {@code null} if the database query failed.
+     */
     private List<Series> getSeriesList(String searchField, String dropBox, User user, Boolean seenParameter) {
         /* Series search */
         SeriesService seriesService = new SeriesService();

@@ -75,6 +75,9 @@ public abstract class AbstractDao {
         return result;
     }
 
+    /**
+     * Closes the connection to the database.
+     */
     public void closeConnection() {
         try {
             connection.close();
