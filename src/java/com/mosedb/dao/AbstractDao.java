@@ -48,7 +48,6 @@ public abstract class AbstractDao {
             }
         }
         int result = pst.executeUpdate();
-        pst.close();
         return result != 0;
     }
 
@@ -73,7 +72,6 @@ public abstract class AbstractDao {
             }
         }
         ResultSet result = pst.executeQuery();
-        pst.close();
         return result;
     }
 
