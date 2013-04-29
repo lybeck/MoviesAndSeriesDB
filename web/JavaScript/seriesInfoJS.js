@@ -77,7 +77,14 @@ function addSeasonFS() {
 }
 
 function deleteSeasonFS() {
-    var code = document.getElementById('hiddenDeleteSeasonFS').innerHTML;
+    var preLoop = "<fieldset class='styledFS smallCenetered' name='deleteSeasonfields'>" +
+            "<legend>Delete season</legend>" +
+            "<div class='styled-select' style='margin: 0 0 0 0; width:35%;'>" +
+            "<select name='delete_season_select' id='delete_season_select'>";
+    var loop = document.getElementById('hidden_delete_season_select').innerHTML;
+    var button = document.getElementById('hiddenDeleteSeasonFS').innerHTML;
+    var postLoop = "</select></div>" + button;
+    var code = preLoop + loop + postLoop;
     document.getElementById('deleteSeasonfieldsHolder').innerHTML = code;
     document.getElementById("deleteSeasonButtonHolder").innerHTML = '';
 }

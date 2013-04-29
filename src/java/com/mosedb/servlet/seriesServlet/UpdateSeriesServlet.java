@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -131,14 +132,12 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
             return true;
         }
         int seasonNumber = Integer.parseInt(seasonString);
-        boolean success = new SeriesService().removeSeason(seriesid, seasonNumber);
-        List<Episode> newEpisodes = new ArrayList<Episode>();
-        for (Episode episode : newEpisodes) {
-            if (episode.getSeasonNumber() != seasonNumber) {
-                newEpisodes.add(episode);
-            }
-        }
-        series.setEpisodes(newEpisodes);
+        HttpSession session = request.getSession(true);
+        SeriesService seriesService = new SeriesService();
+        boolean success = seriesService.removeSeason(seriesid, seasonNumber);
+        series.setEpisodes(seriesService.getAllEpisodes(series.getId()));
+        AttributeManager.setEpisodeDropbox(session, getEpisodeDropboxValues());
+        AttributeManager.setSeasonDropbox(session, getSeasonDropboxValues(series));
         return success;
     }
 

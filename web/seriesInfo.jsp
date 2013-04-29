@@ -202,22 +202,18 @@
                     <option>${year}</option>
                 </c:forEach>
             </c:if>
+        </select>            
+        <select name='hidden_delete_season_select' id='hidden_delete_season_select' style="display: none;">
+            <c:if test="${series != null}">
+                <c:forEach var="season" items="${series.seasonNumbersAsList}">
+                    <option>${season}</option>
+                </c:forEach>
+            </c:if>
         </select>
         <div id='hiddenDeleteSeasonFS' style='display: none;'>
-            <fieldset class='styledFS smallCenetered' name='deleteSeasonfields'>
-                <legend>Delete season</legend>
-                <div class='styled-select' style='margin: 0 0 0 0; width:35%;'>
-                    <select name='delete_season_select' id='delete_season_select' onchange='checkNewSeasonDropboxes();'>
-                        <c:if test="${series != null}">
-                            <c:forEach var="season" items="${series.seasonNumbersAsList}">
-                                <option>${season}</option>
-                            </c:forEach>
-                        </c:if>
-                    </select>
-                </div>
-                <div style='margin: 0 0 0 0; width:100%; text-align: right;'>
-                    <button onclick='removeDeleteSeasonFS();' class='button small'>Hide</button>
-                </div>
+            <div style='margin: 0 0 0 0; width:100%; text-align: right;'>
+                <button onclick='removeDeleteSeasonFS();' class='button small'>Hide</button>
+            </div>
             </fieldset>
         </div>
 

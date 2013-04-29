@@ -52,6 +52,7 @@ public class AddSeriesServlet extends AbstractInfoServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (isUserLoggedIn(request)) {
+            HttpSession session = request.getSession(true);
             Map<LangId, String> names = getNameMap(request);
             if (names.isEmpty()) {
                 AttributeManager.setErrorMessage(request, "One name must be specified!");
@@ -68,7 +69,9 @@ public class AddSeriesServlet extends AbstractInfoServlet {
                 restorePage("addSeries.jsp", request, response);
                 return;
             }
-            AttributeManager.setSeries(request.getSession(true), series);
+            AttributeManager.setSeries(session, series);
+            AttributeManager.setEpisodeDropbox(session, getEpisodeDropboxValues());
+            AttributeManager.setSeasonDropbox(session, getSeasonDropboxValues(series));
             redirectToPage("seriesInfo", request, response);
         } else {
             redirectHome(request, response);

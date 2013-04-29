@@ -20,6 +20,16 @@ import javax.servlet.http.HttpSession;
  * @author Roope
  */
 public class SeriesInfoServlet extends AbstractInfoServlet {
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        if (isUserLoggedIn(request)) {
+            restorePage("seriesInfo.jsp", request, response);
+        } else {
+            redirectHome(request, response);
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
