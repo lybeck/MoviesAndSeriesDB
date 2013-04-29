@@ -7,12 +7,10 @@ package com.mosedb.dao.movieDao;
 import com.mosedb.dao.AbstractDao;
 import com.mosedb.models.Movie;
 import com.mosedb.models.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -66,10 +64,7 @@ public class MovieDao extends AbstractDao {
     }
 
     /**
-     * Removes the movie with the given {@code movieid} from the database. <p>
-     * Note that this method <b>only</b> removes the entry from the mosedb.movie
-     * table, and that the removal will most likely fail if entries from the
-     * other movie related tables are not removed first.
+     * Removes the movie with the given {@code movieid} from the database.
      *
      * @param movieid Id of the movie to be removed.
      * @throws SQLException
@@ -79,40 +74,61 @@ public class MovieDao extends AbstractDao {
         executeUpdate(sql, movieid);
     }
 
+    /**
+     * Updates the {@code seen} column for the specified movie to the database.
+     *
+     * @param movieid Id of the movie.
+     * @param seen The new value of the {@code seen} column.
+     * @return {code true} if the update succeeded, {@code false} otherwise.
+     * @throws SQLException
+     */
     public boolean updateMovieSeen(int movieid, boolean seen) throws SQLException {
         String sql = "update mosedb.movie set (seen)=(?) where movieid=?";
         return executeUpdate(sql, seen, movieid);
     }
 
-    public boolean updateMovieYear(int movieid, Integer newyear) throws SQLException {
+    /**
+     * Updates the {@code year} column for the specified movie in the database.
+     *
+     * @param movieid Id of the movie.
+     * @param year New value for the {@code year} column.
+     * @return {code true} if the update succeeded, {@code false} otherwise.
+     * @throws SQLException
+     */
+    public boolean updateMovieYear(int movieid, Integer year) throws SQLException {
         String sql = "update mosedb.movie set (movieyear)=(?) where movieid=?";
-        return executeUpdate(sql, newyear, movieid);
+        return executeUpdate(sql, year, movieid);
     }
 
+    /**
+     * Retrieves the user's movies from the 'movie' table in the database.
+     *
+     * @param owner User, whose movies are queried.
+     * @return A list of movies.
+     * @throws SQLException
+     */
     public List<Movie> getMovies(String owner) throws SQLException {
-        String sql = "select movieid, movieyear, seen from mosedb.movie where owner=?";
-        ResultSet result = executeQuery(sql, owner);
-        List<Movie> list = new ArrayList<Movie>();
-        while (result.next()) {
-            int movieid = result.getInt("movieid");
-            int movieyear = result.getInt("movieyear");
-            boolean seen = result.getBoolean("seen");
-            if (movieyear != 0) {
-                list.add(new Movie(movieid, owner, seen, movieyear));
-            } else {
-                list.add(new Movie(movieid, owner, seen));
-            }
-        }
-        result.close();
-        return list;
+        return getMovies(null, owner);
     }
 
-    public List<Movie> getMovies(String owner, Boolean seenSearch) throws SQLException {
-        if (seenSearch == null) {
-            return getMovies(owner);
+    /**
+     * Retrieves the user's movies from the 'movie' table in the database.
+     *
+     * @param seenSearch If not {@code null}, movies with the same {@code seen}
+     * value are queried.
+     * @param owner User, whose movies are queried.
+     * @return A list of movies.
+     * @throws SQLException
+     */
+    public List<Movie> getMovies(Boolean seenSearch, String owner) throws SQLException {
+        List<Object> searchTerms = new ArrayList<Object>(2);
+        searchTerms.add(owner);
+        String sql = "select movieid, movieyear, seen from mosedb.movie where owner=?";
+        if (seenSearch != null) {
+            sql += " and seen=?";
+            searchTerms.add(seenSearch);
         }
-        String sql = "select movieid, movieyear, seen from mosedb.movie where owner=? and seen=?";
-        ResultSet result = executeQuery(sql, owner, seenSearch);
+        ResultSet result = executeQuery(sql, searchTerms.toArray());
         List<Movie> list = new ArrayList<Movie>();
         while (result.next()) {
             int movieid = result.getInt("movieid");
@@ -129,30 +145,18 @@ public class MovieDao extends AbstractDao {
     }
 
     public List<Movie> getAllMovies() throws SQLException {
-        String sql = "select movieid, owner, movieyear, seen from mosedb.movie order by owner";
-        ResultSet result = executeQuery(sql);
-        List<Movie> list = new ArrayList<Movie>();
-        while (result.next()) {
-            int movieid = result.getInt("movieid");
-            String owner = result.getString("owner");
-            int movieyear = result.getInt("movieyear");
-            boolean seen = result.getBoolean("seen");
-            if (movieyear != 0) {
-                list.add(new Movie(movieid, owner, seen, movieyear));
-            } else {
-                list.add(new Movie(movieid, owner, seen));
-            }
-        }
-        result.close();
-        return list;
+        return getAllMovies(null);
     }
 
     public List<Movie> getAllMovies(Boolean seenSearch) throws SQLException {
-        if (seenSearch == null) {
-            return getAllMovies();
+        List<Object> searchTerms = new ArrayList<Object>(1);
+        String sql = "select movieid, owner, movieyear, seen from mosedb.movie";
+        if (seenSearch != null) {
+            sql += " where seen=?";
+            searchTerms.add(seenSearch);
         }
-        String sql = "select movieid, owner, movieyear, seen from mosedb.movie where seen=? order by owner";
-        ResultSet result = executeQuery(sql, seenSearch);
+        sql += " order by owner";
+        ResultSet result = executeQuery(sql, searchTerms.toArray());
         List<Movie> list = new ArrayList<Movie>();
         while (result.next()) {
             int movieid = result.getInt("movieid");
