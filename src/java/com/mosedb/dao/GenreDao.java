@@ -19,6 +19,12 @@ public class GenreDao extends AbstractDao {
         super();
     }
 
+    /**
+     * Retrieves a list of all the genres in the database.
+     *
+     * @return A list of genres stored in the database.
+     * @throws SQLException
+     */
     public List<String> getAllGenres() throws SQLException {
         String sql = "select genrename from mosedb.genre order by genrename";
         ResultSet result = executeQuery(sql);

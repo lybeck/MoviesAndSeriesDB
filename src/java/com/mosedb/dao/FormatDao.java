@@ -7,10 +7,6 @@ package com.mosedb.dao;
 import com.mosedb.models.Format;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -22,6 +18,14 @@ public class FormatDao extends AbstractDao {
         super();
     }
 
+    /**
+     * Adds a mediaformat to the database.
+     *
+     * @param mediaformat The mediaformat to be added.
+     * @return The formatid of the format stored, or {@code -1} if the database
+     * connection fails.
+     * @throws SQLException
+     */
     public int addFormat(Format.MediaFormat mediaformat) throws SQLException {
         String sql = "insert into mosedb.format (mediaformat) values (cast(? as mosedb.mediaformat)) returning formatid";
         ResultSet result = executeQuery(sql, mediaformat);
@@ -33,6 +37,14 @@ public class FormatDao extends AbstractDao {
         return id;
     }
 
+    /**
+     * Adds a digital copy mediaformat to the database.
+     *
+     * @param filetype The filetype of the digital copy.
+     * @return The formatid of the format stored, or {@code -1} if the database
+     * connection fails.
+     * @throws SQLException
+     */
     public int addFormatDigitalCopy(String filetype) throws SQLException {
         String sql = "insert into mosedb.format (mediaformat, filetype) "
                 + "values (cast(? as mosedb.mediaformat),?) "
@@ -46,6 +58,16 @@ public class FormatDao extends AbstractDao {
         return id;
     }
 
+    /**
+     * Adds a digital copy mediaformat to the database.
+     *
+     * @param filetype The filetype of the digital copy.
+     * @param resox The width of the file in pixels.
+     * @param resoy The height of the file in pixels.
+     * @return The formatid of the format stored, or {@code -1} if the database
+     * connection fails.
+     * @throws SQLException
+     */
     public int addFormatDigitalCopy(String filetype, int resox, int resoy) throws SQLException {
         String sql = "insert into mosedb.format (mediaformat, filetype, resox, resoy) "
                 + "values (cast(? as mosedb.mediaformat),?,?,?) "
@@ -57,29 +79,5 @@ public class FormatDao extends AbstractDao {
         int id = result.getInt("formatid");
         result.close();
         return id;
-    }
-
-    public void removeFormat(int formatid) throws SQLException {
-        String sql = "delete from mosedb.format where formatid=?";
-        executeUpdate(sql, formatid);
-    }
-
-    public Format getFormat(int formatid) throws SQLException {
-        String sql = "select mediaformat, filetype, resox, resoy from mosedb.format where formatid=?";
-        ResultSet result = executeQuery(sql, formatid);
-        Format format = null;
-        if (result.next()) {
-            Format.MediaFormat mediaformat = Format.getMediaFormat(result.getString("mediaformat"));
-            String filetype = result.getString("filetype");
-            int resox = result.getInt("resox");
-            int resoy = result.getInt("resoy");
-            if (resox == 0 || resoy == 0) {
-                format = new Format(formatid, mediaformat, filetype);
-            } else {
-                format = new Format(formatid, mediaformat, filetype, resox, resoy);
-            }
-        }
-        result.close();
-        return format;
     }
 }
