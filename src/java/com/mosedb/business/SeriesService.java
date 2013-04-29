@@ -25,6 +25,17 @@ import java.util.Map;
  */
 public class SeriesService extends AbstractService {
 
+    /**
+     * Retrieves a list of series the user has stored, or a list of all users
+     * series if the user is admin.
+     *
+     * @param user User, whose series are retrieved. If user is admin
+     * ({@link User#isAdmin()} returns {@code true}) all users' series are
+     * retrieved.
+     * @param seen Retrieves only series with the same value on {@code seen}. If
+     * parameter is {@code null} it is ignored.
+     * @return A list of series, or {@code null} if the database query fails.
+     */
     public List<Series> getSeries(User user, Boolean seen) {
         SeriesDao seriesDao;
         try {
@@ -56,6 +67,20 @@ public class SeriesService extends AbstractService {
         return seriesList;
     }
 
+    /**
+     * Retrieves a list of the user's series with a name corresponding to the
+     * search term, or a list of all users series if the user is admin.
+     *
+     * @param user User, whose series are retrieved. If user is admin
+     * ({@link User#isAdmin()} returns {@code true}) all users series are
+     * retrieved.
+     * @param search Search term, which is compared to series names. If the
+     * search term consists of many words (separated by white spaces) all the
+     * search terms are matches (by AND).
+     * @param seen Retrieves only series with the same value on {@code seen}. If
+     * parameter is {@code null} it is ignored.
+     * @return A list of series, or {@code null} if the database query fails.
+     */
     public List<Series> getByName(User user, String search, Boolean seen) {
         search = search.trim();
         search = search.replaceAll("\\s+", " ");
@@ -89,6 +114,18 @@ public class SeriesService extends AbstractService {
         return seriesList;
     }
 
+    /**
+     * Retrieves a list of the user's series with a genre corresponding to the
+     * search term, or a list of all users series if the user is admin.
+     *
+     * @param user User, whose series are retrieved. If user is admin
+     * ({@link User#isAdmin()} returns {@code true}) all users series are
+     * retrieved.
+     * @param genre Search term, which is compared to series genres.
+     * @param seen Retrieves only series with the same value on {@code seen}. If
+     * parameter is {@code null} it is ignored.
+     * @return A list of series, or {@code null} if the database query fails.
+     */
     public List<Series> getByGenre(User user, String search, Boolean seen) {
         SeriesGenreDao seriesGenreDao;
         try {
@@ -115,11 +152,29 @@ public class SeriesService extends AbstractService {
         return seriesList;
     }
 
+    /**
+     * Retrieves a list of the user's series with a media format corresponding
+     * to the search term, or a list of all users series if the user is admin.
+     *
+     * @param user User, whose series are retrieved. If user is admin
+     * ({@link User#isAdmin()} returns {@code true}) all users series are
+     * retrieved.
+     * @param mediaformat Search term, which is compared to series' media
+     * formats.
+     * @param seen Retrieves only series with the same value on {@code seen}. If
+     * parameter is {@code null} it is ignored.
+     * @return A list of series, or {@code null} if the database query fails.
+     */
     public List<Series> getByMediaFormat(User user, String searchField, Boolean seen) {
         return getSeries(user, seen);
     }
 
-    private void addName(Series series) {
+    /**
+     * Adds names to the series from the database.
+     *
+     * @param series Series to be added names to.
+     */
+    private void addNames(Series series) {
         SeriesNameDao seriesNameDao;
         try {
             seriesNameDao = new SeriesNameDao();
@@ -135,31 +190,11 @@ public class SeriesService extends AbstractService {
         seriesNameDao.closeConnection();
     }
 
-    private void addGenres(Series series) {
-        SeriesGenreDao seriesGenreDao;
-        try {
-            seriesGenreDao = new SeriesGenreDao();
-        } catch (SQLException ex) {
-            reportConnectionError(ex);
-            return;
-        }
-        try {
-            series.setGenres(seriesGenreDao.getGenresById(series.getId()));
-        } catch (SQLException ex) {
-            reportError("Error retrieving series genres from database!", ex);
-        }
-    }
-
-    private void addEpisodes(Series series) {
-        series.setEpisodes(getAllEpisodes(series.getId()));
-    }
-
-    private void addEpisodes(List<Series> series) {
-        for (Series singleSeries : series) {
-            addEpisodes(singleSeries);
-        }
-    }
-
+    /**
+     * Adds names to all the series from the database.
+     *
+     * @param seriesList List of series to be added names to.
+     */
     private void addNames(List<Series> seriesList) {
         SeriesNameDao seriesNameDao;
         try {
@@ -178,6 +213,55 @@ public class SeriesService extends AbstractService {
         seriesNameDao.closeConnection();
     }
 
+    /**
+     * Adds genres to the series from the database.
+     *
+     * @param series Series to be added genres to.
+     */
+    private void addGenres(Series series) {
+        SeriesGenreDao seriesGenreDao;
+        try {
+            seriesGenreDao = new SeriesGenreDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return;
+        }
+        try {
+            series.setGenres(seriesGenreDao.getGenresById(series.getId()));
+        } catch (SQLException ex) {
+            reportError("Error retrieving series genres from database!", ex);
+        }
+    }
+
+    /**
+     * Adds all episodes to the series from the database.
+     *
+     * @param series Series to be added episodes to.
+     */
+    private void addEpisodes(Series series) {
+        series.setEpisodes(getAllEpisodes(series.getId()));
+    }
+
+    /**
+     * Adds all episodes to all the series from the database.
+     *
+     * @param seriesList List of series to be added episodes to.
+     */
+    private void addEpisodes(List<Series> seriesList) {
+        for (Series singleSeries : seriesList) {
+            addEpisodes(singleSeries);
+        }
+    }
+
+    /**
+     * Filters the list of series by the {@code seen} variable. Excludes all
+     * series from the list where {@link Series#isSeen()}{@code !=seen}.
+     *
+     * @param seriesList List to be filtered.
+     * @param seen Variable to be matched with series.
+     * @return List of series where {@link Series#isSeen()}{@code ==seen} for
+     * every series in the list.
+     */
     private List<Series> filterBySeen(List<Series> seriesList, Boolean seen) {
         if (seen == null) {
             return seriesList;
@@ -191,6 +275,14 @@ public class SeriesService extends AbstractService {
         return newList;
     }
 
+    /**
+     * Adds a series to the database.
+     *
+     * @param user The series' owner.
+     * @param series Series to be stored.
+     * @return {@code true} if series was successfully added, otherwise
+     * {@code false}.
+     */
     public boolean addSeries(User user, Series series) {
         int id = addToTableSeries(user);
         if (id <= 0) {
@@ -207,6 +299,13 @@ public class SeriesService extends AbstractService {
         return addToTableGenres(series);
     }
 
+    /**
+     * Adds an empty series to the table 'series' in the database.
+     *
+     * @param user The series' owner.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     private int addToTableSeries(User user) {
         SeriesDao seriesDao;
         try {
@@ -225,6 +324,14 @@ public class SeriesService extends AbstractService {
         }
     }
 
+    /**
+     * Adds information from the series to the table 'seriesname' in the
+     * database.
+     *
+     * @param series Series to be stored.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     private boolean addToTableSeriesname(Series series) {
         SeriesNameDao seriesNameDao;
         try {
@@ -243,6 +350,14 @@ public class SeriesService extends AbstractService {
         }
     }
 
+    /**
+     * Adds information from the series to the table 'seriesgenre' in the
+     * database.
+     *
+     * @param series Series to be stored.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     private boolean addToTableGenres(Series series) {
         SeriesGenreDao seriesGenreDao;
         try {
@@ -264,7 +379,15 @@ public class SeriesService extends AbstractService {
         return true;
     }
 
-    public boolean removeSeries(int id) {
+    /**
+     * Permanently deletes the series with the given {@code seriesid} from the
+     * database.
+     *
+     * @param seriesid Id of the series.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
+    public boolean removeSeries(int seriesid) {
         SeriesDao seriesDao;
         try {
             seriesDao = new SeriesDao();
@@ -273,7 +396,7 @@ public class SeriesService extends AbstractService {
             return false;
         }
         try {
-            seriesDao.removeSeries(id);
+            seriesDao.removeSeries(seriesid);
             seriesDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error trying to delete series from database!", ex);
@@ -282,6 +405,13 @@ public class SeriesService extends AbstractService {
         return false;
     }
 
+    /**
+     * Retrieves all episodes to the series with the given {@code seriesid} from
+     * the database.
+     *
+     * @param seriesid Id of the series.
+     * @return A list of episodes, or {@code null} if the database query fails.
+     */
     public List<Episode> getAllEpisodes(int seriesid) {
         EpisodeDao episodeDao;
         try {
@@ -301,7 +431,13 @@ public class SeriesService extends AbstractService {
         return episodeList;
     }
 
-    public Series getById(int id) {
+    /**
+     * Retrieves the series with the given {@code seriesid} from the database.
+     *
+     * @param seriesid Id of the series.
+     * @return Series, or {@code null} if the database query fails.
+     */
+    public Series getById(int seriesid) {
         SeriesDao seriesDao;
         try {
             seriesDao = new SeriesDao();
@@ -311,7 +447,7 @@ public class SeriesService extends AbstractService {
         }
         Series series;
         try {
-            series = seriesDao.getById(id);
+            series = seriesDao.getById(seriesid);
             seriesDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error retrieving series from database!", ex);
@@ -320,12 +456,20 @@ public class SeriesService extends AbstractService {
         if (series == null) {
             return null;
         }
-        addName(series);
+        addNames(series);
         addGenres(series);
         addEpisodes(series);
         return series;
     }
 
+    /**
+     * Updates the names of the series.
+     *
+     * @param series Series to be updated.
+     * @param names Map containing the new name values.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     public boolean updateNames(Series series, Map<LangId, String> names) {
         SeriesNameDao seriesNameDao;
         try {
@@ -348,6 +492,14 @@ public class SeriesService extends AbstractService {
         return true;
     }
 
+    /**
+     * Updates the genres of the series.
+     *
+     * @param series Series to be updated.
+     * @param genreList List containing the new genre values.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     public boolean updateGenres(Series series, List<String> genreList) {
         SeriesGenreDao seriesGenreDao;
         try {
@@ -369,10 +521,34 @@ public class SeriesService extends AbstractService {
         return true;
     }
 
+    /**
+     * Adds a new season to the series to the database.
+     *
+     * @param seriesid Id of the series.
+     * @param seasonNumber Number of the season to be added.
+     * @param nrOfEpisodes Number of episodes in the season.
+     * @param seen Default value of the {@code seen} variable for the episodes
+     * in the new season.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     public boolean addNewSeason(int seriesid, int seasonNumber, int nrOfEpisodes, boolean seen) {
         return addNewSeason(seriesid, seasonNumber, nrOfEpisodes, seen, null);
     }
 
+    /**
+     * Adds a new season to the series to the database.
+     *
+     * @param seriesid Id of the series.
+     * @param seasonNumber Number of the season to be added.
+     * @param nrOfEpisodes Number of episodes in the season.
+     * @param seen Default value of the {@code seen} variable for the episodes
+     * in the new season.
+     * @param year Default value of the {@code year} variable for the episodes
+     * in the new season.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     public boolean addNewSeason(int seriesid, int seasonNumber, int nrOfEpisodes, boolean seen, Integer year) {
         EpisodeDao episodeDao;
         try {
@@ -397,6 +573,14 @@ public class SeriesService extends AbstractService {
         return true;
     }
 
+    /**
+     * Updates the information of an episode.
+     *
+     * @param episode Episode to be updated, containing all info to be stored in
+     * the database.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     public boolean updateEpisode(Episode episode) {
         EpisodeDao episodeDao;
         try {
@@ -415,6 +599,14 @@ public class SeriesService extends AbstractService {
         return true;
     }
 
+    /**
+     * Permanently deletes the specified season from the database.
+     *
+     * @param seriesid Id of the series.
+     * @param seasonnumber Number of the season to be deleted.
+     * @return{@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     public boolean removeSeason(int seriesid, int seasonnumber) {
         SeriesDao seriesDao;
         try {

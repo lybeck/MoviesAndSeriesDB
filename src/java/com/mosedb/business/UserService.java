@@ -8,8 +8,6 @@ import com.mosedb.dao.UserDao;
 import com.mosedb.models.User;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -17,6 +15,11 @@ import java.util.logging.Logger;
  */
 public class UserService extends AbstractService {
 
+    /**
+     * Retrieves a list of all users from the database.
+     *
+     * @return A list of users, or {@code null} if the database query fails.
+     */
     public List<User> getAllUsers() {
         UserDao userDao;
         try {
@@ -35,6 +38,15 @@ public class UserService extends AbstractService {
         }
     }
 
+    /**
+     * Retrieves the user with the specified {@code username} and
+     * {@code password} from the database.
+     *
+     * @param username Username of the user.
+     * @param password Password of the user.
+     * @return The user's information, or {@code null} if username and password
+     * do not match or the database collection fails.
+     */
     public User getUser(String username, String password) {
         UserDao userDao;
         try {
@@ -53,6 +65,14 @@ public class UserService extends AbstractService {
         }
     }
 
+    /**
+     * Adds a user to the database.
+     *
+     * @param user User to be added.
+     * @param password The user's password.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
     public boolean addUser(User user, String password) {
         UserDao userDao;
         try {
@@ -71,6 +91,11 @@ public class UserService extends AbstractService {
         }
     }
 
+    /**
+     * Permanently deletes a user from the database.
+     *
+     * @param username Username of the user to be removed.
+     */
     public void deleteUser(String username) {
         UserDao userDao;
         try {
@@ -87,7 +112,16 @@ public class UserService extends AbstractService {
         }
     }
 
-    public boolean updateUser(User user, User updatedUser, String newPassword) {
+    /**
+     * Updates the information of a user.
+     *
+     * @param username Username of the user to be updated.
+     * @param updatedUser Information to be updated.
+     * @param newPassword New password for the user.
+     * @return {@code true} if information was successfully added, otherwise
+     * {@code false}.
+     */
+    public boolean updateUser(String username, User updatedUser, String newPassword) {
         UserDao userDao;
         try {
             userDao = new UserDao();
@@ -96,7 +130,7 @@ public class UserService extends AbstractService {
             return false;
         }
         try {
-            boolean success = userDao.updateUser(user.getUsername(), updatedUser, newPassword);
+            boolean success = userDao.updateUser(username, updatedUser, newPassword);
             userDao.closeConnection();
             return success;
         } catch (SQLException ex) {

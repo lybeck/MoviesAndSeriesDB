@@ -52,9 +52,9 @@ public class AccountManagerServlet extends MosedbServlet {
             }
             boolean success;
             if (newPassword != null && newPassword.length() != 0) {
-                success = userService.updateUser(user, updatedUser, newPassword);
+                success = userService.updateUser(user.getUsername(), updatedUser, newPassword);
             } else {
-                success = userService.updateUser(user, updatedUser, password);
+                success = userService.updateUser(user.getUsername(), updatedUser, password);
             }
             if(success){
                 AttributeManager.setSuccessMessage(request, "Succesfully updated account-information!");

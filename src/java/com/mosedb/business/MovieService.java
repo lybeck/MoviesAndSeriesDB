@@ -30,7 +30,7 @@ public class MovieService extends AbstractService {
      * movies if the user is admin.
      *
      * @param user User, whose movies are retrieved. If user is admin
-     * ({@link User#isAdmin()} returns {@code true}) all users movies are
+     * ({@link User#isAdmin()} returns {@code true}) all users' movies are
      * retrieved.
      * @param seen Retrieves only movies with the same value on {@code seen}. If
      * parameter is {@code null} it is ignored.
@@ -419,7 +419,7 @@ public class MovieService extends AbstractService {
      * Retrieves the movie with the given {@code movieid} from the database.
      *
      * @param movieid Id of the movie.
-     * @return Movie, or {@code null} if the database query fails.
+     * @return A movie, or {@code null} if the database query fails.
      */
     public Movie getById(int movieid) {
         MovieDao movieDao;
