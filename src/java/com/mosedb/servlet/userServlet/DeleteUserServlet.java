@@ -5,8 +5,6 @@ import com.mosedb.models.User;
 import com.mosedb.servlet.MosedbServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
