@@ -21,6 +21,13 @@ public class EpisodeDao extends AbstractDao {
         super();
     }
 
+    /**
+     * Retrieves all episodes of a series.
+     *
+     * @param seriesid The id of the series.
+     * @return A list of episodes.
+     * @throws SQLException
+     */
     public List<Episode> getAllEpisodes(int seriesid) throws SQLException {
         String sql = "select seasonnumber, episodenumber, episodename, episodeyear, seen from mosedb.episode "
                 + "where seriesid=? order by seasonnumber, episodenumber";
@@ -41,12 +48,30 @@ public class EpisodeDao extends AbstractDao {
         return episodeList;
     }
 
+    /**
+     * Adds an episode to the database.
+     *
+     * @param seriesid Id of the series.
+     * @param seasonnumber Number of the season.
+     * @param episodenumber Number of the episode.
+     * @param seen Tag if the episode is seen or not.
+     * @param year The year of the episode.
+     * @return {@code true} if the addition succeeded, {@code false} otherwise.
+     * @throws SQLException
+     */
     public boolean addEpisode(int seriesid, int seasonnumber, int episodenumber, boolean seen, Integer year) throws SQLException {
         String sql = "insert into mosedb.episode (seriesid,seasonnumber,episodenumber,episodeyear,seen) "
                 + "values (?,?,?,?,?)";
         return executeUpdate(sql, seriesid, seasonnumber, episodenumber, year, seen);
     }
 
+    /**
+     * Updates the info of the episode.
+     *
+     * @param episode Episode to be updated, containing the new data.
+     * @return {@code true} if the update succeeded, {@code false} otherwise.
+     * @throws SQLException
+     */
     public boolean updateEpisode(Episode episode) throws SQLException {
         String sql = "update mosedb.episode set (episodename,episodeyear,seen)=(?,?,?) "
                 + "where seriesid=? and seasonnumber=? and episodenumber=?";

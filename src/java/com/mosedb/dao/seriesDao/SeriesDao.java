@@ -22,6 +22,12 @@ public class SeriesDao extends AbstractDao {
         super();
     }
 
+    /**
+     * Retrieves all series information from the 'series' table in the database.
+     *
+     * @return A list of series.
+     * @throws SQLException
+     */
     public List<Series> getAllSeries() throws SQLException {
         String sql = "select seriesid, owner from mosedb.series order by owner";
         ResultSet result = executeQuery(sql);
@@ -35,6 +41,13 @@ public class SeriesDao extends AbstractDao {
         return seriesList;
     }
 
+    /**
+     * Retrieves all series information associated with {@code owner} from the
+     * 'series' table in the database.
+     *
+     * @return A list of series.
+     * @throws SQLException
+     */
     public List<Series> getSeries(String owner) throws SQLException {
         String sql = "select seriesid from mosedb.series where owner=?";
         ResultSet result = executeQuery(sql, owner);
@@ -47,6 +60,14 @@ public class SeriesDao extends AbstractDao {
         return seriesList;
     }
 
+    /**
+     * Adds an empty entry to the table 'series' in the database.
+     *
+     * @param user The owner of the series.
+     * @return The seriesid of the added series if the addition succeeded,
+     * {@code -1} otherwise.
+     * @throws SQLException
+     */
     public int addSeries(User user) throws SQLException {
         String sql = "insert into mosedb.series (owner) values (?) returning seriesid";
         ResultSet result = executeQuery(sql, user.getUsername());
@@ -58,20 +79,41 @@ public class SeriesDao extends AbstractDao {
         return id;
     }
 
-    public void removeSeries(int id) throws SQLException {
+    /**
+     * Removes a series from the database.
+     *
+     * @param seriesid Id of the series.
+     * @throws SQLException
+     */
+    public void removeSeries(int seriesid) throws SQLException {
         String sql = "delete from mosedb.series where seriesid=?";
-        executeUpdate(sql, id);
+        executeUpdate(sql, seriesid);
     }
 
-    public Series getById(int id) throws SQLException {
+    /**
+     * Retrieves the information associated with the {@code seriesid} from the
+     * table 'series' in the database.
+     *
+     * @param seriesid The id of the series.
+     * @return A series.
+     * @throws SQLException
+     */
+    public Series getById(int seriesid) throws SQLException {
         String sql = "select owner from mosedb.series where seriesid=?";
-        ResultSet result = executeQuery(sql, id);
+        ResultSet result = executeQuery(sql, seriesid);
         if (!result.next()) {
             return null;
         }
-        return new Series(id, result.getString("owner"));
+        return new Series(seriesid, result.getString("owner"));
     }
 
+    /**
+     * Removes all episodes from a season from the database.
+     *
+     * @param seriesid Id of the series whose season is to be deleted.
+     * @param seasonnumber Number of the season to be deleted.
+     * @throws SQLException
+     */
     public void removeSeason(int seriesid, int seasonnumber) throws SQLException {
         String sql = "delete from mosedb.episode where seriesid=? and seasonnumber=?";
         executeUpdate(sql, seriesid, seasonnumber);

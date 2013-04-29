@@ -11,6 +11,7 @@ import com.mosedb.models.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
@@ -27,10 +28,19 @@ public class SeriesNameDao extends AbstractDao {
         super();
     }
 
-    public boolean addNames(int id, Map<LangId, String> names) throws SQLException {
+    /**
+     * Adds the names to be associated with the series.
+     *
+     * @param seriesid Id of the series.
+     * @param names Map containing the names associated with the series.
+     * @return {@code true} if the addition was successful, {@code false}
+     * otherwise.
+     * @throws SQLException
+     */
+    public boolean addNames(int seriesid, Map<LangId, String> names) throws SQLException {
         boolean success;
         for (LangId langId : names.keySet()) {
-            success = addName(id, langId, names.get(langId));
+            success = addName(seriesid, langId, names.get(langId));
             if (!success) {
                 return false;
             }
@@ -38,14 +48,31 @@ public class SeriesNameDao extends AbstractDao {
         return true;
     }
 
-    public boolean addName(int id, LangId langId, String name) throws SQLException {
+    /**
+     * Adds a name to a series.
+     *
+     * @param seriesid Id of the series.
+     * @param langId Language of the name.
+     * @param name Name to be associated with the series.
+     * @return {@code true} if the addition was successful, {@code false}
+     * otherwise.
+     * @throws SQLException
+     */
+    public boolean addName(int seriesid, LangId langId, String name) throws SQLException {
         String sql = "insert into mosedb.seriesname (seriesid,langid,seriesname) values (?,cast(? as mosedb.langid),?)";
-        return executeUpdate(sql, id, langId, name);
+        return executeUpdate(sql, seriesid, langId, name);
     }
 
-    public Map<LangId, String> getSeriesNames(int id) throws SQLException {
+    /**
+     * Retrieves the names associated with the series.
+     *
+     * @param seriesid Id of the series.
+     * @return A map containing all names of the series.
+     * @throws SQLException
+     */
+    public Map<LangId, String> getSeriesNames(int seriesid) throws SQLException {
         String sql = "select langid, seriesname from mosedb.seriesname where seriesid=?";
-        ResultSet result = executeQuery(sql, id);
+        ResultSet result = executeQuery(sql, seriesid);
         Map<LangId, String> map = new EnumMap<LangId, String>(LangId.class);
         while (result.next()) {
             LangId langid = LangId.getLangId(result.getString("langid"));
@@ -56,28 +83,30 @@ public class SeriesNameDao extends AbstractDao {
         return map;
     }
 
+    /**
+     * Searches series with a name corresponding to the search term. The search
+     * is <b>not</b> case sensitive.
+     *
+     * @param search Name to be queried.
+     * @param user User whose series are queried. If the user is admin all
+     * users' series are queried.
+     * @return A list of series.
+     * @throws SQLException
+     */
     public List<Series> getSeriesByName(String search, User user) throws SQLException {
-        String sql = "select distinct s.seriesid, s.owner from mosedb.series s, mosedb.seriesname sn "
-                + "where s.seriesid=sn.seriesid and lower(sn.seriesname) like lower(?)";
-        ResultSet result;
-        if (user.isAdmin()) {
-            result = executeQuery(sql, "%" + search + "%");
-        } else {
-            sql += " and s.owner=?";
-            result = executeQuery(sql, "%" + search + "%", user.getUsername());
-        }
-
-        List<Series> seriesList = new ArrayList<Series>();
-        while (result.next()) {
-            int id = result.getInt("seriesid");
-            String owner = result.getString("owner");
-            Series series = new Series(id, owner);
-            series.setNames(getSeriesNames(id));
-            seriesList.add(series);
-        }
-        return seriesList;
+        return getSeriesByName(Arrays.asList(search), user);
     }
 
+    /**
+     * Searches series with a name corresponding to <b>all</b> the search terms.
+     * The search is <b>not</b> case sensitive.
+     *
+     * @param search Name to be queried.
+     * @param user User whose series are queried. If the user is admin all
+     * users' series are queried.
+     * @return A list of series.
+     * @throws SQLException
+     */
     public List<Series> getSeriesByName(List<String> searchList, User user) throws SQLException {
         String sql = "select distinct s.seriesid, s.owner from mosedb.series s, mosedb.seriesname sn "
                 + "where s.seriesid=sn.seriesid and lower(sn.seriesname) like lower(?)";
@@ -104,8 +133,14 @@ public class SeriesNameDao extends AbstractDao {
         return seriesList;
     }
 
-    public void removeNames(int id) throws SQLException {
+    /**
+     * Removes all names associated with the series.
+     *
+     * @param seriesid Id of the series.
+     * @throws SQLException
+     */
+    public void removeNames(int seriesid) throws SQLException {
         String sql = "delete from mosedb.seriesname where seriesid=?";
-        executeUpdate(sql, id);
+        executeUpdate(sql, seriesid);
     }
 }

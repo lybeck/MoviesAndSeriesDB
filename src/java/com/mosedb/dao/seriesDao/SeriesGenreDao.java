@@ -22,10 +22,18 @@ public class SeriesGenreDao extends AbstractDao {
         super();
     }
 
-    public boolean addGenres(int id, List<String> genreList) throws SQLException {
+    /**
+     * Adds genres to a series.
+     *
+     * @param seriesid Id of the series.
+     * @param genreList The genres to be associated with the series.
+     * @return {@code true} if the addition succeeded, {@code false} otherwise.
+     * @throws SQLException
+     */
+    public boolean addGenres(int seriesid, List<String> genreList) throws SQLException {
         boolean success;
         for (String genre : genreList) {
-            success = addGenre(id, genre);
+            success = addGenre(seriesid, genre);
             if (!success) {
                 return false;
             }
@@ -33,11 +41,28 @@ public class SeriesGenreDao extends AbstractDao {
         return true;
     }
 
-    public boolean addGenre(int id, String genre) throws SQLException {
+    /**
+     * Adds a genre to the series.
+     *
+     * @param seriesid Id of the series.
+     * @param genre Genre to be associated with the series.
+     * @return {@code true} if the addition succeeded, {@code false} otherwise.
+     * @throws SQLException
+     */
+    public boolean addGenre(int seriesid, String genre) throws SQLException {
         String sql = "insert into mosedb.seriesgenre (seriesid,genrename) values (?,?)";
-        return executeUpdate(sql, id, genre);
+        return executeUpdate(sql, seriesid, genre);
     }
 
+    /**
+     * Retrieves all series corresponding to the genre from the database.
+     *
+     * @param search Genre to be queried by.
+     * @param user User whose series are queried. If the user is admin all
+     * users' series are queried.
+     * @return A list of series.
+     * @throws SQLException
+     */
     public List<Series> getSeriesByGenre(String search, User user) throws SQLException {
         String sql = "select distinct s.seriesid, s.owner from mosedb.series s, mosedb.seriesgenre sg "
                 + "where s.seriesid=sg.seriesid and lower(genrename) like lower(?)";
@@ -57,9 +82,16 @@ public class SeriesGenreDao extends AbstractDao {
         return seriesList;
     }
 
-    public List<String> getGenresById(int id) throws SQLException {
+    /**
+     * Retrieves all genres associated with the series.
+     *
+     * @param seriesid Id of the series.
+     * @return A list containing all genres associated with the series.
+     * @throws SQLException
+     */
+    public List<String> getGenresById(int seriesid) throws SQLException {
         String sql = "select genrename from mosedb.seriesgenre where seriesid=?";
-        ResultSet result = executeQuery(sql, id);
+        ResultSet result = executeQuery(sql, seriesid);
         List<String> genres = new ArrayList<String>();
         while (result.next()) {
             genres.add(result.getString("genrename"));
@@ -67,13 +99,30 @@ public class SeriesGenreDao extends AbstractDao {
         return genres;
     }
 
-    public boolean updateGenres(int id, List<String> genreList) throws SQLException {
-        removeGenres(id);
-        return addGenres(id, genreList);
+    /**
+     * Updates the genres associated with the series.
+     *
+     * @param seriesid Id of the series.
+     * @param genreList List of the new genres associated with the series.
+     * @return {@code true} if the addition succeeded, {@code false} otherwise.
+     * @throws SQLException
+     */
+    public boolean updateGenres(int seriesid, List<String> genreList) throws SQLException {
+        removeGenres(seriesid);
+        if (genreList.isEmpty()) {
+            return true;
+        }
+        return addGenres(seriesid, genreList);
     }
 
-    private void removeGenres(int id) throws SQLException {
+    /**
+     * Removes all genre information associated with the series.
+     *
+     * @param seriesid Id of the series.
+     * @throws SQLException
+     */
+    private void removeGenres(int seriesid) throws SQLException {
         String sql = "delete from mosedb.seriesgenre where seriesid=?";
-        executeUpdate(sql, id);
+        executeUpdate(sql, seriesid);
     }
 }
