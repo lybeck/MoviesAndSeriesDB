@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Handles all the functionality in accountManager.jsp necessary to edit
+ * user-information.
  *
  * @author Roope
  */
@@ -55,7 +57,7 @@ public class AccountManagerServlet extends MosedbServlet {
             } else {
                 success = userService.updateUser(user.getUsername(), updatedUser, password);
             }
-            if(success){
+            if (success) {
                 AttributeManager.setSuccessMessage(request, "Succesfully updated account-information!");
                 AttributeManager.setUserInSession(request.getSession(true), updatedUser);
             } else {
@@ -67,6 +69,16 @@ public class AccountManagerServlet extends MosedbServlet {
         }
     }
 
+    /**
+     *
+     * Is used to parse the information from the fields on accountManager.jsp
+     * necessary to construct the user to be added.
+     *
+     * @param request The request from where the field values are received.
+     * @param user The old {@code User} object that is to be overwritten, from
+     * which username and admin-values are used.
+     * @return The updated user.
+     */
     private User getUserFromFields(HttpServletRequest request, User user) {
         String newFirstName = request.getParameter(FIRST_NAME_FIELD).trim();
         String newLastName = request.getParameter(LAST_NAME_FIELD).trim();
