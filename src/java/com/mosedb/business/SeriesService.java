@@ -46,7 +46,7 @@ public class SeriesService extends AbstractService {
             reportError("Error while retrieving seriess by username.", ex);
             return null;
         }
-        
+
         addNames(series);
         addEpisodes(series);
         long end = System.currentTimeMillis();
@@ -148,7 +148,7 @@ public class SeriesService extends AbstractService {
     private void addEpisodes(Series series) {
         series.setEpisodes(getAllEpisodes(series.getId()));
     }
-    
+
     private void addEpisodes(List<Series> series) {
         for (Series singleSeries : series) {
             addEpisodes(singleSeries);
@@ -246,20 +246,22 @@ public class SeriesService extends AbstractService {
         return true;
     }
 
-    private void removeSeries(int id) {
+    public boolean removeSeries(int id) {
         SeriesDao seriesDao;
         try {
             seriesDao = new SeriesDao();
         } catch (SQLException ex) {
             reportConnectionError(ex);
-            return;
+            return false;
         }
         try {
             seriesDao.removeSeries(id);
             seriesDao.closeConnection();
         } catch (SQLException ex) {
             reportError("Error trying to delete series from database!", ex);
+            return false;
         }
+        return false;
     }
 
     public List<Episode> getAllEpisodes(int seriesid) {
@@ -395,4 +397,21 @@ public class SeriesService extends AbstractService {
         return true;
     }
 
+    public boolean removeSeason(int seriesid, int seasonnumber) {
+        SeriesDao seriesDao;
+        try {
+            seriesDao = new SeriesDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
+            seriesDao.removeSeason(seriesid, seasonnumber);
+            seriesDao.closeConnection();
+        } catch (SQLException ex) {
+            reportError("Error trying to remove season from database!", ex);
+            return false;
+        }
+        return true;
+    }
 }

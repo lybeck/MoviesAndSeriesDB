@@ -71,4 +71,9 @@ public class SeriesDao extends AbstractDao {
         }
         return new Series(id, result.getString("owner"));
     }
+
+    public void removeSeason(int seriesid, int seasonnumber) throws SQLException {
+        String sql = "delete from mosedb.episode where seriesid=? and seasonnumber=?";
+        executeUpdate(sql, seriesid, seasonnumber);
+    }
 }
