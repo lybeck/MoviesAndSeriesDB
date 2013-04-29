@@ -73,19 +73,13 @@ h1,h2,h3,h4{
     float: right; 
 }
 
-.navbarLeft a{
-    padding-top: 6px;
-    padding-left: 4px;
-}
-
-.navbarRight a {
-    padding-top: 6px;
-    padding-right: 4px;
+.navbarLeft a, .navbarRight a{
+    padding: 6px 4px 0 4px;
 }
 
 .navbarLeft a:link,a:visited,.navbarRight a:link,a:visited{
     display: inline-block;
-    width: 140px;
+    width: 145px;
     height: 30px;
     background-color: #131219;
     color:#e9eaf8;
