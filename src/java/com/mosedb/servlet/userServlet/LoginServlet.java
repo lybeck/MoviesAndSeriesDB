@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *Handles all the login functionality in login.jsp.
+ * Handles all the login functionality in login.jsp.
+ *
  * @author Lasse
  */
 public class LoginServlet extends MosedbServlet {
@@ -34,7 +35,7 @@ public class LoginServlet extends MosedbServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession(true);
-        String username = request.getParameter("username"); 
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
         try {
             User user = LoginManager.doLogin(session, username, password);
@@ -45,7 +46,7 @@ public class LoginServlet extends MosedbServlet {
                 restorePage("login.jsp", request, response);
             }
         } catch (Exception e) {
-            System.out.println("Unknown error while trying to log in!");
+            System.err.println("Unknown error while trying to log in!");
         }
     }
 }

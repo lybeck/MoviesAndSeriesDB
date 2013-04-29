@@ -203,7 +203,6 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         }
 
         boolean newSeen = request.getParameter(EPISODE_SEEN_CHECKBOX + episodeTag) != null;
-        System.out.println("");
         if (newSeen ^ episode.isSeen()) {
             episode.setSeen(newSeen);
             changes = true;

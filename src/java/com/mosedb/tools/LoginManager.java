@@ -12,8 +12,8 @@ import javax.servlet.http.HttpSession;
 public class LoginManager {
 
     /**
-     * The login functionality. Uses {@code UserService()} to get the user
-     * with given parameters, and {@code AttributeManager() } to set the user to the 
+     * The login functionality. Uses {@code UserService()} to get the user with
+     * given parameters, and {@code AttributeManager() } to set the user to the
      * current session.
      *
      * @param session The current session.
@@ -22,8 +22,8 @@ public class LoginManager {
      * @return The matching user according to the username and password,
      * {@code null} if no user was found with given parameters.;
      */
-    public static User doLogin(HttpSession session, String username, String password){
-        UserService userService = new UserService(); 
+    public static User doLogin(HttpSession session, String username, String password) {
+        UserService userService = new UserService();
         User user = userService.getUser(username, password);
         AttributeManager.setUserInSession(session, user);
 
@@ -34,11 +34,12 @@ public class LoginManager {
         }
         return user;
     }
-    
+
     /**
-     * Handles the logout functionality; uses {@code AttributeManager()} to remove
-     * all object from current session.
-     * @param session 
+     * Handles the logout functionality; uses {@code AttributeManager()} to
+     * remove all object from current session.
+     *
+     * @param session
      */
     public static void doLogout(HttpSession session) {
         AttributeManager.removeAll(session);
