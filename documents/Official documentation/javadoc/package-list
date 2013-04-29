@@ -1,0 +1,11 @@
+com.mosedb.business
+com.mosedb.dao
+com.mosedb.dao.movieDao
+com.mosedb.dao.seriesDao
+com.mosedb.databaseconnection
+com.mosedb.models
+com.mosedb.servlet
+com.mosedb.servlet.movieServlet
+com.mosedb.servlet.seriesServlet
+com.mosedb.servlet.userServlet
+com.mosedb.tools
