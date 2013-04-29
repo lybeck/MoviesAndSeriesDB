@@ -536,8 +536,7 @@ public class SeriesService extends AbstractService {
      * @param nrOfEpisodes Number of episodes in the season.
      * @param seen Default value of the {@code seen} variable for the episodes
      * in the new season.
-     * @param mediaFormat Default value of the format for the episodes in the
-     * new season.
+     * @param format Format of the season.
      * @return {@code true} if information was successfully added, otherwise
      * {@code false}.
      */
@@ -555,8 +554,7 @@ public class SeriesService extends AbstractService {
      * in the new season.
      * @param year Default value of the {@code year} variable for the episodes
      * in the new season.
-     * @param mediaFormat Default value of the format for the episodes in the
-     * new season.
+     * @param format Format of the season.
      * @return {@code true} if information was successfully added, otherwise
      * {@code false}.
      */

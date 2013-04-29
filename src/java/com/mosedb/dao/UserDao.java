@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -26,6 +24,7 @@ public class UserDao extends AbstractDao {
      * Retrieves all users from the database.
      *
      * @return List of all users.
+     * @throws SQLException  
      */
     public List<User> getAllUsers() throws SQLException {
         String sql = "select username, firstname, lastname, admin from mosedb.users order by admin, username";

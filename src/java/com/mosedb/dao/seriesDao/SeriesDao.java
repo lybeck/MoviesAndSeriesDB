@@ -45,6 +45,7 @@ public class SeriesDao extends AbstractDao {
      * Retrieves all series information associated with {@code owner} from the
      * 'series' table in the database.
      *
+     * @param owner user, whose series are queried.
      * @return A list of series.
      * @throws SQLException
      */
