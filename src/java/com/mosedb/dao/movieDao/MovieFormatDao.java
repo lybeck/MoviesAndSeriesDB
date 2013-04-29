@@ -24,28 +24,38 @@ public class MovieFormatDao extends AbstractDao {
         super();
     }
 
+    /**
+     * Adds a format to the 'movieformat' table in the database.
+     *
+     * @param movieid Id of the movie.
+     * @param formatid Id of the format information.
+     * @return {@code true} if the addition succeeded, {@code false} otherwise.
+     * @throws SQLException
+     */
     public boolean addMovieFormat(int movieid, int formatid) throws SQLException {
         String sql = "insert into mosedb.movieformat (movieid,formatid) values (?,?)";
         return executeUpdate(sql, movieid, formatid);
     }
 
+    /**
+     * Removes all the media format information associated with the movie.
+     *
+     * @param movieid Id of the movie.
+     * @throws SQLException
+     */
     public void removeMovieFormats(int movieid) throws SQLException {
         String sql = "delete from mosedb.format f using mosedb.movieformat mf "
                 + "where mf.movieid=? and f.formatid=mf.formatid";
         executeUpdate(sql, movieid);
     }
 
-    public List<Integer> getFormatIds(int movieid) throws SQLException {
-        String sql = "select formatid from mosedb.movieformat where movieid=?";
-        ResultSet result = executeQuery(sql, movieid);
-        List<Integer> list = new ArrayList<Integer>();
-        while (result.next()) {
-            list.add(result.getInt("formatid"));
-        }
-        result.close();
-        return list;
-    }
-
+    /**
+     * Retrieves the movieids associated with the {@code mediaformat}.
+     *
+     * @param mediaformat Media format to be queried by.
+     * @return A set of movieids.
+     * @throws SQLException
+     */
     public Set<Integer> getMovieIdsByMediaFormat(String mediaformat) throws SQLException {
         String sql = "select movieid from mosedb.format f, mosedb.movieformat mf "
                 + "where f.formatid=mf.formatid and f.mediaformat=cast(? as mosedb.mediaformat)";
@@ -61,6 +71,13 @@ public class MovieFormatDao extends AbstractDao {
         return set;
     }
 
+    /**
+     * Retrieves the movie's formats from the database.
+     *
+     * @param movieid Id of the movie.
+     * @return A list of formats.
+     * @throws SQLException
+     */
     public List<Format> getFormats(int movieid) throws SQLException {
         String sql = "select f.mediaformat, f.filetype, f.resox, f.resoy "
                 + "from mosedb.movieformat mf, mosedb.format f "
