@@ -7,8 +7,6 @@ package com.mosedb.business;
 import com.mosedb.dao.GenreDao;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,6 +14,11 @@ import java.util.logging.Logger;
  */
 public class GenreService extends AbstractService {
 
+    /**
+     * Retrieves a list of all genres stored in the database.
+     *
+     * @return List of genres. {@code null} if connection to database fails.
+     */
     public List<String> getAllGenres() {
         try {
             GenreDao genreDao = new GenreDao();

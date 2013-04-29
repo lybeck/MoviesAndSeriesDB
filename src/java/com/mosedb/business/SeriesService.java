@@ -13,12 +13,11 @@ import com.mosedb.models.LangId;
 import com.mosedb.models.Series;
 import com.mosedb.models.User;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -26,8 +25,7 @@ import java.util.logging.Logger;
  */
 public class SeriesService extends AbstractService {
 
-    public List<Series> getSeries(User user) {
-        long start = System.currentTimeMillis();
+    public List<Series> getSeries(User user, Boolean seen) {
         SeriesDao seriesDao;
         try {
             seriesDao = new SeriesDao();
@@ -35,32 +33,30 @@ public class SeriesService extends AbstractService {
             reportConnectionError(ex);
             return null;
         }
-        List<Series> series;
+        List<Series> seriesList;
         try {
             if (user.isAdmin()) {
-                series = seriesDao.getAllSeries();
+                seriesList = seriesDao.getAllSeries();
             } else {
-                series = seriesDao.getSeries(user.getUsername());
+                seriesList = seriesDao.getSeries(user.getUsername());
             }
         } catch (SQLException ex) {
             reportError("Error while retrieving seriess by username.", ex);
             return null;
         }
 
-        addNames(series);
-        addEpisodes(series);
-        long end = System.currentTimeMillis();
-        double time = (end - start) * 1.0 / 1000;
-        System.out.println("Search for series took " + time + " seconds.");
+        addNames(seriesList);
+        addEpisodes(seriesList);
 
         seriesDao.closeConnection();
 
-        Collections.sort(series);
+        seriesList = filterBySeen(seriesList, seen);
+        Collections.sort(seriesList);
 
-        return series;
+        return seriesList;
     }
 
-    public List<Series> getByName(User user, String search) {
+    public List<Series> getByName(User user, String search, Boolean seen) {
         search = search.trim();
         search = search.replaceAll("\\s+", " ");
         List<String> searchList = Arrays.asList(search.split(" "));
@@ -86,10 +82,14 @@ public class SeriesService extends AbstractService {
 
         seriesNameDao.closeConnection();
 
+        addEpisodes(seriesList);
+        seriesList = filterBySeen(seriesList, seen);
+        Collections.sort(seriesList);
+
         return seriesList;
     }
 
-    public List<Series> getByGenre(User user, String search) {
+    public List<Series> getByGenre(User user, String search, Boolean seen) {
         SeriesGenreDao seriesGenreDao;
         try {
             seriesGenreDao = new SeriesGenreDao();
@@ -105,13 +105,18 @@ public class SeriesService extends AbstractService {
             return null;
         }
         seriesGenreDao.closeConnection();
+
         addNames(seriesList);
         addEpisodes(seriesList);
+
+        seriesList = filterBySeen(seriesList, seen);
+        Collections.sort(seriesList);
+
         return seriesList;
     }
 
-    public List<Series> getByMediaFormat(User user, String searchField) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public List<Series> getByMediaFormat(User user, String searchField, Boolean seen) {
+        return getSeries(user, seen);
     }
 
     private void addName(Series series) {
@@ -171,6 +176,19 @@ public class SeriesService extends AbstractService {
             }
         }
         seriesNameDao.closeConnection();
+    }
+
+    private List<Series> filterBySeen(List<Series> seriesList, Boolean seen) {
+        if (seen == null) {
+            return seriesList;
+        }
+        List<Series> newList = new ArrayList<Series>();
+        for (Series series : seriesList) {
+            if (series.isSeen() == seen) {
+                newList.add(series);
+            }
+        }
+        return newList;
     }
 
     public boolean addSeries(User user, Series series) {
