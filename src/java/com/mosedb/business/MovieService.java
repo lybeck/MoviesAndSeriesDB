@@ -49,7 +49,7 @@ public class MovieService extends AbstractService {
             if (user.isAdmin()) {
                 movies = movieDao.getAllMovies(seen);
             } else {
-                movies = movieDao.getMovies(user.getUsername(), seen);
+                movies = movieDao.getMovies(seen, user.getUsername());
             }
         } catch (SQLException ex) {
             reportError("Error while retrieving movies by username.", ex);
