@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
-<script src="JavaScript/addMovieJS.js"></script>
+<script src="JavaScript/addDropboxesJS.js"></script>
 
 <h3>Edit movie-info</h3>
 <form action="updateMovie" method="post">

@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ *AttributeManager is a class that handles all the attribute-setting, getting and 
+ * removing from the session. The code is self-explanatory.
  * @author Roope
  */
 public class AttributeManager {

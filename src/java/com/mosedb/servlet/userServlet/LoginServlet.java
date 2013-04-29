@@ -10,13 +10,12 @@ import com.mosedb.tools.AttributeManager;
 import com.mosedb.tools.LoginManager;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ *Handles all the login functionality in login.jsp.
  * @author Lasse
  */
 public class LoginServlet extends MosedbServlet {

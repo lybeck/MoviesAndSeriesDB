@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Handles all the user-adding functionality on adminTools.jsp.
  *
  * @author Roope
  */
@@ -56,6 +57,13 @@ public class AddUserServlet extends MosedbServlet {
         }
     }
 
+    /**
+     * Is used to parse the information from the fields on adminTools.jsp
+     * necessary to construct the user to be added.
+     *
+     * @param request The request from where the field values are received.
+     * @return The user that is constructed from the field-values.
+     */
     private User getUserFromFields(HttpServletRequest request) {
         String username = request.getParameter(USERNAME_FIELD).trim();
         String firstName = request.getParameter(FIRST_NAME_FIELD).trim();

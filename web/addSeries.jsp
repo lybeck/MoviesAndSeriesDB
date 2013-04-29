@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="topNav.jspf" %>
-<script src="JavaScript/addMovieJS.js"></script>
+<script src="JavaScript/addDropboxesJS.js"></script>
 
 <h3>Add series to database</h3>
 <form action="addSeries" method="post">

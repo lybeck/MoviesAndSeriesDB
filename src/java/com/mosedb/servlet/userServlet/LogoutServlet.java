@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Handles the logout functionality and redirects to login page.
  *
  * @author Lasse
  */

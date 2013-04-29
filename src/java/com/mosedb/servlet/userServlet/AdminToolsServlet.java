@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Handles all the functionality of adminTools.jsp
  *
  * @author Roope
  */

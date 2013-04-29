@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Handles all the functionality of user-deletion on adminTools.jsp.
  *
  * @author Roope
  */
 public class DeleteUserServlet extends MosedbServlet {
-    
-    private static final String SELECT_GROUP="deleteSelect";
+
+    private static final String SELECT_GROUP = "deleteSelect";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,11 +39,11 @@ public class DeleteUserServlet extends MosedbServlet {
                     }
                 }
                 redirectToPage("adminTools", request, response);
-                } else {
-                    redirectHome(request, response);
-                }
             } else {
                 redirectHome(request, response);
             }
+        } else {
+            redirectHome(request, response);
         }
     }
+}

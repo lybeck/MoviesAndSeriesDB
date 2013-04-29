@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AccountManagerServlet extends MosedbServlet {
 
-    private static final String USERNAME_FIELD = "username";
     private static final String PASSWORD_FIELD = "password";
     private static final String NEW_PASSWORD_FIELD = "new_password";
     private static final String FIRST_NAME_FIELD = "first_name";
