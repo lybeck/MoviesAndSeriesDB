@@ -69,4 +69,10 @@ public class Series extends AbstractMediaEntity {
         }
         return seasons;
     }
+    
+    public List<Integer> getSeasonNumbersAsList() {
+        List<Integer> seasons = new ArrayList<Integer>(getSeasonNumbers());
+        Collections.sort(seasons);
+        return seasons;
+    }
 }

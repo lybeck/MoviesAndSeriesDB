@@ -34,8 +34,8 @@ function removeGenreDropbox() {
 
 function addSeasonFS() {
     var sFieldsDiv = "<div id=seasonfieldsDiv>";
-    var fieldset = "<fieldset class='styledFS' name='seasonfields'" +
-            "style='width: 60%; margin: 0 auto; text-align:left'><legend>New season</legend>";
+    var fieldset = "<fieldset class='styledFS smallCenetered' name='seasonfields'>" +
+            "<legend>New season</legend>";
 
     var seenCheckbox = "<div id='seasonFieldSeenDiv'>" +
             "Seen: <input type='checkbox' value='new_season_seen_checkbox' name='new_season_seen_checkbox' " +
@@ -60,7 +60,7 @@ function addSeasonFS() {
 
     var rightDiv = selectClose + "<div style='margin: 0 0 0 0; width:100%; text-align: right;'>";
     var deleteButton = "<button onclick='removeSeasonFS();'" +
-            "class='button small'>Delete</button></div>";
+            "class='button small'>Hide</button></div>";
 
     var close = "</fieldset></div><p></p>";
 
@@ -76,16 +76,31 @@ function addSeasonFS() {
 
 }
 
+function deleteSeasonFS() {
+    var code = document.getElementById('hiddenDeleteSeasonFS').innerHTML;
+    document.getElementById('deleteSeasonfieldsHolder').innerHTML = code;
+    document.getElementById("deleteSeasonButtonHolder").innerHTML = '';
+}
+
 function removeSeasonFS() {
     document.getElementById("seasonfieldsHolder").innerHTML = '';
 
-    var plusBCode = "Add season:" +
-            "<input type='button' class='button' value='+' id='plusButton'" +
+    var plusBCode = "<input type='button' class='button small' value='Add season' id='addSeasonButton'" +
             "onclick='addSeasonFS();'>" +
             "<p></p>";
 
     document.getElementById("plusButtonHolder").innerHTML = plusBCode;
     checkNewSeasonDropboxes();
+}
+
+function removeDeleteSeasonFS() {
+    document.getElementById("deleteSeasonfieldsHolder").innerHTML = '';
+
+    var plusBCode = "<input type='button' class='button small' value='Delete season' id='deleteSeasonButton'" +
+            "onclick='deleteSeasonFS();'>" +
+            "<p></p>";
+
+    document.getElementById("deleteSeasonButtonHolder").innerHTML = plusBCode;
 }
 
 function checkNewSeasonDropboxes() {

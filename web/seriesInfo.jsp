@@ -125,7 +125,6 @@
                 <th>Title</th>
                 <th>Year</th>
                 <th>Seen</th>
-                <th>Delete</th>
             </tr>
             <% int indx2 = 1;%>
             <c:forEach var="ep" items="${series.episodes}">
@@ -177,21 +176,9 @@
                     <label class="customCheck" 
                            for="seen_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"></label>
                 </td>
-                <td class="padded">
-                    <input type="checkbox" value="delete_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}" 
-                           id="delete_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"
-                           name="episode_seen_checkbox">
-                    <label class="customCheck" 
-                           for="delete_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}"></label>
-                </td>
                 <%indx2++;%>
             </c:forEach>
         </table>
-    </c:if>
-    
-    <c:if test="${series != null && !empty series.episodes}">
-        <button type="submit" class="button small delete" name="submit" value="delete_selected_button">
-        Delete</button>
     </c:if>
     
     <div style="width: 100%; overflow: hidden;">
@@ -216,16 +203,40 @@
                 </c:forEach>
             </c:if>
         </select>
-        <input name='number_of_season_divs' id='number_of_season_divs' 
-               style="display: none;" value="0">
-        
+        <div id='hiddenDeleteSeasonFS' style='display: none;'>
+            <fieldset class='styledFS smallCenetered' name='deleteSeasonfields'>
+                <legend>Delete season</legend>
+                <div class='styled-select' style='margin: 0 0 0 0; width:35%;'>
+                    <select name='delete_season_select' id='delete_season_select' onchange='checkNewSeasonDropboxes();'>
+                        <c:if test="${series != null}">
+                            <c:forEach var="season" items="${series.seasonNumbersAsList}">
+                                <option>${season}</option>
+                            </c:forEach>
+                        </c:if>
+                    </select>
+                </div>
+                <div style='margin: 0 0 0 0; width:100%; text-align: right;'>
+                    <button onclick='removeDeleteSeasonFS();' class='button small'>Hide</button>
+                </div>
+            </fieldset>
+        </div>
+
         <div id="plusButtonHolder">
-            Add season:
-           <input type='button' class='button' value='+' id='plusButton'
+           <input type='button' class='button small' value='Add season' id='addSeasonButton'
                   onclick='addSeasonFS();'>
            <p></p>
         </div>
+        <div id="deleteSeasonButtonHolder">
+            <input type='button' class='button small' value='Delete season' id='deleteSeasonButton'
+               onclick='deleteSeasonFS();'
+               <c:if test="${series.seasonNumbersAsList == null || empty series.seasonNumbersAsList}">
+                   style="display: none;"   
+               </c:if>
+                >
+            <br>
+        </div>
         <div id="seasonfieldsHolder"></div>
+        <div id="deleteSeasonfieldsHolder"></div>
     </div>
     <br>
     <button type="submit" class="button" name="submit" value="update_series" id="update_series"
