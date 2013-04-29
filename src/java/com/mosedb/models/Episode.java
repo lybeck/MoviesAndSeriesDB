@@ -16,6 +16,7 @@ public class Episode implements Comparable<Episode> {
     private String episodeName;
     private Integer episodeYear;
     private boolean seen;
+    private Format format;
 
     public Episode(int seriesId, int seasonNumber, int episodeNumber) {
         this.seriesId = seriesId;
@@ -38,6 +39,16 @@ public class Episode implements Comparable<Episode> {
         this.episodeName = episodeName;
         this.episodeYear = episodeYear;
         this.seen = seen;
+    }
+
+    public Episode(int seriesId, int seasonNumber, int episodeNumber, String episodeName, Integer episodeYear, boolean seen, Format format) {
+        this.seriesId = seriesId;
+        this.seasonNumber = seasonNumber;
+        this.episodeNumber = episodeNumber;
+        this.episodeName = episodeName;
+        this.episodeYear = episodeYear;
+        this.seen = seen;
+        this.format = format;
     }
 
     public boolean isSeen() {
@@ -86,6 +97,14 @@ public class Episode implements Comparable<Episode> {
 
     public void setEpisodeYear(Integer episodeYear) {
         this.episodeYear = episodeYear;
+    }
+
+    public Format getFormat() {
+        return format;
+    }
+
+    public void setFormat(Format format) {
+        this.format = format;
     }
 
     @Override
