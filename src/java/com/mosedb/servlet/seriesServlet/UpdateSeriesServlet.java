@@ -6,6 +6,8 @@ package com.mosedb.servlet.seriesServlet;
 
 import com.mosedb.business.SeriesService;
 import com.mosedb.models.Episode;
+import com.mosedb.models.Format;
+import com.mosedb.models.Format.MediaFormat;
 import com.mosedb.models.LangId;
 import com.mosedb.models.Series;
 import com.mosedb.servlet.AbstractInfoServlet;
@@ -31,10 +33,12 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     private static final String NEW_SEASON_EPISODE_NUMBER_DROPBOX = "new_season_episode_select";
     private static final String NEW_SEASON_YEAR_DROPBOX = "new_season_year_select";
     private static final String NEW_SEASON_SEEN_CHECKBOX = "new_season_seen_checkbox";
+    private static final String NEW_SEASON_FORMAT_DROPBOX = "new_season_format_select";
     private static final String DELETE_SEASON_DROPBOX = "delete_season_select";
     private static final String EPISODE_NAME_INPUT = "episode_name_";
     private static final String EPISODE_YEAR_SELECT = "episode_year_";
     private static final String EPISODE_SEEN_CHECKBOX = "episode_seen_";
+    private static final String EPISODE_FORMAT_DROPBOX = "episode_media_format_";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,12 +64,13 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
     }
 
     /**
-     * Updates the series currently in session according to the information in seriesInfo.jsp
-     * @param request
-     * The request from which the current session is gotten.
+     * Updates the series currently in session according to the information in
+     * seriesInfo.jsp
+     *
+     * @param request The request from which the current session is gotten.
      * @return {@code true} if updating succeeded, {@code false} if not.
      */
-    private boolean updateSeries(HttpServletRequest request){
+    private boolean updateSeries(HttpServletRequest request) {
         AttributeManager.removeErrorMessage(request);
         AttributeManager.removeSuccessMessage(request);
 
@@ -194,13 +199,15 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         } else {
             seen = false;
         }
+        MediaFormat mediaFormat = MediaFormat.valueOf(request.getParameter(NEW_SEASON_FORMAT_DROPBOX));
+        Format format = new Format(mediaFormat);
 
         boolean success;
         SeriesService seriesService = new SeriesService();
         if (year != null) {
-            success = seriesService.addNewSeason(series.getId(), seasonNumber, nrOfEpisodes, seen, year);
+            success = seriesService.addNewSeason(series.getId(), seasonNumber, nrOfEpisodes, seen, year, format);
         } else {
-            success = seriesService.addNewSeason(series.getId(), seasonNumber, nrOfEpisodes, seen);
+            success = seriesService.addNewSeason(series.getId(), seasonNumber, nrOfEpisodes, seen, format);
         }
         if (!success) {
             return false;
@@ -259,6 +266,12 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         boolean newSeen = request.getParameter(EPISODE_SEEN_CHECKBOX + episodeTag) != null;
         if (newSeen ^ episode.isSeen()) {
             episode.setSeen(newSeen);
+            changes = true;
+        }
+
+        MediaFormat newMediaFormat = MediaFormat.valueOf(request.getParameter(EPISODE_FORMAT_DROPBOX + episodeTag));
+        if (newMediaFormat != episode.getFormat().getMediaFormat()) {
+            episode.setFormat(new Format(newMediaFormat));
             changes = true;
         }
 

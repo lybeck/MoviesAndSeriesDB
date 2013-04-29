@@ -169,10 +169,10 @@
                     </td>
                     <td>
                         <div class="styled-select tableBox">
-                            <select name='media_format_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}'>
+                            <select name='episode_media_format_${ep.seriesId}_${ep.seasonNumber}_${ep.episodeNumber}'>
                                 <c:forEach var='format' items='${formatList}'>
                                     <c:choose>
-                                        <c:when test="${ep.format == format}">
+                                        <c:when test="${ep.format.mediaFormat == format}">
                                             <option selected="true">${format}</option>
                                         </c:when>
                                         <c:otherwise>

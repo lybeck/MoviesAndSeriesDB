@@ -390,7 +390,6 @@ public class MovieService extends AbstractService {
         try {
             int formatId;
             for (Format format : movie.getFormats()) {
-                formatId = -1;
                 if (format.hasFileInfo()) {
                     if (format.hasResoInfo()) {
                         formatId = formatDao.addFormatDigitalCopy(format.getFileType(), format.getResoX(), format.getResoY());

@@ -4,11 +4,15 @@
  */
 package com.mosedb.business;
 
+import com.mosedb.dao.FormatDao;
 import com.mosedb.dao.seriesDao.EpisodeDao;
 import com.mosedb.dao.seriesDao.SeriesDao;
+import com.mosedb.dao.seriesDao.EpisodeFormatDao;
 import com.mosedb.dao.seriesDao.SeriesGenreDao;
 import com.mosedb.dao.seriesDao.SeriesNameDao;
 import com.mosedb.models.Episode;
+import com.mosedb.models.Format;
+import com.mosedb.models.Format.MediaFormat;
 import com.mosedb.models.LangId;
 import com.mosedb.models.Series;
 import com.mosedb.models.User;
@@ -18,6 +22,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -428,6 +434,7 @@ public class SeriesService extends AbstractService {
             reportError("Error retrieving episodes for series!", ex);
             return null;
         }
+        addFormats(episodeList);
         return episodeList;
     }
 
@@ -529,11 +536,13 @@ public class SeriesService extends AbstractService {
      * @param nrOfEpisodes Number of episodes in the season.
      * @param seen Default value of the {@code seen} variable for the episodes
      * in the new season.
+     * @param mediaFormat Default value of the format for the episodes in the
+     * new season.
      * @return {@code true} if information was successfully added, otherwise
      * {@code false}.
      */
-    public boolean addNewSeason(int seriesid, int seasonNumber, int nrOfEpisodes, boolean seen) {
-        return addNewSeason(seriesid, seasonNumber, nrOfEpisodes, seen, null);
+    public boolean addNewSeason(int seriesid, int seasonNumber, int nrOfEpisodes, boolean seen, Format format) {
+        return addNewSeason(seriesid, seasonNumber, nrOfEpisodes, seen, null, format);
     }
 
     /**
@@ -546,10 +555,12 @@ public class SeriesService extends AbstractService {
      * in the new season.
      * @param year Default value of the {@code year} variable for the episodes
      * in the new season.
+     * @param mediaFormat Default value of the format for the episodes in the
+     * new season.
      * @return {@code true} if information was successfully added, otherwise
      * {@code false}.
      */
-    public boolean addNewSeason(int seriesid, int seasonNumber, int nrOfEpisodes, boolean seen, Integer year) {
+    public boolean addNewSeason(int seriesid, int seasonNumber, int nrOfEpisodes, boolean seen, Integer year, Format format) {
         EpisodeDao episodeDao;
         try {
             episodeDao = new EpisodeDao();
@@ -570,6 +581,39 @@ public class SeriesService extends AbstractService {
             return false;
         }
         episodeDao.closeConnection();
+        return addFormatInfoToDatabase(seriesid, seasonNumber, nrOfEpisodes, format);
+    }
+
+    private boolean addFormatInfoToDatabase(int seriesid, int seasonNumber, int nrOfEpisodes, Format format) {
+        FormatDao formatDao;
+        EpisodeFormatDao episodeFormatDao;
+        try {
+            formatDao = new FormatDao();
+            episodeFormatDao = new EpisodeFormatDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return false;
+        }
+        try {
+            for (int i = 1; i <= nrOfEpisodes; i++) {
+                int formatId;
+                if (format.hasFileInfo()) {
+                    if (format.hasResoInfo()) {
+                        formatId = formatDao.addFormatDigitalCopy(format.getFileType(), format.getResoX(), format.getResoY());
+                    } else {
+                        formatId = formatDao.addFormatDigitalCopy(format.getFileType());
+                    }
+                } else {
+                    formatId = formatDao.addFormat(format.getMediaFormat());
+                }
+                episodeFormatDao.addSeriesFormat(seriesid, seasonNumber, i, formatId);
+            }
+            formatDao.closeConnection();
+            episodeFormatDao.closeConnection();
+        } catch (SQLException ex) {
+            reportError("Error adding episode formats to database!", ex);
+            return false;
+        }
         return true;
     }
 
@@ -596,7 +640,27 @@ public class SeriesService extends AbstractService {
             reportError("Error trying to update episode info!", ex);
             return false;
         }
-        return true;
+        return updateEpisodeFormat(episode);
+    }
+
+    private boolean updateEpisodeFormat(Episode episode) {
+        removeEpisodeFormats(episode);
+        return addFormatInfoToDatabase(episode.getSeriesId(), episode.getSeasonNumber(), episode.getEpisodeNumber(), episode.getFormat());
+    }
+
+    private void removeEpisodeFormats(Episode episode) {
+        EpisodeFormatDao episodeFormatDao;
+        try {
+            episodeFormatDao = new EpisodeFormatDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return;
+        }
+        try {
+            episodeFormatDao.removeFormats(episode);
+        } catch (SQLException ex) {
+            reportError("Error updating episode format information!", ex);
+        }
     }
 
     /**
@@ -623,5 +687,22 @@ public class SeriesService extends AbstractService {
             return false;
         }
         return true;
+    }
+
+    private void addFormats(List<Episode> episodeList) {
+        EpisodeFormatDao episodeFormatDao;
+        try {
+            episodeFormatDao = new EpisodeFormatDao();
+        } catch (SQLException ex) {
+            reportConnectionError(ex);
+            return;
+        }
+        try {
+            for (Episode episode : episodeList) {
+                episode.setFormat(episodeFormatDao.getFormat(episode));
+            }
+        } catch (SQLException ex) {
+            reportError("Error retrieving format info for episodes!", ex);
+        }
     }
 }
