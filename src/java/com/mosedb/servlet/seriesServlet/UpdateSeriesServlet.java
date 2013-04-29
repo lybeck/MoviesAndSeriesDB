@@ -270,7 +270,8 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         }
 
         MediaFormat newMediaFormat = MediaFormat.valueOf(request.getParameter(EPISODE_FORMAT_DROPBOX + episodeTag));
-        if (newMediaFormat != episode.getFormat().getMediaFormat()) {
+        Format oldFormat = episode.getFormat();
+        if (oldFormat == null || newMediaFormat != oldFormat.getMediaFormat()) {
             episode.setFormat(new Format(newMediaFormat));
             changes = true;
         }
