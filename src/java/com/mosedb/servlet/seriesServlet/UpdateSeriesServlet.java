@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Handles all the functionality in seriesInfo.jsp.
  *
  * @author Lasse
  */
@@ -58,7 +59,13 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         }
     }
 
-    private boolean updateSeries(HttpServletRequest request) throws ServletException, IOException {
+    /**
+     * Updates the series currently in session according to the information in seriesInfo.jsp
+     * @param request
+     * The request from which the current session is gotten.
+     * @return {@code true} if updating succeeded, {@code false} if not.
+     */
+    private boolean updateSeries(HttpServletRequest request){
         AttributeManager.removeErrorMessage(request);
         AttributeManager.removeSuccessMessage(request);
 
@@ -118,11 +125,29 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         return totalSuccess;
     }
 
+    /**
+     * Removes the series currently in the session from the database and returns
+     * a boolean value to {@link #updateSeries(javax.servlet.http.HttpServletRequest)}
+     * }.
+     *
+     * @param request The request from which the current session is gotten.
+     * @return {@code true} if deletion succeeded, {@code false} if not.
+     */
     private boolean removeSeries(HttpServletRequest request) {
         int seriesid = AttributeManager.getSeries(request.getSession(true)).getId();
         return new SeriesService().removeSeries(seriesid);
     }
 
+    /**
+     * Removes a season from the series currently in the session according to
+     * the corresponding fields on seriesInfo.jsp, and then updates the series
+     * and sets it to the session. Returns a boolean value to
+     * {@link #updateSeries(javax.servlet.http.HttpServletRequest)}
+     *
+     * @param request Request from which the season number to delete and the
+     * current session is gotten
+     * @return {@code true} if deletion succeeded, {@code false} if not.
+     */
     private boolean removeSeason(HttpServletRequest request) {
         Series series = AttributeManager.getSeries(request.getSession(true));
         int seriesid = series.getId();
@@ -140,6 +165,17 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         return success;
     }
 
+    /**
+     * Adds a season to the series currently in the session according to the
+     * corresponding fields on seriesInfo.jsp, and then updates the series and
+     * sets it to the session. Returns a boolean value to
+     * {@link #updateSeries(javax.servlet.http.HttpServletRequest)}
+     *
+     * @param request Request from which the season number to delete and the
+     * current session is gotten
+     * @param series The series to which a season is to be added.
+     * @return {@code true} if adding succeeded, {@code false} if not.
+     */
     private boolean addNewSeason(HttpServletRequest request, Series series) {
         String seasonNrString = request.getParameter(NEW_SEASON_NUMBER_DROPBOX);
         if (seasonNrString == null) {
@@ -174,6 +210,15 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         return true;
     }
 
+    /**
+     * Updates all the episodes from a series using {@link #updateEpisode(javax.servlet.http.HttpServletRequest, com.mosedb.models.Episode)
+     * }. Returns a boolean value to
+     * {@link #updateSeries(javax.servlet.http.HttpServletRequest)}.
+     *
+     * @param request
+     * @param series The series which episodes is updated.
+     * @return {@code true} if updating succeeded, {@code false} if not.
+     */
     private boolean updateEpisodes(HttpServletRequest request, Series series) {
         boolean success = true;
         for (Episode episode : series.getEpisodes()) {
@@ -182,6 +227,15 @@ public class UpdateSeriesServlet extends AbstractInfoServlet {
         return success;
     }
 
+    /**
+     * Updates the episodes information according to the corresponding fields
+     * from seriesInfo.jsp. Returns a boolean value to
+     * {@link #updateSeries(javax.servlet.http.HttpServletRequest)}
+     *
+     * @param request The request from which the episode update info is gotten.
+     * @param episode The episode to be updated
+     * @return {@code true} if updating succeeded, {@code false} if not.
+     */
     private boolean updateEpisode(HttpServletRequest request, Episode episode) {
         boolean changes = false;
         String episodeTag = episode.getSeriesId() + "_" + episode.getSeasonNumber() + "_" + episode.getEpisodeNumber();

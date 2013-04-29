@@ -5,18 +5,13 @@
 package com.mosedb.servlet.seriesServlet;
 
 import com.mosedb.business.GenreService;
-import com.mosedb.business.MovieService;
 import com.mosedb.business.SeriesService;
-import com.mosedb.models.Format;
 import com.mosedb.models.LangId;
-import com.mosedb.models.Movie;
 import com.mosedb.models.Series;
 import com.mosedb.models.User;
 import com.mosedb.servlet.AbstractInfoServlet;
 import com.mosedb.tools.AttributeManager;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
